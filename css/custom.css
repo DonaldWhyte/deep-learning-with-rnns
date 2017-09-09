@@ -1,0 +1,26 @@
+.small-table-text td, .small-table-text th {
+    font-size: 20px;
+}
+
+.medium-table-text td, .medium-table-text th {
+    font-size: 26px;
+}
+
+code {
+    color: #22F;
+}
+
+code.small {
+    font-size: 16px;
+    line-height: 18px;
+}
+
+code.medium {
+    font-size: 18px;
+    line-height: 20px;
+}
+
+.reveal section img {
+    border: 0px;
+    box-shadow: none;
+}
