@@ -1,2 +1,3 @@
-# deep-learning-with-r
-Presentation slides and workshop materials of Deep Learning with Recurrent Neural Networks
+# Deep Learning with Recurrent Neural Networks
+
+Presentation slides and workshop materials of Deep Learning with Recurrent Neural Networks.
