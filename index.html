@@ -58,6 +58,12 @@
           </section>
 
           <section data-markdown>
+            By the end of this talk...
+
+            Build a TODO.
+          </section>
+
+          <section data-markdown>
             ## Outline
 
             * TODO
@@ -66,9 +72,124 @@
 
         <section>
           <section data-markdown>
-            # TODO
+            # 1. Neural Networks
+          </section>
+
+          <section data-markdown>
+            ## Regression
 
             TODO
+          </section>
+
+          <section data-markdown data-notes="
+TODO
+">
+            ##
+          </section>
+        </section>
+
+        <section>
+          <section data-markdown data-notes="
+Good learning resources:
+
+https://medium.com/@camrongodbout/recurrent-neural-networks-for-beginners-7aca4e933b82
+          ">
+            # 2. Recurrent Neural Networks
+          </section>
+
+          <section data-markdown>
+            TODO: basic definition of RNN w/ loop unrolling
+          </section>
+
+          <section data-markdown>
+            TODO: what these can be used for (sequential data, things that need
+            memory of past inputs for context)
+          </section>
+
+          <section data-markdown>
+            TODO: limitations -- in theory can remember all past inputs but in
+            reality this doesn't work with vanilla RNNs
+          </section>
+
+          <section data-markdown>
+            TODO: high-level overview of LSTMs
+          </section>
+        </section>
+
+        <section>
+          <section data-markdown>
+            # 3. RNNs in Python
+          </section>
+
+          <section data-markdown data-notes="
+Allows user to write symbolic mathematical expressions, then automatically generates their derivatives, saving the user from having to code gradients or backpropagation. These symbolic expressions are automatically compiled to CUDA code for a fast, on-the-GPU implementation.
+
+Theano: The reference deep-learning library for Python with an API largely compatible with the popular NumPy library.
+">
+          </section>
+
+          <section data-markdown>
+            Low-level compute graph libraries:
+
+            * Theano
+            * Tensorflow (Google)
+            * Caffe (Berkley)
+
+            High-level libraries:
+
+            * Keras
+            * Sonnet (DeepMind)
+          </section>
+
+          <section data-markdown>
+            Let's use *Keras*.
+          </section>
+
+          <section data-markdown>
+            * Built on top of Tensorflow
+            * Can build very complex networks quickly
+            * Easy to extend if required
+            * Built-in support for LSTM nodes
+          </section>
+
+          <section data-markdown data-notes="
+Keras can use many compute backends, such as TensorFlow, Theano and CNTK.
+">
+            ### Installation
+
+            Keras can use many compute backends.
+
+            Let's use TensorFlow.
+
+            ```bash
+            pip3 install tensorflow
+            pip3 install keras
+            ```
+          </section>
+
+          <section data-markdown>
+            ### TODO
+
+            TODO
+          </section>
+
+          <section data-markdown data-notes="
+Source: https://keras.io/visualization/
+">
+            Visualise a Keras model:
+
+            ```bash
+            # Install required dependencies to generate graphs
+            brew install graphviz
+            pip3 install pydot
+            ```
+
+            ```python
+            from keras.utils import plot_model
+            plot_model(model, to_file='model.svg')
+            ```
+
+            <img src="TODO: plotted graph" />
           </section>
         </section>
 
