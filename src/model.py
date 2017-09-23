@@ -6,9 +6,12 @@ from tensorflow.contrib import layers
 from tensorflow.contrib import rnn
 from typing import Callable, List, Optional
 
-from text import ALPHASIZE, print_learning_learned_comparison
+from text import ALPHABET_SIZE, print_learning_learned_comparison
 
 _logger = logging.getLogger(__name__)
+
+
+# TODO: add dropout to this model
 
 
 class RNNTextModel:
@@ -20,7 +23,8 @@ class RNNTextModel:
                  stats_log_dir: str):
         """TODO
 
-        TODO: document all inputs"""
+        TODO: document all inputs
+        """
         self._sequence_length = sequence_length
 
         # Define RNN inputs.
@@ -29,8 +33,8 @@ class RNNTextModel:
             'batch_size': tf.placeholder(tf.int32, name='batch_size'),
             # Dimensions: [ batch_size, sequence_length ]
             'X': tf.placeholder(tf.uint8, [None, None], name='X')
-            # Dimensions: [ batch_size, sequence_length, ALPHASIZE ]
-            'Xo': tf.one_hot(self._inputs['X'], ALPHASIZE, 1.0, 0.0)
+            # Dimensions: [ batch_size, sequence_length, ALPHABET_SIZE ]
+            'Xo': tf.one_hot(self._inputs['X'], ALPHABET_SIZE, 1.0, 0.0)
         }
 
         # Define expected RNN outputs. This is used for training.
@@ -39,8 +43,8 @@ class RNNTextModel:
         self.expected_outputs = {
             # Dimensions: [ batch_size, sequence_length ]
             'Y':  = tf.placeholder(tf.uint8, [None, None], name='Y_exp')
-            # Dimensions: [ batch_size, sequence_length, ALPHASIZE ]
-            'Yo':  = tf.one_hot(self._out, ALPHASIZE, 1.0, 0.0)
+            # Dimensions: [ batch_size, sequence_length, ALPHABET_SIZE ]
+            'Yo':  = tf.one_hot(self._out, ALPHABET_SIZE, 1.0, 0.0)
         }
 
         # Define internal/hidden RNN layers. The RNN is composed of a certain
@@ -88,30 +92,30 @@ class RNNTextModel:
         # Flatten the first two dimensions of the output. This performs the
         # following transformation:
         #
-        # [ batch_size, sequence_length, ALPHASIZE ]
-        #     => [ batch_size x sequence_length, ALPHASIZE ]
+        # [ batch_size, sequence_length, ALPHABET_SIZE ]
+        #     => [ batch_size x sequence_length, ALPHABET_SIZE ]
         Yflat = tf.reshape(Yr, [-1, gru_internal_size])
 
         # After this transformation, apply softmax readout layer. This way, the
         # weights and biases are shared across unrolled time steps. From the
         # readout point of view, a value coming from a cell or a minibatch is
         # the same thing.
-        Ylogits = layers.linear(Yflat, ALPHASIZE)                      # [ batch_size x sequence_length, ALPHASIZE ]
-        Yflat_ = tf.reshape(Yo_, [-1, ALPHASIZE])                      # [ batch_size x sequence_length, ALPHASIZE ]
+        Ylogits = layers.linear(Yflat, ALPHABET_SIZE)                      # [ batch_size x sequence_length, ALPHABET_SIZE ]
+        Yflat_ = tf.reshape(Yo_, [-1, ALPHABET_SIZE])                      # [ batch_size x sequence_length, ALPHABET_SIZE ]
         self._loss = tf.nn.softmax_cross_entropy_with_logits(          # [ batch_size x sequence_length ]
             logits=Ylogits, labels=Yflat_)
         self._loss = tf.reshape(                                       # [ batch_size, sequence_length ]
             self._loss, [self._inputs['batch_size'], -1])
-        Yo = tf.nn.softmax(Ylogits, name='Yo')                         # [ batch_size x sequence_length, ALPHASIZE ]
+        Yo = tf.nn.softmax(Ylogits, name='Yo')                         # [ batch_size x sequence_length, ALPHABET_SIZE ]
         Y = tf.argmax(Yo, 1)                                           # [ batch_size x sequence_length ]
         Y = tf.reshape(Y, [self._inputs['batch_size'], -1], name='Y')  # [ batch_size, sequence_length ]
 
         self._train_step = tf.train.AdamOptimizer().minimize(self._loss)
 
-        self._build_statistics()
+        self._build_statistics(stats_log_dir)
         self._initialise_tf_session()
 
-    def _build_statistics(self):
+    def _build_statistics(self, stats_log_dir: str):
         sequence_loss = tf.reduce_mean(loss, 1)
         batch_loss = tf.reduce_mean(sequence_loss)
         batch_accuracy = tf.reduce_mean(
@@ -121,7 +125,10 @@ class RNNTextModel:
 
         self._summaries = tf.summary.merge([loss_summary, acc_summary])
         self._stats_summary_writer = tf.summary.FileWriter(
-            f'log/{timestamp}-training')
+            os.path.join(stats_log_dir, f'{timestamp}-training'))
+
+        self. = tf.summary.FileWriter(
+            os.path.join(stats_log_dir, f'{timestamp}-validation'))
 
     def _initialise_tf_session(self):
         initalised_vars = tf.global_variables_initializer()
@@ -131,11 +138,12 @@ class RNNTextModel:
 
     def run_training_loop(self,
                           training_text: List[int],
+                          num_epochs: int,
                           learning_rate: float,
                           display_every_n_batches: int,
                           batch_size: int,
                           checkpoint_dir: str,
-                          on_step_complete: Callable[[int], None]
+                          on_step_complete: Callable[[int], None],
                           should_stop: Callable[[int], bool]):
         """TODO
 
@@ -162,7 +170,7 @@ class RNNTextModel:
         input_state = self._session.run(self._zero_state)
 
         batch_sequencer = txt.rnn_minibatch_sequencer(
-            training_text, batch_size, sequence_length, nb_epochs=1000)
+            training_text, batch_size, sequence_length, nb_epochs=num_epochs)
         step = 0
         for x, y_, epoch in batch_sequencer:
             # Train on one minibatch.

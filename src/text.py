@@ -7,7 +7,7 @@ _logger = logging.getLogger(__name__)
 
 
 # Size of the alphabet that we work with.
-ALPHASIZE = 98
+ALPHABET_SIZE = 98
 
 
 def read_data_files(
