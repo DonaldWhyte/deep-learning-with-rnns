@@ -18,7 +18,9 @@ class RNNTextModel:
                  gru_internal_size: int,
                  num_hidden_layers: int,
                  stats_log_dir: str):
-        """TODO: document all inputs"""
+        """TODO
+
+        TODO: document all inputs"""
         self._sequence_length = sequence_length
 
         # Define RNN inputs.
@@ -59,7 +61,17 @@ class RNNTextModel:
         # training loop.
         self._zero_state = multicell.zero_state(batch_size, dtype=tf.float32)
 
-        # TODO: why `dynamic_rnn`???
+        # Using `dynamic_rnn` means Tensorflow "performs fully dynamic
+        # unrolling" of the network. This is faster than compiling the full
+        # graph at initialisation time.
+        #
+        # Note that compiling the full grapgh at train time isn’t that big of
+        # an issue for training, because we only need to build the graph once.
+        # It could be a big issue, however, if we need to build the graph
+        # multiple times at test time. And remember, this training loop does
+        # occassionally process inputs via test time, through the occassional
+        # reports it outputs.
+        #
         # Yr: [ batch_size, sequence_length, gru_internal_size ]
         # H:  [ batch_size, gru_internal_size * num_hidden_layers ]
         # H is the last state in the sequence.
@@ -138,7 +150,10 @@ class RNNTextModel:
         step_size = batch_size * self._sequence_length
         display_every_n_batches = display_every_n_batches * step_size
 
-        # TODO: explain this
+        # Create direcftory that stores checkpoints of the trained model.
+        # Training models can take a very long time (several hours or days), so
+        # storing intermediate results on disk prevents us losing all progress
+        # if the process crashes.
         if not os.path.exists(checkpoint_dir):
             os.mkdir(checkpoint_dir)
         saver = tf.train.Saver(max_to_keep=1)
