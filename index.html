@@ -14,6 +14,16 @@
 
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
 
+    <!-- HACK: I've imported MathJAX and manually tell it to re-render all
+         equations after the external markdown slides have loaded (see script
+         at bottom of this HTML file.
+
+         reveal.js support for MathJAX does not appear to extend to *external*
+         markdown files, so I needed to trigger the re-render when external
+         files are loaded.
+    -->
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
     <link rel="stylesheet" href="css/reveal.css">
     <link rel="stylesheet" href="css/theme/white.css" id="theme">
     <link rel="stylesheet" href="css/custom.css">
@@ -39,197 +49,16 @@
   <body>
 
     <div class="reveal">
-
       <div class="slides">
-        <section>
-          <section>
-            <h2>Deep Learning with Recurrent Neural Networks</h2>
-            <h4>In Python</h4>
-            <p>
-                <a href="http://donaldwhyte.co.uk">Alejandro Saucedo</a>
-                / <a href="http://twitter.com/axsauze">@axsauze</a><br/>
-                <a href="http://donaldwhyte.co.uk">Donald Whyte</a>
-                / <a href="http://twitter.com/donald_whyte">@donald_whyte</a>
-              <br />
-            </p>
-            <p>
-
-            </p>
-          </section>
-
-          <section data-markdown>
-            By the end of this talk...
-
-            Build a TODO.
-          </section>
-
-          <section data-markdown>
-            ## Outline
-
-            * TODO
-          </section>
+        <section data-markdown="contents.md"
+                 data-separator="^\[NEXT SECTION\]"
+                 data-separator-vertical="^\[NEXT\]"
+                 data-separator-notes="^_note_">
         </section>
+      </div>
+    </div>
 
-        <section>
-          <section data-markdown>
-            ## 1. Supervised Learning
-          </section>
-
-          <section data-markdown>
-            Use labeled historical data to predict future outcomes
-          </section>
-
-          <section data-markdown>
-            Given some input data, predict the correct output
-
-            ![shapes](images/shapes.svg)
-
-            What **features** of the input tell us about the output?
-          </section>
-
-          <section data-notes="
-Raw input data in the shape example before would be all of the pixels that make
-up a shape, or even the raw binary data that makes up the image.
-">
-            <h3>Feature Space</h3>
-
-            <ul>
-              <li>A feature is some property that describes raw input data</li>
-              <li>
-                Input is represented as a vector in
-                <strong>feature space</strong>
-              </li>
-              <li>2 features = 2D vector = 2D space</li>
-            </ul>
-
-            <center>
-              <div id="shape-plot"
-                   style="width: 500px; height: 400px; margin-top: 32px">
-              </div>
-            </center>
-          </section>
-
-          <section data-markdown data-notes="
-Raw input data in the shape example before would be all of the pixels that make
-up a shape, or even the raw binary data that makes up the image.
-
-Other examples of raw inputs include each character in a document, each byte in
-a file, every sample frequency in audio.
-
-These inputs are highly complex and noisy, which makes it incredibly difficult
-to identity patterns and infer greater meaning from the data.
-
-So we abstract away the complexity using feature vectors, which significantly
-reduce the dimensionality of the data.
-
-* Added benefits:
-  - remove redundant information
-  - decreases time it takes to learn a good model
-  - comprehensible by research (REFER TO PREVIOUS SLIDE)
-">
-            ### Why Use Feature Space?
-
-            ![feature-extractor](images/feature-extractor.svg)
-
-            * Could simply use raw binary data as input
-            * Raw inputs are complex and noisy
-            * Abstract the complexity away by using features
-          </section>
-
-          <section data-notes="
-Supervised leanring depends on use having a training dataset, that has both
-the input features and the *known* outputs of those feature vectors.
-
-The training data is used to find a function, or model, that effectively
-discriminates between your inputs.
-
-The model cuts the feature space into regions, where each region
-corresponds to an output class.
-
-In the example here, we see that the model segments the feature space into
-our two output classes -- triangles and squares.
-
-Once we have a trained model, we use it to classify new, unseen data by
-transforming it into a feature vector, mapping it to feature space, and
-chekcing which region the vector is mapped to.
-">
-            <div class="left-col">
-              <ul>
-                <li>Training data is used to produce a model</li>
-                <li> f(x&#x0304;) = mx&#x0304; + c </li>
-                <li>Model divides feature space into segments</li>
-                <li>Each segment corresponds to one <strong>output class</strong></li>
-              </ul>
-            </div>
-
-            <div class="right-col">
-              <center>
-                <div id="shape-plot-discriminant" style="width: 450px"></div>
-              </center>
-            </div>
-
-            <div class="clear-col"></div>
-
-            <p>
-              Use trained model to predict outcome of new, unseen inputs
-            </p>
-          </section>
-
-          <section data-notes="
-Now in reality, your data might not be linearly seperable, so we might have to
-use a more complex model to correctly discriminate between the different output
-classes.
-
-Of course, we need to be careful our models don't overfit our input training
-data, otherwise it will fail to correctly classify new, unseen data points.
-
-We can see on the diagram on the right, there are many unseen square instances
-that have been incorrectly classified as a triangle. The two triangles near them
-might just be outliers, but because the model was trained on a small training
-dataset, the feature space looked like it had a different structure.
-">
-            <h3>Choosing a Suitable Model</h3>
-
-            <div class="left-col">
-              <center>
-                <div id="shape-plot-complex" style="width: 450px"></div>
-              </center>
-            </div>
-            <div class="right-col fragment" data-fragment="1">
-              <center>
-                <div id="shape-plot-overfitting" style="width: 450px"></div>
-              </center>
-            </div>
-          </section>
-        </section>
-
-        <section data-notes="
-TODO: finish this section
-
-REALLY think about how to make it concise.
-
-TODO: think of good example to use
-
-* straight line equation (as in the last section)
-* say we want to model non-linear
-* combine equations into a system of equations, say we need to learn whole matrix
-* turn single straight line into a perceptron
-* turn whole set of equations into network
-* high-level explanation of backprop to learn the weights
-">
-          <section data-markdown>
-            ## 2. Neural Networks
-          </section>
-
-          <section data-markdown>
-            TODO
-          </section>
-
-          <section data-markdown>
-            TODO
-          </section>
-        </section>
-
+    <!--
         <section>
           <section data-markdown data-notes="
 Good learning resources:
@@ -250,7 +79,7 @@ https://medium.com/@camrongodbout/recurrent-neural-networks-for-beginners-7aca4e
           </section>
 
           <section data-markdown>
-            TODO: limitations -- in theory can remember all past inputs but in
+            TODO: limitations - in theory can remember all past inputs but in
             reality this doesn't work with vanilla RNNs
           </section>
 
@@ -344,6 +173,7 @@ Source: https://keras.io/visualization/
       </div>
 
     </div>
+    -->
 
     <script src="lib/js/head.min.js"></script>
     <script src="js/reveal.js"></script>
@@ -362,6 +192,12 @@ Source: https://keras.io/visualization/
 
         transition: 'none', // none/fade/slide/convex/concave/zoom
 
+        math: {
+            mathjax: 'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js',
+            // See http://docs.mathjax.org/en/latest/config-files.html
+            config: 'TeX-AMS_HTML-full'
+        },
+
         // Optional reveal.js plugins
         dependencies: [
           { src: 'lib/js/classList.js', condition: function() { return !document.body.classList; } },
@@ -373,164 +209,379 @@ Source: https://keras.io/visualization/
           {
             src: 'plugin/external/external.js',
             condition: function() {
-              return !!document.querySelector( '[data-external]' );
+              return !!document.querySelector('[data-external]');
             }
           },
         ]
       });
+    </script>
 
-      // Charts construction
+    <script>
+      // CONSTANTS
+      var MIN_X = -5;
+      var MAX_X = 5;
+      var POINT_INTERVAL = 0.001;
 
-      function loadChartEvent(event) {
-        // Remove Highcharts.com marker
+      // FUNCTIONS
+      function loadChartEvent() {
         $("text:contains('Highcharts.com')").remove();
       }
 
-      var shapeChart = {
-        chart: {
-          type: 'scatter',
-          zoomType: 'xy',
-          backgroundColor: 'rgba(0, 0, 0, 0)',
-          events: {
-            load: loadChartEvent
-          }
-        },
-        title: {
-          text: ''
-        },
-        xAxis: {
-          title: {
-            text: 'Area',
-            style: {
-              fontSize: '24px',
-              color: 'black',
-              'font-weight': 'strong'
+      function generatePoints(minX, maxX, pointInterval, func) {
+        var pointsToGenerate = Math.abs(maxX - minX) / pointInterval;
+        var data = [];
+        for (var i = 0; i < pointsToGenerate; ++i) {
+          var x = minX + (i * pointInterval)
+          data.push([x, func(x)]);
+        }
+        return data;
+      }
+
+      Reveal.addEventListener('ready', function(event) {
+        var baseShapeChart = {
+          chart: {
+            type: 'scatter',
+            zoomType: 'xy',
+            backgroundColor: 'rgba(0, 0, 0, 0)',
+            events: { load: loadChartEvent }
+          },
+          title: { text: '' },
+          xAxis: {
+            title: {
+              text: 'Area',
+              style: {
+                fontSize: '24px',
+                color: 'black',
+                'font-weight': 'strong'
+              }
+            },
+            labels: {
+              style: {
+                color: 'black',
+                'font-weight': 'strong',
+                'font-size': '14px'
+              }
             }
           },
-          labels: {
-            style: {
-              color: 'black',
-              'font-weight': 'strong',
-              'font-size': '14px'
-            }
-          }
-        },
-        yAxis: {
-          title: {
-            text: 'Perimeter',
-            style: {
-              fontSize: '24px',
-              color: 'black'
+          yAxis: {
+            title: {
+              text: 'Perimeter',
+              style: {
+                fontSize: '24px',
+                color: 'black'
+              }
+            },
+            labels: {
+              style: {
+                color: 'black',
+                'font-weight': 'strong',
+                'font-size': '14px'
+              }
             }
           },
-          labels: {
-            style: {
-              color: 'black',
-              'font-weight': 'strong',
-              'font-size': '14px'
-            }
-          }
-        },
-        legend: {
-          enabled: false
-        },
-        tooltip: {
-          enabled: false
-        },
-        exporting: {
-          enabled: false
-        },
-        plotOptions: {
-          scatter: {
-            marker: {
-              radius: 10,
-              states: {
-                hover: {
-                  enabled: true,
-                  lineColor: '#000'
+          legend: { enabled: false },
+          tooltip: { enabled: false },
+          exporting: { enabled: false },
+          plotOptions: {
+            scatter: {
+              marker: {
+                radius: 10,
+                states: {
+                  hover: { enabled: true, lineColor: '#000' }
                 }
               }
             }
-          }
-        },
-        series: [
-          {
-            name: 'Square',
-            marker: {
-              symbol: 'square'
+          },
+          series: [
+            {
+              name: 'Square',
+              marker: { symbol: 'square' },
+              color: 'rgba(223, 83, 83, 1)',
+              data: [
+                [3.7, 0.9], [3.9, 1.7], [3.9, 0.9], [4.2, 1.2], [3.5, 1.4],
+                [3.85, 1.3], [3.4, 1.0], [3.7, 1.25]
+              ]
+            }, {
+              name: 'Triangle',
+              marker: { symbol: 'triangle' },
+              color: 'rgba(119, 152, 191, 1)',
+              data: [
+                [2.75, 0.18], [3.2, 0.22], [4.2, 0.65], [4.1, 0.20], [3.5, 0.4],
+                [4.0, 0.24], [4.15, 0.5], [3.8, 0.5], [2.8, 0.6], [3.8, 0.5],
+                [3.0, 0.8], [2.7, 1.4], [3.1, 0.5], [2.8, 1.3], [2.7, 1.1],
+                [2.8, 0.9], [3.15, 1.25], [3.5, 1.9]
+              ]
+            }
+          ]
+        };
+        var shapeChartWithDiscriminant = jQuery.extend(
+          true, {}, baseShapeChart);
+        shapeChartWithDiscriminant["series"].push({
+          type: 'line',
+          name: 'Discriminant',
+          data: [[4.2, 0.1], [2.8, 1.9]],
+          marker: {
+            enabled: false
+          },
+          enableMouseTracking: false,
+          showInLegend: false,
+          lineWidth: 5,
+          lineColor: 'black'
+        });
+
+        var shapeChartComplex = jQuery.extend(
+          true, {}, baseShapeChart);
+        shapeChartComplex['series'].push({
+          type: 'spline',
+          name: 'Discriminant',
+          data: [
+            [3.65, 1.9], [3.2, 1.0], [3.5, 0.65], [4.2, 0.8]
+          ],
+          marker: { enabled: false },
+          enableMouseTracking: false,
+          showInLegend: false,
+          lineWidth: 5,
+          lineColor: 'black'
+        });
+
+        var shapeChartOverfitting = jQuery.extend(
+          true, {}, shapeChartComplex);
+        shapeChartOverfitting['series'].push({
+          name: 'Square-Wrong',
+          marker: { symbol: 'square' },
+          color: '#0f0',
+          showInLegend: false,
+          data: [
+            [3.35, 1.75], [3.2, 1.7], [3.4, 1.5], [3.1, 1.5], [3.3, 1.55]
+          ]
+        });
+
+        var deepLearningGrowthChart = {
+          chart: {
+            type: 'column',
+            backgroundColor: 'rgba(0, 0, 0, 0)',
+            events: { load: loadChartEvent },
+            marginTop: 64,
+            marginBottom: 32
+          },
+          title: { text: '' },
+          xAxis: {
+            categories: [
+              '2015', '2016', '2017', '2018', '2019',
+              '2020', '2021', '2022', '2023', '2024'
+            ],
+            crosshair: true,
+            labels: {
+              style: {
+                color: 'black',
+                'font-weight': 'strong',
+                'font-size': '18px'
+              }
+            }
+          },
+          yAxis: {
+            min: 0,
+            tickInterval: 2000,
+            title: {
+              text: '$ millions',
+              style: {
+                color: 'black',
+                'font-weight': 'strong',
+                'font-size': '28px'
+              }
             },
-            color: 'rgba(223, 83, 83, 1)',
-            data: [
-              [3.7, 0.9], [3.9, 1.7],
-              [3.9, 0.9], [4.2, 1.2],
-              [3.5, 1.4], [3.85, 1.3],
-              [3.4, 1.0], [3.7, 1.25]
-            ]
-          }, {
-            name: 'Triangle',
-            marker: {
-              symbol: 'triangle'
+            labels: {
+              formatter: function () {
+                return '$' + this.value
+              },
+              style: {
+                color: 'black',
+                'font-weight': 'strong',
+                'font-size': '18px'
+              }
+            }
+          },
+          legend: { enabled: false },
+          tooltip: { enabled: false },
+          exporting: { enabled: false },
+          plotOptions: {
+            column: {
+              pointPadding: 0.2,
+              borderWidth: 0
+            }
+          },
+          series: [
+            {
+              name: 'Revenue',
+              data: [ 100, 200, 400, 800, 1900, 3950, 6000, 7800, 9600, 10200 ]
+            }
+          ]
+        };
+
+        var baseActivationFunctionChart =  {
+          chart: {
+            backgroundColor: 'rgba(0, 0, 0, 0)',
+            events: { load: loadChartEvent },
+            marginTop: 32,
+            marginBottom: 64
+          },
+          title: { text: '' },
+          xAxis: {
+            title: {
+              text: 'Weighted Sum (x)',
+              style: {
+                color: 'black',
+                'font-weight': 'strong',
+                'font-size': '32px'
+              }
             },
-            color: 'rgba(119, 152, 191, 1)',
-            data: [
-              [2.75, 0.18], [3.2, 0.22],
-              [4.2, 0.65], [4.1, 0.20],
-              [3.5, 0.4], [4.0, 0.24],
-              [4.15, 0.5], [3.8, 0.5],
-              [2.8, 0.6], [3.8, 0.5],
-              [3.0, 0.8], [2.7, 1.4],
-              [3.1, 0.5], [2.8, 1.3],
-              [2.7, 1.1], [2.8, 0.9],
-              [3.15, 1.25], [3.5, 1.9]
-            ]
+            min: -2,
+            max: 2,
+            tickInterval: 1.0,
+            minorTickLength: 0,
+            tickLength: 0,
+            labels: {
+              style: {
+                color: 'black',
+                'font-weight': 'strong',
+                'font-size': '26px'
+              }
+            }
+          },
+          yAxis: {
+            title: {
+              text: 'f(x)',
+              style: {
+                color: 'black',
+                'font-weight': 'strong',
+                'font-style': 'italic',
+                'font-size': '32px'
+              }
+            },
+            min: -0.2,
+            max: 1.2,
+            tickInterval: 0.2,
+            labels: {
+              style: {
+                color: 'black',
+                'font-weight': 'strong',
+                'font-size': '26px'
+              }
+            },
+          },
+          tooltip: { enabled: false },
+          exporting: { enabled: false },
+          legend: { enabled: false },
+          series: []
+        };
+
+        var commonLegendConfig = {
+          layout: 'vertical',
+          align: 'right',
+          verticalAlign: 'middle',
+          borderWidth: 0,
+          symbolWidth: 64,
+          itemStyle: {
+            color: 'black',
+            'font-weight': 'strong',
+            fontSize: '36px'
+          },
+          itemHoverStyle: {
+            color: 'black',
+            'font-weight': 'strong',
+            fontSize: '36px'
           }
-        ]
-      };
+        };
 
-      var shapeChartWithDiscriminant = jQuery.extend(true, {}, shapeChart);
-      shapeChartWithDiscriminant["series"].push({
-        type: 'line',
-        name: 'Discriminant',
-        data: [[4.2, 0.1], [2.8, 1.9]],
-        marker: {
-          enabled: false
-        },
-        enableMouseTracking: false,
-        showInLegend: false,
-        lineWidth: 5,
-        lineColor: 'black'
-      });
+        var stepDataSeries = {
+          name: 'Step',
+          lineWidth: 5,
+          color: '#058DC7',
+          data: [
+              [-2,  0], [0, 0], [0, 1], [2, 1]
+          ]
+        };
 
-      var shapeChartComplex = jQuery.extend(true, {}, shapeChart);
-      shapeChartComplex['series'].push({
-        type: 'spline',
-        name: 'Discriminant',
-        data: [[3.65, 1.9], [3.25, 1.1], [3.25, 0.95], [3.5, 0.65], [4.2, 0.8]],
-        marker: {
-          enabled: false
-        },
-        enableMouseTracking: false,
-        showInLegend: false,
-        lineWidth: 5,
-        lineColor: 'black'
-      });
+        var sigmoidDataSeries = {
+          name: 'Sigmoid',
+          lineWidth: 5,
+          color: '#ED561B',
+          type: 'spline',
+          data: (function() {
+            var STEEPNESS = 3.0;
+            function sigmoid(x) {
+              var exponent = STEEPNESS * -x;
+              return 1 / (1 + Math.exp(exponent));
+            }
 
-      var shapeChartOverfitting = jQuery.extend(true, {}, shapeChartComplex);
-      shapeChartOverfitting['series'].push({
-        name: 'Square-Wrong',
-        marker: {
-          symbol: 'square'
-        },
-        color: 'purple',
-        showInLegend: false,
-        data: [ [3.30, 1.8], [3.15, 1.75], [3.35, 1.55], [3.05, 1.55], [3.25, 1.6] ]
-      });
+            return generatePoints(MIN_X, MAX_X, POINT_INTERVAL, sigmoid);
+          })()
+        };
 
-      $(function () {
-        $('#shape-plot').highcharts(shapeChart);
+        var stepActivationFunctionChart = jQuery.extend(
+          true, {}, baseActivationFunctionChart);
+        stepActivationFunctionChart.series.push(stepDataSeries);
+
+        var sigmoidActivationFunctionChart = jQuery.extend(
+          true, {}, baseActivationFunctionChart);
+        sigmoidActivationFunctionChart.series.push(sigmoidDataSeries);
+
+        var allActivationFunctionsChart = jQuery.extend(
+          true, {}, baseActivationFunctionChart);
+        allActivationFunctionsChart.series.push(stepDataSeries);
+        allActivationFunctionsChart.series.push(sigmoidDataSeries);
+        allActivationFunctionsChart.legend = commonLegendConfig;
+
+        var reluDataSeries = {
+          name: 'ReLU',
+          lineWidth: 5,
+          color: '#99BADD',
+          data: (function() {
+            return generatePoints(MIN_X, MAX_X, POINT_INTERVAL, function(x) {
+              return Math.max(0, x);
+            });
+          })()
+        };
+
+        var softplusDataSeries = {
+          name: 'Softplus',
+          lineWidth: 5,
+          color: 'green',
+          data: (function() {
+            return generatePoints(MIN_X, MAX_X, POINT_INTERVAL, function(x) {
+              return Math.log(1 + Math.exp(x))
+            });
+          })()
+        };
+
+        var modernActivationFunctionsChart = jQuery.extend(
+          true, {}, baseActivationFunctionChart);
+        modernActivationFunctionsChart.series = [
+          sigmoidDataSeries,
+          reluDataSeries,
+          softplusDataSeries
+        ];
+        modernActivationFunctionsChart.legend = commonLegendConfig;
+        modernActivationFunctionsChart.xAxis.min = -5;
+        modernActivationFunctionsChart.xAxis.max = 5;
+        modernActivationFunctionsChart.xAxis.tickInterval = 5;
+        modernActivationFunctionsChart.yAxis.min = -1;
+        modernActivationFunctionsChart.yAxis.max = 5;
+        modernActivationFunctionsChart.yAxis.tickInterval = 1;
+
+        $('#shape-plot').highcharts(baseShapeChart);
         $('#shape-plot-discriminant').highcharts(shapeChartWithDiscriminant);
         $('#shape-plot-complex').highcharts(shapeChartComplex);
         $('#shape-plot-overfitting').highcharts(shapeChartOverfitting);
+        $('#deep-learning-growth-chart').highcharts(deepLearningGrowthChart);
+        $('#step-activation-function-chart').highcharts(stepActivationFunctionChart);
+        $('#sigmoid-activation-function-chart').highcharts(sigmoidActivationFunctionChart);
+        $('#all-activation-functions-chart').highcharts(allActivationFunctionsChart);
+        $('#modern-activation-functions-chart').highcharts(modernActivationFunctionsChart);
+
+        // Force a re-render after slides have loaded to ensure all math
+        // equations are picked up.
+        MathJax.Hub.Rerender();
       });
     </script>
 

@@ -14,7 +14,7 @@ def _main():
     display_every_n_batches = 50
     progress = ProgressBar(
         display_every_n_batches,
-        size_of_bar_in_chars=111+2,
+        size_of_bar_in_chars=111 + 2,
         header_message=f'Training on next {display_every_n_batches} batches')
     def on_step_complete(step: int):
         # TODO: explain
