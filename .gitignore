@@ -1,3 +1,7 @@
+# Tensorflow and tensorboard files
+logs/
+checkpoints/
+
 # Max OSX
 .DS_Store
 
