@@ -119,10 +119,6 @@ class RNNTextModel:
         Ylogits = layers.linear(Yflat, ALPHABET_SIZE)                  # [ batch_size x sequence_length, ALPHABET_SIZE ]
         Yflat_ = tf.reshape(                                           # [ batch_size x sequence_length, ALPHABET_SIZE ]
             self._expected_outputs['Yo'], [-1, ALPHABET_SIZE])
-        self._loss = tf.nn.softmax_cross_entropy_with_logits(          # [ batch_size x sequence_length ]
-            logits=Ylogits, labels=Yflat_)
-        self._loss = tf.reshape(                                       # [ batch_size, sequence_length ]
-            self._loss, [self._inputs['batch_size'], -1])
         Yo = tf.nn.softmax(Ylogits, name='Yo')                         # [ batch_size x sequence_length, ALPHABET_SIZE ]
         Y = tf.argmax(Yo, 1)                                           # [ batch_size x sequence_length ]
         Y = tf.reshape(Y, [self._inputs['batch_size'], -1], name='Y')  # [ batch_size, sequence_length ]
@@ -131,6 +127,10 @@ class RNNTextModel:
         self._actual_outputs = {'Y': Y}
 
         # TODO: comment on why these are here
+        self._loss = tf.nn.softmax_cross_entropy_with_logits(          # [ batch_size x sequence_length ]
+            logits=Ylogits, labels=Yflat_)
+        self._loss = tf.reshape(                                       # [ batch_size, sequence_length ]
+            self._loss, [self._inputs['batch_size'], -1])
         self._sequence_loss = tf.reduce_mean(self._loss, 1)
         self._batch_loss = tf.reduce_mean(self._sequence_loss)
         self._batch_accuracy = tf.reduce_mean(

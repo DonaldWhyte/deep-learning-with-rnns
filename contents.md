@@ -502,8 +502,8 @@ Long-term dependencies
 
 [NEXT]
 
-# TODO: update diagram to higlight long term dependencies between time axes
-# TODO: also add letters from preivous one
+TODO: update diagram to higlight long term dependencies between time axes
+TODO: also add letters from preivous one
 
 ![rnn-diagram](images/rnn-unrolled-dependencies.svg)
 
@@ -579,4 +579,61 @@ TODO
 
 
 [NEXT SECTION]
-TODO: actual code
+## 5. Building a Tensorflow Model
+
+[NEXT]
+TODO: diagram of full desired architecture (NO learning rate OR batch size)
+
+[NEXT]
+TODO: marked diagram with raw input layer
+
+[NEXT]
+TODO: marked diagram with one-hot input layer
+
+[NEXT]
+TODO: marked diagram with expected output and expected one-hot layers
+
+[NEXT]
+TODO: marked diagram with deep RNN cell layers
+
+[NEXT]
+TODO: create tuple of placeholders of cell states (this are placeheholders)
+
+[NEXT]
+TODO: dynamic RNN and the H node
+
+[NEXT]
+TODO: softmax layer implementation + flattening for the output
+
+[NEXT]
+TODO: output one-hot to single char
+
+[NEXT]
+Remaining tasks:
+
+* define our loss function
+* decide what weight optimiser to use
+
+[NEXT]
+TODO: loss function (only actual loss function, forget about stasts)
+
+[NEXT]
+TODO: optimiser
+
+
+[NEXT SECTION]
+## 6. Training the Model
+
+TODO
+
+
+[NEXT SECTION]
+## 7. Using Trained Models
+
+TODO
+
+
+[NEXT SECTION]
+## 8. Conclusion
+
+TODO: have this?
