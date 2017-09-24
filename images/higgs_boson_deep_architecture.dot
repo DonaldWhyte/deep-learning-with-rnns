@@ -1,0 +1,94 @@
+digraph G {
+   rankdir=LR
+   splines=false
+
+   x0 [style=filled, bgcolor=grey];
+   xdot [label="...", style=filled, bgcolor=grey];
+   x20 [style=filled, bgcolor=grey];
+   h10 [label="ReLU(0)"];
+   h20 [label="ReLU(0)"];
+   h30 [label="ReLU(0)"];
+   h40 [label="ReLU(0)"];
+   h50 [label="ReLU(0)"];
+   h60 [label="ReLU(0)"];
+   h1dot [label="..."];
+   h2dot [label="..."];
+   h3dot [label="..."];
+   h4dot [label="..."];
+   h5dot [label="..."];
+   h6dot [label="..."];
+   h1499 [label="ReLU(499)"];
+   h2499 [label="ReLU(499)"];
+   h3499 [label="ReLU(499)"];
+   h4499 [label="ReLU(499)"];
+   h5499 [label="ReLU(499)"];
+   h6499 [label="ReLU(499)"];
+   y [style=filled, color=indianred1];
+   output [penwidth=0, label="0 or 1"];
+
+   x0 -> h10;
+   x0 -> h1dot;
+   x0 -> h1499;
+   xdot -> h10;
+   xdot -> h1dot;
+   xdot -> h1499;
+   x20 -> h10;
+   x20 -> h1dot;
+   x20 -> h1499;
+
+   h10 -> h20;
+   h10 -> h2dot;
+   h10 -> h2499;
+   h1dot -> h20;
+   h1dot -> h2dot;
+   h1dot -> h2499;
+   h1499 -> h20;
+   h1499 -> h2dot;
+   h1499 -> h2499;
+
+   h20 -> h30;
+   h20 -> h3dot;
+   h20 -> h3499;
+   h2dot -> h30;
+   h2dot -> h3dot;
+   h2dot -> h3499;
+   h2499 -> h30;
+   h2499 -> h3dot;
+   h2499 -> h3499;
+
+   h30 -> h40;
+   h30 -> h4dot;
+   h30 -> h4499;
+   h3dot -> h40;
+   h3dot -> h4dot;
+   h3dot -> h4499;
+   h3499 -> h40;
+   h3499 -> h4dot;
+   h3499 -> h4499;
+
+   h40 -> h50;
+   h40 -> h5dot;
+   h40 -> h5499;
+   h4dot -> h50;
+   h4dot -> h5dot;
+   h4dot -> h5499;
+   h4499 -> h50;
+   h4499 -> h5dot;
+   h4499 -> h5499;
+
+   h50 -> h60;
+   h50 -> h6dot;
+   h50 -> h6499;
+   h5dot -> h60;
+   h5dot -> h6dot;
+   h5dot -> h6499;
+   h5499 -> h60;
+   h5499 -> h6dot;
+   h5499 -> h6499;
+
+   h60 -> y;
+   h6dot -> y;
+   h6499 -> y;
+
+   y -> output;
+}
