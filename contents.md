@@ -615,7 +615,7 @@ Remaining tasks:
 * decide what weight optimiser to use
 
 [NEXT]
-TODO: loss function (only actual loss function, forget about stasts)
+TODO: loss function (only actual loss function, forget about stats)
 
 [NEXT]
 TODO: optimiser
@@ -624,16 +624,92 @@ TODO: optimiser
 [NEXT SECTION]
 ## 6. Training the Model
 
-TODO
+[NEXT]
+TODO: loading the data details
+
+Emphasise the fact that you load all of the textual data in as integer-coded
+chars. All documents are flattened into a single large sequence.
+
+[NEXT]
+TODO: creating session and init vars
+
+[NEXT]
+TODO: init run to initialise state to zeros
+
+[NEXT]
+TODO: concept of mini-batching
+
+[NEXT]
+TODO: some code to split things to into batches.
+
+(probably omit the details, show explain the underlying concept of splitting
+one big large sequence)
+
+[NEXT]
+DEMO!
+
+_note_
+Briefly show real code and and start running training. Run through one batch
+and see how the loss is reduced.
+
+[NEXT]
+### Tensorboard
+
+TODO: what it is
+
+[NEXT]
+How it works:
+
+* TODO
+
+_note_
+Show what code you need to add in the real example code. Explain that it logs
+data to a file and is then picked up by a local web server.
+
+[NEXT]
+
+Install:
+
+```
+pip3 install tensorboard
+```
+
+Run:
+
+```
+tensorboard --logdir log
+```
+
+_note_
+Run tensorboard and show how it works.
 
 
 [NEXT SECTION]
 ## 7. Using Trained Models
 
-TODO
+[NEXT]
+TODO: how to save the model weights (the Saver object)
+
+[NEXT]
+TODO: loading model from scratch
+
+[TEXT]
+TODO: using it to generate new text
+
+_note_
+Demonstrate this using a pre-trained model that is good at generating the
+target text. It will take too long for the model to be trained from scratch
+live.
 
 
 [NEXT SECTION]
-## 8. Conclusion
+## Fin
 
-TODO: have this?
+[TEXT]
+TODO: conclusion
+
+[TEXT]
+TODO: further reading
+
+[NEXT]
+TODO: contact details, Twitters, blog, etc.

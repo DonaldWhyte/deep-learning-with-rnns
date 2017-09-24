@@ -185,7 +185,7 @@ class RNNTextModel:
         step_size = self._batch_size * self._sequence_length
         display_every_n_batches = display_every_n_batches * step_size
 
-        # Create direcftory that stores checkpoints of the trained model.
+        # Create directory that stores checkpoints of the trained model.
         # Training models can take a very long time (several hours or days), so
         # storing intermediate results on disk prevents us losing all progress
         # if the process crashes.
