@@ -448,6 +448,15 @@ TODO: lack of memory argument
 
 TODO: this is bad for the problemds like the one we want to solve
 
+_note_
+Source: http://colah.github.io/posts/2015-08-Understanding-LSTMs/
+
+Humans don’t start their thinking from scratch every second. As you read this essay, you understand each word based on your understanding of previous words. You don’t throw everything away and start thinking from scratch again. Your thoughts have persistence.
+
+Traditional neural networks can’t do this, and it seems like a major shortcoming. For example, imagine you want to classify what kind of event is happening at every point in a movie. It’s unclear how a traditional neural network could use its reasoning about previous events in the film to inform later ones.
+
+Recurrent neural networks address this issue. They are networks with loops in them, allowing information to persist.
+
 
 [NEXT SECTION]
 ## 3. Deep Recurrent Networks
@@ -458,9 +467,61 @@ TODO: what these can be used for (sequential data, things that need
 memory of past inputs for context)
 
 _note_
-Use diagrams from the following page to explain what an RNN is
+Source of following diagrams is:
 
 http://www.hexahedria.com/2015/08/03/composing-music-with-recurrent-neural-networks/
+
+[NEXT]
+![rnn-diagram](images/rnn-perceptron.svg)
+
+[NEXT]
+![rnn-diagram](images/rnn-feedforward.svg)
+
+[NEXT]
+![rnn-diagram](images/rnn-deepfeedforward.svg)
+
+[NEXT]
+![rnn-diagram](images/rnn-compress.svg)
+
+[NEXT]
+![rnn-diagram](images/rnn-loopcompressed.svg)
+
+[NEXT]
+![rnn-diagram](images/rnn-unrolled.svg)
+
+[NEXT]
+
+TODO: highlight this with exampler input and output chars for setence rec
+
+![rnn-diagram](images/rnn-unrolled-example-io.svg)
+
+[NEXT]
+### Problem:
+
+Long-term dependencies
+
+[NEXT]
+
+# TODO: update diagram to higlight long term dependencies between time axes
+# TODO: also add letters from preivous one
+
+![rnn-diagram](images/rnn-unrolled-dependencies.svg)
+
+[NEXT]
+### Cell States
+
+TODO: update diagram to include hidden cell lines
+
+TODO: mark hidden state as H (a "hidden state")
+
+![rnn-diagram](images/rnn-stateloopcompressed.svg)
+
+* TODO
+* TODO
+* Many variants: LSTM, GRU, etc.
+
+[NEXT]
+![rnn-diagram](images/rnn-hiddenstate.svg)
 
 [NEXT]
 TODO: re-emphasize what these networks are good for
@@ -471,11 +532,6 @@ TODO: explain how training the RNN is basically the same as before!!
 
 TODO: just introduce the fact that we do two loops (one per input,
 one per char in sequence)
-
-
-[NEXT]
-
-TODO: explain what cost function is
 
 
 [NEXT SECTION]

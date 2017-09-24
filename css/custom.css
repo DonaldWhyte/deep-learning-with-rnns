@@ -25,3 +25,7 @@ img[alt="perceptron_learning"] {
     zoom: 0.5; /* all browsers */
     -moz-transform: scale(0.5);  /* Firefox */
 }
+
+img[alt="rnn-diagram"] {
+    width: 512px;
+}
