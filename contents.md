@@ -212,6 +212,21 @@ Most data is not linearly separable
 
 Need a *network* of neurons to discriminate non-linear data
 
+TODO: issue with using traditional models on sequential data (which is what we care aobut)
+
+[NEXT]
+TODO: section discussing input/outputs
+
+[NEXT]
+TODO: one-hot input and one-hot output
+
+with just a single perceptron
+
+repeatedly run it
+
+[NEXT]
+TODO: issues with this...
+
 [NEXT]
 ### Feed-Forward Neural Networks
 
@@ -580,6 +595,9 @@ TODO
 
 [NEXT SECTION]
 ## 5. Building a Tensorflow Model
+
+[NEXT]
+'mirin' my 3.6
 
 [NEXT]
 TODO: diagram of full desired architecture (NO learning rate OR batch size)
