@@ -18,12 +18,6 @@ TODO: state exatcl whay we're going to build and what data we're using from
 the very start
 
 
-[NEXT]
-## Outline
-
-* TODO
-
-
 [NEXT SECTION]
 ## 1. Traditional Supervised Learning
 
@@ -78,16 +72,19 @@ TODO: example of that, in equation
 
 
 [NEXT]
-
-Is this apporach suitable for learing how to write plays?
+Can this be used to learn how to write novels?
 
 
 [NEXT]
 ### Issues with Traditional Learning
 
-* Don't scale to large numbers of input feature
+* Does not scale to large numbers of input features
 * Relies on you to break raw input data into a small set of useful features
 * Good feature engineering requires in-depth domain knowledge and time
+
+<p class="fragment" data-fragment-index="1">
+  TODO: cannot represent memory, sequences, etc.
+</p>
 
 
 [NEXT SECTION]
@@ -101,10 +98,8 @@ Scales to thousands of features
 
 No manual feature extraction
 
-
 [NEXT]
 Just use the raw input data
-
 
 [NEXT]
 ### The Mighty Perceptron
@@ -149,15 +144,6 @@ $$
 $$
 
 [NEXT]
-### Step Function
-
-* Produces binary output from real-valued sum
-* Used for for binary classification
-  - e.g. Triangle (0) or Square(1)
-
-PLACEHOLDER<!-- .element id="step-activation-function-chart" -->
-
-[NEXT]
 ### Sigmoid Function
 
 * Can make perceptron produce continuous output
@@ -190,20 +176,48 @@ Training dataset, which is a collection of known input/output pairs
 (typically produced by humans manually labelling input).
 
 [NEXT]
-<!-- .slide: data-background-color="white" data-transition="none" -->
 ![perceptron_learning](images/perceptron_learning1.png)
 
+_note_
+TODO: have this learning section? or just make it better?
+
 [NEXT]
-<!-- .slide: data-background-color="white" data-transition="none" -->
 ![perceptron_learning](images/perceptron_learning2.png)
 
 [NEXT]
-<!-- .slide: data-background-color="white" data-transition="none" -->
 ![perceptron_learning](images/perceptron_learning3.png)
 
 [NEXT]
-<!-- .slide: data-background-color="white" data-transition="none" -->
 ![perceptron_learning](images/perceptron_learning4.png)
+
+[NEXT]
+### Representing Text
+
+Make the input layer represent:
+
+* a single word
+* or a single character
+
+[NEXT]
+
+Use the input to word/char to predict the next!
+
+[NEXT]
+TODO: diagram with word based
+
+[NEXT]
+TODO: diagram based on characters
+
+[NEXT]
+We will use characters as the inputs.
+
+* TODO
+* TODO
+* TODO: why
+
+_note_
+Both techniques use the same principle. You use the input token to _predict_
+the next token.
 
 [NEXT]
 ### Problem
@@ -212,20 +226,11 @@ Most data is not linearly separable
 
 Need a *network* of neurons to discriminate non-linear data
 
-TODO: issue with using traditional models on sequential data (which is what we care aobut)
-
 [NEXT]
-TODO: section discussing input/outputs
+Emphasize the fact that predicting character sequences still maps to an
+abstract data space, where you can fit straight lines.
 
-[NEXT]
-TODO: one-hot input and one-hot output
-
-with just a single perceptron
-
-repeatedly run it
-
-[NEXT]
-TODO: issues with this...
+However, this is clearly not going to be as simple as fitting a straight line.
 
 [NEXT]
 ### Feed-Forward Neural Networks

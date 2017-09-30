@@ -493,15 +493,6 @@ Source: https://keras.io/visualization/
           }
         };
 
-        var stepDataSeries = {
-          name: 'Step',
-          lineWidth: 5,
-          color: '#058DC7',
-          data: [
-              [-2,  0], [0, 0], [0, 1], [2, 1]
-          ]
-        };
-
         var sigmoidDataSeries = {
           name: 'Sigmoid',
           lineWidth: 5,
@@ -518,17 +509,12 @@ Source: https://keras.io/visualization/
           })()
         };
 
-        var stepActivationFunctionChart = jQuery.extend(
-          true, {}, baseActivationFunctionChart);
-        stepActivationFunctionChart.series.push(stepDataSeries);
-
         var sigmoidActivationFunctionChart = jQuery.extend(
           true, {}, baseActivationFunctionChart);
         sigmoidActivationFunctionChart.series.push(sigmoidDataSeries);
 
         var allActivationFunctionsChart = jQuery.extend(
           true, {}, baseActivationFunctionChart);
-        allActivationFunctionsChart.series.push(stepDataSeries);
         allActivationFunctionsChart.series.push(sigmoidDataSeries);
         allActivationFunctionsChart.legend = commonLegendConfig;
 
@@ -574,7 +560,6 @@ Source: https://keras.io/visualization/
         $('#shape-plot-complex').highcharts(shapeChartComplex);
         $('#shape-plot-overfitting').highcharts(shapeChartOverfitting);
         $('#deep-learning-growth-chart').highcharts(deepLearningGrowthChart);
-        $('#step-activation-function-chart').highcharts(stepActivationFunctionChart);
         $('#sigmoid-activation-function-chart').highcharts(sigmoidActivationFunctionChart);
         $('#all-activation-functions-chart').highcharts(allActivationFunctionsChart);
         $('#modern-activation-functions-chart').highcharts(modernActivationFunctionsChart);
