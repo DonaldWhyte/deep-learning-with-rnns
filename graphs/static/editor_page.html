@@ -1,0 +1,53 @@
+<html>
+    <head>
+        <script
+          src="https://code.jquery.com/jquery-3.2.1.min.js"
+          integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+          crossorigin="anonymous"></script>
+        <link rel="stylesheet" href="codemirror.css">
+        <script src="codemirror.js"></script>
+        <script>
+            function generate() {
+                editor.save();
+                const code = $("#code").val();
+                const uri = encodeURI("/render?code=" + code);
+                console.log(code);
+                console.log(uri);
+                $("#preview").attr("src", uri);
+            }
+        </script>
+        <style>
+            .table td {
+                border: 1px solid black;
+            }
+        </style>
+    </head>
+
+    <body>
+        <table class="table">
+            <tr>
+                <td>
+                    <textarea id="code"></textarea>
+                </td>
+                <td>
+                    <img id="preview" src="" />
+                </td>
+            </tr>
+            <tr>
+                <td><button onclick="generate()">Generate</button></td>
+                <td></td>
+            </tr>
+        </table>
+
+        <script>
+          const editor = CodeMirror.fromTextArea(
+            document.getElementById("code"),
+            {
+                lineNumbers: true,
+                mode:  "python"
+            }
+          );
+          editor.setSize(600);
+        </script>
+    </body>
+</html>

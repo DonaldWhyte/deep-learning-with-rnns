@@ -226,9 +226,10 @@ Most data is not linearly separable
 
 Need a *network* of neurons to discriminate non-linear data
 
-[NEXT]
+_note_
 Emphasize the fact that predicting character sequences still maps to an
-abstract data space, where you can fit straight lines.
+abstract data space, In this spade you can use straight lines or curves to
+to properly predict the next output class (which character is next).
 
 However, this is clearly not going to be as simple as fitting a straight line.
 
