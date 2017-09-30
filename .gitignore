@@ -1,3 +1,6 @@
+# Auto-generated graphs
+graphs/*.svg
+
 # Tensorflow and tensorboard files
 logs/
 checkpoints/
