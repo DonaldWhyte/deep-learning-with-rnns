@@ -518,11 +518,6 @@ Source: https://keras.io/visualization/
           true, {}, baseActivationFunctionChart);
         sigmoidActivationFunctionChart.series.push(sigmoidDataSeries);
 
-        var allActivationFunctionsChart = jQuery.extend(
-          true, {}, baseActivationFunctionChart);
-        allActivationFunctionsChart.series.push(sigmoidDataSeries);
-        allActivationFunctionsChart.legend = commonLegendConfig;
-
         var reluDataSeries = {
           name: 'ReLU',
           lineWidth: 5,
@@ -566,7 +561,6 @@ Source: https://keras.io/visualization/
         $('#shape-plot-overfitting').highcharts(shapeChartOverfitting);
         $('#deep-learning-growth-chart').highcharts(deepLearningGrowthChart);
         $('#sigmoid-activation-function-chart').highcharts(sigmoidActivationFunctionChart);
-        $('#all-activation-functions-chart').highcharts(allActivationFunctionsChart);
         $('#modern-activation-functions-chart').highcharts(modernActivationFunctionsChart);
 
         // Force a re-render after slides have loaded to ensure all math

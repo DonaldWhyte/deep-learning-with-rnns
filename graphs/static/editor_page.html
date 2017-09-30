@@ -9,10 +9,13 @@
         <script>
             function generate() {
                 editor.save();
-                const code = $("#code").val();
-                const uri = encodeURI("/render?code=" + code);
-                console.log(code);
-                console.log(uri);
+                // encodeURI will not encoded the + char, so we do it manually
+                // before encoding the code.
+                const code = $("#code").val().replace('+', '%2B');
+                const time_str = "" + new Date().getTime();
+                const uri = encodeURI(
+                    "/render?code=" + code +
+                    "&time=" + time_str);
                 $("#preview").attr("src", uri);
             }
         </script>
@@ -47,7 +50,7 @@
                 mode:  "python"
             }
           );
-          editor.setSize(600);
+          editor.setSize(600, 550);
         </script>
     </body>
 </html>

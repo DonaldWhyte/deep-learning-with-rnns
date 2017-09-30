@@ -90,7 +90,6 @@ Can this be used to learn how to write novels?
 [NEXT SECTION]
 ## 2. Deep Neural Networks
 
-
 [NEXT]
 Deep neural nets can learn to complex non-linear relationships
 
@@ -109,7 +108,6 @@ Just use the raw input data
 * Modelled after a neuron in the human brain
 
 [NEXT]
-<!-- .slide: data-background-color="white" -->
 ![perceptron](images/perceptron.svg)
 
 [NEXT]
@@ -119,7 +117,7 @@ For `n` features, the perceptron is defined as:
 
 * `n`-dimensional weight vector `w`
 * bias scalar `b`
-* activation function `f(x)`
+* activation function `f(s)`
 
 [NEXT]
 |                     |                                            |
@@ -128,7 +126,7 @@ For `n` features, the perceptron is defined as:
 | Weights             | $w = \left(w_0, w_1, \cdots, w_n\right)$   |
 | Bias                | $b$                                        |
 | Weighted Sum        | $\left(\sum_{i=0}^{n} {w_ix_i}\right) + b$ |
-| Activation Function | $f(x)$                                     |
+| Activation Function | $f(s)$                                     |
 
 
 [NEXT]
@@ -149,7 +147,9 @@ $$
 * Can make perceptron produce continuous output
 * Required to learn weights (more info on this later)
 
-PLACEHOLDER<!-- .element id="all-activation-functions-chart" -->
+TODO: make this more relevant to current talk
+
+PLACEHOLDER<!-- .element id="sigmoid-activation-function-chart" -->
 
 _note_
 We'll find having a continuous activation function very useful for when we
@@ -196,17 +196,13 @@ TODO: have this learning section? or just make it better?
 Make the input layer represent:
 
 * a single word
-* or a single character
+* a single character
+
+Pros and cons with either approach.
 
 [NEXT]
 
-Use the input to word/char to predict the next!
-
-[NEXT]
-TODO: diagram with word based
-
-[NEXT]
-TODO: diagram based on characters
+Use the input to word/char to predict the next.
 
 [NEXT]
 We will use characters as the inputs.
@@ -220,46 +216,63 @@ Both techniques use the same principle. You use the input token to _predict_
 the next token.
 
 [NEXT]
+![char_perceptron](images/char_perceptron1.svg)
+
+[NEXT]
+<table class="small-table"><tr>
+  <td><strong>Input:</strong> <span style="color: blue">b</span></td>
+  <td><strong>Predicted char:</strong> <span style="color: red">?</span></td></tr>
+  <tr><td><strong>Current sentence:</strong> <span style="color: blue">b</span><span style="color: red">?</span></td></tr>
+</table>
+
+[NEXT]
+![char_perceptron_filled](images/char_perceptron2.svg)
+
+<table class="small-table"><tr>
+  <td><strong>Input:</strong> <span style="color: blue">b</span></td>
+  <td><strong>Predicted char:</strong> <span style="color: red">a</span></td></tr>
+  <tr><td><strong>Current sentence:</strong> <span style="color: blue">b</span><span style="color: red">a</span></td></tr>
+</table>
+
+[NEXT]
+![char_perceptron_filled](images/char_perceptron3.svg)
+
+<table class="small-table"><tr>
+  <td><strong>Input:</strong> <span style="color: blue">a</span></td>
+  <td><strong>Predicted char:</strong> <span style="color: red">d</span></td></tr>
+  <tr><td><strong>Current sentence:</strong> <span style="color: blue">ba</span><span style="color: red">d</span></td></tr>
+</table>
+
+[NEXT]
 ### Problem
 
-Most data is not linearly separable
+Single perceptrons are straight line equations.
 
-Need a *network* of neurons to discriminate non-linear data
+They have single output.
 
-_note_
-Emphasize the fact that predicting character sequences still maps to an
-abstract data space, In this spade you can use straight lines or curves to
-to properly predict the next output class (which character is next).
-
-However, this is clearly not going to be as simple as fitting a straight line.
+Need a *network* of neurons to output the full one-hot vector.
 
 [NEXT]
-### Feed-Forward Neural Networks
+### Neural Networks
 
-Most common neural network architecture
+Uses *many* perceptrons
 
-Provides classification or regression
-
-Uses *multiple* perceptrons in a layered fashion
+Bundle those TODO
 
 [NEXT]
-<!-- .slide: data-background-color="white" -->
-![feed_forward_neural_network_twoclass](images/ffnn_twoclass.svg)
+![nn_chars_filled_in](images/nn_chars_filled_in.svg)
 
 [NEXT]
-<!-- .slide: data-background-color="white" -->
-![feed_forward_neural_network_nclass](images/ffnn_nclass.svg)
+![nn_chars_filled_in](images/deep_nn_chars_filled_in.svg)
 
 [NEXT]
-### Architecture for Classification
+|            |                                     |
+| ---------- | ----------------------------------- |
+| **Input**  | $V$ nodes, a single one-hot vector  |
+| **Hidden** | multiple percetrons                 |
+| **Output** | $V$ nodes, a single one-hout vector |
 
-|        |   |
-| ------ | - |
-| Input  | `n` nodes, set to the value of each feature |
-| Hidden | where the magic happens |
-| Output | `m` nodes, set to probability input is in a class |
-
-where `n` is feature count and `m` is class count.
+where $V$ is the number of characters.
 
 _note_
 The hidden layers is where all the smarts comes in. I could spend days
@@ -292,79 +305,46 @@ Weight matrix produced using the following Latex equation:
 W = \begin{bmatrix} w_{00} & w_{01} & \cdots & w_{0n} \\ w_{10} & w_{11} & \cdots & w_{1n} \\ \vdots & \vdots & \vdots & \vdots \\ w_{m0} & w_{m1} & \cdots & w_{mn} \end{bmatrix}
 
 [NEXT]
-### Non-Linearity
-
-* **Hidden** layers used to separate non-linear data
-* Linear activation functions means network is linear
-* Use n-linear activation functions instead (e.g. sigmoid)
-
-PLACEHOLDER<!-- .element id="sigmoid-activation-function-chart" -->
-
-[NEXT]
-### Training FFNNs
+### Training Neural Networks
 
 Learn the weight matrices!
 
-[NEXT]
-### Learning Weight Matrices
-
-Requires two things:
-
-* Cost function
-* Weight optimiser
-
-[NEXT]
-### Cost Function
-
-TODO
+<p class="fragment" data-fragment-index="1">
+  **Optimisation problem**
+</p>
 
 [NEXT]
 ### Gradient Descent Optimiser
 
-Keep adjusting neuron weights
+Keep adjusting the weights of each hidden layer
 
-Such that loss/error function is minimised
-
-Uses derivatives of activation functions to adjust weights
-
-So we need continuous activation functions like sigmoid!
+In such a way that we minimise incorrect predictions
 
 [NEXT]
-<!-- .slide: data-background-color="white" class="small low-padding" -->
-![gradient_descent](images/gradient_descent.png)
+![gradient_descent](images/gradient_descent_cropped.gif)
 
-|               |              |
-| ------------- | ------------ |
-| Weight matrix | $w$          |
-| Loss function | $J(w)$       |
-| Loss minima   | $J_{min}(w)$ |
+Uses **derivatives** of activation functions to adjust weights
 
 _note_
+
 We can describe the principle behind gradient descent as “climbing down a
 hill” until a local or global minimum is reached.
 
-At each step, we take a step into the opposite direction of the gradient.
+We use the **derivatives** of each neuron's activation function to determine
+the direction of the error. The direction of error is the gradient.
+
+At each step, we take a step into the **opposite** direction of the gradient.
+That is, we adjust the weights so we have _less_ error in the next step.
+
+This is why we typically use an activation function like sigmoid. Sigmoid
+provides a continuous output. It is fast and easy to compute the derivative of
+continuous functions. If we used a discrete activiation function, it would be
+much harder to run gradient descent.
 
 The step size is determined by the value of the **learning rate** as well
 as the slope of the gradient.
 
-Source of diagram: http://sebastianraschka.com/Articles/2015_singlelayer_neurons.html#gradient-descent
-
-[NEXT]
-
-Mean squared error loss function:
-
-$ J(w) = \frac {1} {n} \sum_{i=i}^N {(y_i - t_i)^2} $
-
-where:
-
-* $N$ is the number of inputs in your test dataset
-* for each training sample $i$:
-  - $y_i$ is a vector storing the values of each output node
-  - $t_i$ is a vector storing the *known, correct* outputs
-
-_note_
-Note that this function is evaluated for *every* single point run through the training dataset!
+Source of diagram: https://medium.com/onfido-tech/machine-learning-101-be2e0a86c96a
 
 [NEXT]
 ### Backpropagation
@@ -385,7 +365,6 @@ Visualisation of learning by backpropagation:
 http://www.emergentmind.com/neural-network
 
 [NEXT]
-<!-- .slide: data-background-color="white" data-transition="none" -->
 ### Forward Pass
 ![backprop_forward_pass](images/ffnn_nclass.svg)
 
@@ -397,22 +376,18 @@ _note_
 5. Finally, compute output layer values
 
 [NEXT]
-<!-- .slide: data-background-color="white" data-transition="none" -->
 ### Forward Pass
 ![backprop_forward_pass](images/backprop_forwardpass_0.svg)
 
 [NEXT]
-<!-- .slide: data-background-color="white" data-transition="none" -->
 ### Forward Pass
 ![backprop_forward_pass](images/backprop_forwardpass_1.svg)
 
 [NEXT]
-<!-- .slide: data-background-color="white" data-transition="none" -->
 ### Forward Pass
 ![backprop_forward_pass](images/backprop_forwardpass_2.svg)
 
 [NEXT]
-<!-- .slide: data-background-color="white" data-transition="none" -->
 ### Backward Pass
 ![backprop_back_pass](images/backprop_backpass_0.svg)
 
@@ -426,48 +401,28 @@ _note_
 5. Update weights, then repeat from step 1 (performing another forward and backward pass) until the weight values converge
 
 [NEXT]
-<!-- .slide: data-background-color="white" data-transition="none" -->
 ### Backward Pass
 ![backprop_back_pass](images/backprop_backpass_1.svg)
 
 [NEXT]
-<!-- .slide: data-background-color="white" data-transition="none" -->
 ### Backward Pass
 ![backprop_back_pass](images/backprop_backpass_2.svg)
 
 [NEXT]
-<!-- .slide: data-background-color="white" data-transition="none" -->
 ### Backward Pass
 ![backprop_back_pass](images/backprop_backpass_3.svg)
 
 [NEXT]
-After training the network, we obtain weights which minimise the loss/error
+After training the network, we obtain weights which minimise prediction  error
 
-Classify new, unseen inputs by running them through the **forward pass** step
-
-[NEXT]
-### Universal Approximation Theorem
-
-> A feed-forward neural network with a single hidden layer that has a finite
-> number of nodes, can approximate any continuous function
-
+Predict next characters by running an input char through the **forward pass** step
 
 [NEXT]
-Repsentability ≠ learnability
-
-
-[NEXT]
-### Limitations of Shallow Networks
-
-TODO
-
-[NEXT]
-
-### What about Memory?
+### Another Problerm
 
 TODO: lack of memory argument
 
-TODO: this is bad for the problemds like the one we want to solve
+TODO: this is bad for the problems like the one we want to solve
 
 _note_
 Source: http://colah.github.io/posts/2015-08-Understanding-LSTMs/

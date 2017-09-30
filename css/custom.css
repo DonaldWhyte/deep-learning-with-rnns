@@ -3,7 +3,6 @@
     box-shadow: none;
 }
 
-
 .left-col {
     width: 50%;
     float: left;
@@ -19,6 +18,29 @@
     clear: both;
 }
 
+.small-table td {
+    border: 0px;
+    font-size: 24px;
+    margin: 0px;
+}
+
+p.small,
+a.small {
+    font-size: 28px;
+}
+
+.small td,
+.small th {
+    font-size: 32px;
+}
+
+/* Padding Styles */
+
+.low-padding p,
+.low-padding img {
+    margin: 0px !important;
+}
+
 
 /* Images */
 img[alt="perceptron_learning"] {
@@ -31,5 +53,29 @@ img[alt="rnn-diagram"] {
 }
 
 img[alt="perceptron"] {
-    width: 800px;
+    width: 600px;
+}
+
+img[alt="char_perceptron"] {
+    width: 600px;
+    margin: 0px;
+    padding: 0px;
+}
+
+img[alt="char_perceptron_filled"] {
+    width: 400px;
+    margin: 0px;
+    padding: 0px;
+}
+
+img[alt="nn_chars_filled_in"] {
+    width: 600px;
+}
+
+img[alt="weight_matrix"] {
+    width: 600px;
+}
+
+img[alt="gradient_descent"] {
+    width: 500px;
 }

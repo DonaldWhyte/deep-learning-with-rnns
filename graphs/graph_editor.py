@@ -43,6 +43,5 @@ graph = generate()'''
     graph.render().figure.savefig(svg_buffer, format='svg')
     svg = svg_buffer.getvalue()
 
-    print(f'Generated this SVG: {svg}')
     return Response(svg, mimetype='image/svg+xml')
 
