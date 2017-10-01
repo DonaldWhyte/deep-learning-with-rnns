@@ -68,37 +68,63 @@ a 2D feature space.
 [NEXT]
 Use trained model to predict outcome of new, unseen inputs.
 
-TODO: example of that, in equation
-
+TODO: example in equation
 
 [NEXT]
 Can this be used to learn how to write novels?
 
+[NEXT]
+No.
 
 [NEXT]
-### Issues with Traditional Learning
+Generating coherent text requires memory of what was written previously.
+
+[NEXT]
+> <span style="font-weight: bold; color: red">Boris'</span> favourite
+> <span style="font-weight: bold; color: blue">drink</span> is
+> <span style="font-weight: bold; color: blue">beer.</span>
+> <span style="font-weight: bold; color: red">He</span> likes
+> <span style="font-weight: bold; color: blue">lagers</span> the most.
+
+<table>
+  <tr>
+    <th>Male Person</th>
+    <td><span style="font-weight: bold; color: red">Boris, he</span></td>
+  </tr>
+  <tr>
+    <th>Drinks</th>
+    <td><span style="font-weight: bold; color: blue">drink, beer, lagers</span></td>
+  </tr>
+  <tr>
+  </tr>
+</table>
+
+_note_
+Other issues with traditional machine learning:
 
 * Does not scale to large numbers of input features
 * Relies on you to break raw input data into a small set of useful features
 * Good feature engineering requires in-depth domain knowledge and time
-
-<p class="fragment" data-fragment-index="1">
-  TODO: cannot represent memory, sequences, etc.
-</p>
 
 
 [NEXT SECTION]
 ## 2. Deep Neural Networks
 
 [NEXT]
-Deep neural nets can learn to complex non-linear relationships
+Deep neural nets can learn to patterns in complex data, like language.
 
-Scales to thousands of features
+We can encode memory into the algorithm.
 
-No manual feature extraction
+_note_
+We can encode memory into the algorithm, allowing us to generate more
+coherent novels that _remember_ what was previously written.
 
 [NEXT]
-Just use the raw input data
+Just use the raw input data.
+
+Our training data is the raw text of existing novels.
+
+No need for for manual feature extraction.
 
 [NEXT]
 ### The Mighty Perceptron
@@ -196,29 +222,26 @@ TODO: have this learning section? or just make it better?
 Make the input layer represent:
 
 * a single word
-* a single character
-
-Pros and cons with either approach.
-
-[NEXT]
+* or a single character
 
 Use the input to word/char to predict the next.
 
 [NEXT]
 We will use characters as the inputs.
 
-* TODO
-* TODO
-* TODO: why
-
 _note_
-Both techniques use the same principle. You use the input token to _predict_
-the next token.
+There are pros and cons with either representation. Both techniques use the
+same principle. You use the input token to _predict_ the next token.
+
+TODO: note down some reasons why we're using chars not words, but no need to
+go into detail in the talk unless someone asks
 
 [NEXT]
 ![char_perceptron](images/char_perceptron1.svg)
 
 [NEXT]
+![char_perceptron_filled](images/char_perceptron2.svg)
+
 <table class="small-table"><tr>
   <td><strong>Input:</strong> <span style="color: blue">b</span></td>
   <td><strong>Predicted char:</strong> <span style="color: red">?</span></td></tr>
@@ -226,7 +249,7 @@ the next token.
 </table>
 
 [NEXT]
-![char_perceptron_filled](images/char_perceptron2.svg)
+![char_perceptron_filled](images/char_perceptron3.svg)
 
 <table class="small-table"><tr>
   <td><strong>Input:</strong> <span style="color: blue">b</span></td>
@@ -235,7 +258,7 @@ the next token.
 </table>
 
 [NEXT]
-![char_perceptron_filled](images/char_perceptron3.svg)
+![char_perceptron_filled](images/char_perceptron4.svg)
 
 <table class="small-table"><tr>
   <td><strong>Input:</strong> <span style="color: blue">a</span></td>
@@ -248,16 +271,17 @@ the next token.
 
 Single perceptrons are straight line equations.
 
-They have single output.
+Produce a single output.
 
 Need a *network* of neurons to output the full one-hot vector.
 
 [NEXT]
 ### Neural Networks
 
-Uses *many* perceptrons
+Uses *many* perceptrons to:
 
-Bundle those TODO
+* learn patterns in complex data, like language
+* produce the multiple outputs required for text prediction
 
 [NEXT]
 ![nn_chars_filled_in](images/nn_chars_filled_in.svg)
@@ -309,9 +333,8 @@ W = \begin{bmatrix} w_{00} & w_{01} & \cdots & w_{0n} \\ w_{10} & w_{11} & \cdot
 
 Learn the weight matrices!
 
-<p class="fragment" data-fragment-index="1">
-  **Optimisation problem**
-</p>
+[NEXT]
+Optimisation problem.
 
 [NEXT]
 ### Gradient Descent Optimiser
@@ -413,18 +436,26 @@ _note_
 ![backprop_back_pass](images/backprop_backpass_3.svg)
 
 [NEXT]
-After training the network, we obtain weights which minimise prediction  error
+After training the network, we obtain weights which minimise prediction error.
 
-Predict next characters by running an input char through the **forward pass** step
+Predict next character by running the last character through the
+**forward pass** step.
 
 [NEXT]
-### Another Problerm
+### However...
 
-TODO: lack of memory argument
+> <span style="font-weight: bold; color: red">Boris'</span> favourite
+> <span style="font-weight: bold; color: blue">drink</span> is
+> <span style="font-weight: bold; color: blue">beer.</span>
+> <span style="font-weight: bold; color: red">He</span> likes
+> <span style="font-weight: bold; color: blue">lagers</span> the most.
 
-TODO: this is bad for the problems like the one we want to solve
+Network still has <strong>no memory of past characters</strong>.
 
 _note_
+We need to know what the last _N_ characters were to effectively predict the
+next character.
+
 Source: http://colah.github.io/posts/2015-08-Understanding-LSTMs/
 
 Humans don’t start their thinking from scratch every second. As you read this essay, you understand each word based on your understanding of previous words. You don’t throw everything away and start thinking from scratch again. Your thoughts have persistence.
@@ -540,7 +571,6 @@ one per char in sequence)
 [NEXT SECTION]
 ## 4. RNNs in Python
 
-
 [NEXT]
 Building a neural network involves:
 
@@ -581,7 +611,6 @@ Allows user to write symbolic mathematical expressions, then automatically gener
 Theano: The reference deep-learning library for Python with an API largely compatible with the popular NumPy library.
 
 [NEXT]
-
 ![tensorflow](images/tensorflow.svg)
 
 * Can build very complex networks quickly
@@ -594,7 +623,15 @@ Theano: The reference deep-learning library for Python with an API largely compa
 ## 5. Tensorflow
 
 [NEXT]
-TODO: diagram of full desired architecture (NO learning rate OR batch size)
+TODO: diagram of full desired architecture (no tensorflow artefacts)
+
+[NEXT]
+### Goal
+
+Build a computaiton graph that learns the weights of this network.
+
+_note_
+TODO
 
 [NEXT]
 TODO: marked diagram with raw input layer
