@@ -628,10 +628,99 @@ TODO: diagram of full desired architecture (no tensorflow artefacts)
 [NEXT]
 ### Goal
 
-Build a computaiton graph that learns the weights of this network.
+Build a computation graph that learns the weights of this network.
 
 _note_
 TODO
+
+[NEXT]
+### The Computation Graph
+|               |                                                        |
+| ------------- | ------------------------------------------------------ |
+| `tf.Tensor`    | Unit of data. An _n_ dimensional array of numbers.        |
+| `tf.Operation` | Unit of computation. Takes 0+ `tf.Tensor`s as inputs and outputs 0+ `tf.Tensor`s. |
+| `tf.Graph`     | Collection of connected `tf.Tensor`s and `tf.Operation`s. |
+
+
+[NEXT]
+```python
+node1 = tf.constant(3.0, dtype=tf.float32)
+node2 = tf.constant(4.0) # also tf.float32 implicitly
+print(node1)
+print(node2)
+```
+
+Output:
+
+```bash
+Tensor("Const:0", shape=(), dtype=float32)
+Tensor("Const_1:0", shape=(), dtype=float32)
+```
+
+[NEXT]
+Many built-in `tf.Operation`s:
+
+|              |   |
+| ------------ | - |
+| `TODO`     | TODO |
+| `TODO`     | TODO |
+
+[NEXT]
+`tf.Session`
+
+Used to execute a computation graph.
+
+[NEXT]
+```python
+# Put an "addition" operation on the graph.
+node3 = tf.add(node1, node2)
+
+# Create a session and run the root node of the graph.
+session = tf.Session()
+print(session.run([node3]))
+```
+
+Output:
+
+```bash
+7.0
+```
+
+[NEXT]
+### Placeholders
+
+TODO
+
+[NEXT]
+```python
+TODO
+```
+
+[NEXT]
+### Variables
+
+TODO
+
+[NEXT]
+```python
+TODO
+```
+
+[NEXT]
+
+1. Define `tf.Placeholders`
+  - the inputs
+2. Define `tf.Operations`
+  - architecture of the network
+  - evaluation and optimiser operations
+3. Define `tf.Variables`
+  - weight matrices we're trying to learn
+  - training stats like accuracy
+4. Define `tf.Session`
+  - call `run()` and pass in root of computation graph
+
+[NEXT]
+TODO: diagram of full desired architecture (no tensorflow artefacts)
 
 [NEXT]
 TODO: marked diagram with raw input layer
@@ -676,6 +765,7 @@ TODO: optimiser
 [NEXT]
 TODO: loading the data details
 
+_note_
 Emphasise the fact that you load all of the textual data in as integer-coded
 chars. All documents are flattened into a single large sequence.
 
@@ -707,30 +797,26 @@ and see how the loss is reduced.
 TODO: what it is
 
 [NEXT]
-How it works:
+Add stats logging to your code:
 
-* TODO
+```python
+TODO
+```
+
+Run Tensorboard:
+
+```
+tensorboard --logdir logs
+```
 
 _note_
 Show what code you need to add in the real example code. Explain that it logs
 data to a file and is then picked up by a local web server.
 
-[NEXT]
+Run tensorboard and show the following:
 
-Install:
-
-```
-pip3 install tensorboard
-```
-
-Run:
-
-```
-tensorboard --logdir log
-```
-
-_note_
-Run tensorboard and show how it works.
+* computation graph
+* accuracy measures
 
 
 [NEXT SECTION]

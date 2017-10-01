@@ -140,8 +140,8 @@ class RNNTextModel:
         # TODO: explain what this is
         self._train_step = tf.train.AdamOptimizer().minimize(self._loss)
 
-        self._build_statistics(stats_log_dir)
         self._initialise_tf_session()
+        self._build_statistics(stats_log_dir)
 
     def _build_statistics(self, stats_log_dir: str):
         loss_summary = tf.summary.scalar('batch_loss', self._batch_loss)
@@ -149,7 +149,8 @@ class RNNTextModel:
         self._summaries = tf.summary.merge([loss_summary, acc_summary])
 
         self._stats_summary_writer = tf.summary.FileWriter(
-            os.path.join(stats_log_dir, f'{self._timestamp}-training'))
+            os.path.join(stats_log_dir, f'{self._timestamp}-training'),
+            graph=self._session.graph)
         self._validation_stats_writer = tf.summary.FileWriter(
             os.path.join(stats_log_dir, f'{self._timestamp}-validation'))
 
