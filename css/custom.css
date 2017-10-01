@@ -26,7 +26,7 @@
 
 p.small,
 a.small {
-    font-size: 28px;
+    font-size: 20px;
 }
 
 .small td,
@@ -78,4 +78,43 @@ img[alt="weight_matrix"] {
 
 img[alt="gradient_descent"] {
     width: 500px;
+}
+
+img[alt="rnn_diagram"] {
+    width: 400px;
+}
+
+img[alt="deep_rnn_diagram"] {
+    width: 600px;
+}
+
+img[alt="tensorflow"] {
+    width: 400px;
+}
+
+img[alt="nn_backprop_algebra"] {
+    width: 550px;
+}
+
+/* Library Icons */
+
+img[alt="icon_tensorflow"] {
+      width: 100px;
+      padding: 0px 32px 0px 32px;
+}
+img[alt="icon_keras"] {
+      width: 100px;
+      padding: 0px 32px 0px 32px;
+}
+img[alt="icon_caffe"] {
+      width: 250px;
+      padding: 0px 32px 0px 32px;
+}
+img[alt="icon_pytorch"] {
+      width: 200px;
+      padding: 0px 32px 0px 32px;
+}
+img[alt="icon_theano"] {
+      width: 200px;
+      padding: 0px 32px 0px 32px;
 }

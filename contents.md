@@ -437,39 +437,66 @@ Recurrent neural networks address this issue. They are networks with loops in th
 [NEXT SECTION]
 ## 3. Deep Recurrent Networks
 
-
-[NEXT]
-TODO: what these can be used for (sequential data, things that need
-memory of past inputs for context)
-
 _note_
 Source of following diagrams is:
 
 http://www.hexahedria.com/2015/08/03/composing-music-with-recurrent-neural-networks/
 
 [NEXT]
-![rnn-diagram](images/rnn-perceptron.svg)
+### Single neuron &mdash; one output
+
+![rnn_diagram](images/rnn-perceptron.svg)
 
 [NEXT]
-![rnn-diagram](images/rnn-feedforward.svg)
+### Neural network &mdash; multiple outputs
+
+![rnn_diagram](images/rnn-feedforward.svg)
 
 [NEXT]
-![rnn-diagram](images/rnn-deepfeedforward.svg)
+### Deep Networks &mdash; many hidden layers
+
+![deep_rnn_diagram](images/rnn-deepfeedforward.svg)
 
 [NEXT]
-![rnn-diagram](images/rnn-compress.svg)
+### Simplified Visualisation
+
+![rnn_diagram](images/rnn-compress.svg)
+
+One node represents a full layer of neurons.
+
+_note_
+TODO: clearly graph the expansion of one node to an input layer
 
 [NEXT]
-![rnn-diagram](images/rnn-loopcompressed.svg)
+### Recurrent Networks
+
+![rnn_diagram](images/rnn-loopcompressed.svg)
+
+Each node's input includes the output of itself during the last run of the
+network.
 
 [NEXT]
-![rnn-diagram](images/rnn-unrolled.svg)
+### Unrolled Recurrent Network
+![rnn_diagram](images/rnn-unrolled.svg)
+
+Previous predictions help make the _next_ prediction.
+
+Each prediction is a **time step**.
 
 [NEXT]
+![rnn_diagram](images/rnn-unrolled-chars1.svg)
 
-TODO: highlight this with exampler input and output chars for setence rec
+[NEXT]
+![rnn_diagram](images/rnn-unrolled-chars2.svg)
 
-![rnn-diagram](images/rnn-unrolled-example-io.svg)
+[NEXT]
+![rnn_diagram](images/rnn-unrolled-chars3.svg)
+
+[NEXT]
+![rnn_diagram](images/rnn-unrolled-chars4.svg)
+
+_note_
+TODO: notes on chars example?
 
 [NEXT]
 ### Problem:
@@ -481,7 +508,7 @@ Long-term dependencies
 TODO: update diagram to higlight long term dependencies between time axes
 TODO: also add letters from preivous one
 
-![rnn-diagram](images/rnn-unrolled-dependencies.svg)
+![rnn_diagram](images/rnn-unrolled-dependencies.svg)
 
 [NEXT]
 ### Cell States
@@ -490,14 +517,14 @@ TODO: update diagram to include hidden cell lines
 
 TODO: mark hidden state as H (a "hidden state")
 
-![rnn-diagram](images/rnn-stateloopcompressed.svg)
+![rnn_diagram](images/rnn-stateloopcompressed.svg)
 
 * TODO
 * TODO
 * Many variants: LSTM, GRU, etc.
 
 [NEXT]
-![rnn-diagram](images/rnn-hiddenstate.svg)
+![rnn_diagram](images/rnn-hiddenstate.svg)
 
 [NEXT]
 TODO: re-emphasize what these networks are good for
@@ -515,9 +542,38 @@ one per char in sequence)
 
 
 [NEXT]
-* Libraries that build graph-based math expressions
-* Automatically generates the derivates of each node
-* Builds the system of equations to learn model parameters for you
+Building a neural network involves:
+
+* defining its architecture
+* learning the weight matrices for that architecture
+
+[NEXT]
+![nn_computation_graph](images/nn_computation_graph.png)
+
+_note_
+Source: https://devblogs.nvidia.com/parallelforall/recursive-neural-networks-pytorch/
+
+Here is a small section of the computation graph required to train a simple
+recurrent network.
+
+[NEXT]
+![nn_backprop_algebra](images/nn_backprop_algebra.png)
+
+_note_
+Source: https://geekyisawesome.blogspot.co.uk/2016/06/the-backpropagation-algorithm-for.html
+
+This is some of the algebra require for one step of backpropagaiton/training
+for a single layer. And this is basic neural network with loops or cell states.
+
+[NEXT]
+### Python Neural Net Libraries
+
+![icon_tensorflow](images/tensorflow_icon.svg)
+![icon_keras](images/keras_icon.svg)
+![icon_caffe](images/caffe_icon.svg)
+
+![icon_pytorch](images/pytorch_icon.svg)
+![icon_theano](images/theano_icon.svg)
 
 _note_
 Allows user to write symbolic mathematical expressions, then automatically generates their derivatives, saving the user from having to code gradients or backpropagation. These symbolic expressions are automatically compiled to CUDA code for a fast, on-the-GPU implementation.
@@ -525,40 +581,24 @@ Allows user to write symbolic mathematical expressions, then automatically gener
 Theano: The reference deep-learning library for Python with an API largely compatible with the popular NumPy library.
 
 [NEXT]
-TODO: basic diagram for the landscape
 
-Low-level compute graph libraries:
-
-* Theano
-* Tensorflow (Google)
-* Caffe (Berkley)
-
-High-level libraries:
-
-* Keras
-* Sonnet (DeepMind)
-
-
-[NEXT]
-Let's use *Tensorflow*.
+![tensorflow](images/tensorflow.svg)
 
 * Can build very complex networks quickly
 * Easy to extend if required
-* Built-in support for LSTM nodes
-* Good visualisation tools with **Tensorboard**
-
+* Built-in support for RNN memory cells
+* Good visualisation tools
 
 [NEXT]
 ### Installation
 
-TODO
+```bash
+pip3 install --upgrade tensorflow
+```
 
 
 [NEXT SECTION]
-## 5. Building a Tensorflow Model
-
-[NEXT]
-'mirin' my 3.6
+## 5. Tensorflow
 
 [NEXT]
 TODO: diagram of full desired architecture (NO learning rate OR batch size)

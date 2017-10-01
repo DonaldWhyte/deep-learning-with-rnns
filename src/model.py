@@ -18,9 +18,6 @@ from text import (ALPHABET_SIZE,
 _logger = logging.getLogger(__name__)
 
 
-# TODO: add dropout to this model
-
-
 class RNNTextModel:
 
     def __init__(self,
