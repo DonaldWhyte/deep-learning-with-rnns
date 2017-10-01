@@ -635,12 +635,13 @@ TODO
 
 [NEXT]
 ### The Computation Graph
-|               |                                                        |
-| ------------- | ------------------------------------------------------ |
+|                |                                                                                   |
+| -------------  | --------------------------------------------------------------------------------- |
 | `tf.Tensor`    | Unit of data. An _n_ dimensional array of numbers.        |
 | `tf.Operation` | Unit of computation. Takes 0+ `tf.Tensor`s as inputs and outputs 0+ `tf.Tensor`s. |
 | `tf.Graph`     | Collection of connected `tf.Tensor`s and `tf.Operation`s. |
 
+Operations are nodes and tensors are edges.
 
 [NEXT]
 ```python
@@ -660,10 +661,12 @@ Tensor("Const_1:0", shape=(), dtype=float32)
 [NEXT]
 Many built-in `tf.Operation`s:
 
-|              |   |
-| ------------ | - |
-| `TODO`     | TODO |
-| `TODO`     | TODO |
+|            |                                                                    |
+| ---------- | ------------------------------------------------------------------ |
+| `constant` | outputs a constant tensor                                          |
+| `reshape`  | reshapes an input tensor to a new tensor with different dimensions |
+| `add`      | add values of two tensors                                          |
+| `matmul`   | multiplys two matrices                                             |
 
 [NEXT]
 `tf.Session`
@@ -687,35 +690,62 @@ Output:
 ```
 
 [NEXT]
-### Placeholders
+`tf.Placeholder`
 
-TODO
+Defines a node whose vlaue is not yet determined.
 
-[NEXT]
-```python
-TODO
-```
+The value is filled in later, before the graph is executed.
 
-[NEXT]
-### Variables
+These are used to define neural network inputs.
 
-TODO
+_note_
+For us, the inputs will be those one-hot vector inputs that represent
+characters which I showed you before.
 
 [NEXT]
 ```python
-TODO
+# Define a 2D input vector that stores the two input features
+# for shape classification.
+#
+# The features were: [area, perimeter]
+inputs = tf.placeholder(tf.float32, [2])
 ```
 
 [NEXT]
 
-1. Define `tf.Placeholders`
-  - the inputs
-2. Define `tf.Operations`
+```python
+# Graph Node 1: inputs
+inputs = tf.placeholder(tf.float32, [2])
+# Graph Node 2: an internal operation
+multiplied_inputs = tf.scalar_mul(3, inputs)
+# Graph Node 3: final output
+output_sum = tf.reduce_sum(multiplied_inputs)
+
+# Run the graph.
+session = tf.Session()
+result = session.run(output_sum, feed_dict={inputs: [10, 15]})
+print(result)
+```
+
+Output
+
+```
+75.0
+```
+
+[NEXT]
+TODO: graph that shows visualisation of this input grapbh
+
+^--- need to do on home network
+
+[NEXT]
+
+1. Define graph nodes: `tf.Placeholder`s
+  - input data
+  - e.g. the previous char used to predict the next char
+2. Define graph edges: `tf.Operation`s
   - architecture of the network
   - evaluation and optimiser operations
-3. Define `tf.Variables`
-  - weight matrices we're trying to learn
-  - training stats like accuracy
 4. Define `tf.Session`
   - call `run()` and pass in root of computation graph
 
