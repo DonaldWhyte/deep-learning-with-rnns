@@ -134,3 +134,20 @@ img[alt="icon_theano"] {
       width: 200px;
       padding: 0px 32px 0px 32px;
 }
+
+.donald {
+    background-image: url('../images/donald.jpg');
+    background-repeat: no-repeat;
+    border-radius: 40px;
+    width: 200px;
+    height: 200px;
+}
+
+.alejandro {
+    background-image: url('../images/alejandro.jpg');
+    background-repeat: no-repeat;
+    background-position: 50%;
+    border-radius: 40px;
+    width: 200px;
+    height: 200px;
+}

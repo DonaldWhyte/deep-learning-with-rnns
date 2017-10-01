@@ -877,4 +877,25 @@ TODO: conclusion
 TODO: further reading
 
 [NEXT]
-TODO: contact details, Twitters, blog, etc.
+### Slides
+[http://donaldwhyte.co.uk/deep-learning-with-rnns](http://donaldwhyte.co.uk/deep-learning-with-rnns)
+
+[NEXT]
+### Get In Touch
+
+<div class="left-col">
+  <div class="donald"></div>
+  <div class="contact-details">
+    [a@e-x.io](mailto:a@e-x.io)<br />
+    [@AxSaucedo](http://twitter.com/AxSaucedo)<br />
+    https://github.com/axsauze
+  </div>
+</div>
+<div class="right-col">
+  <div class="contact-details">
+    [donaldwhyte0@gmail.com](mailto:donaldwhyte0@gmail.com)<br />
+    [@donald_whyte](http://twitter.com/donald_whyte)<br />
+    https://github.com/DonaldWhyte
+  </div>
+  <div class="alejandro"></div>
+</div>

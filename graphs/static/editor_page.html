@@ -11,11 +11,17 @@
                 editor.save();
                 // encodeURI will not encoded the + char, so we do it manually
                 // before encoding the code.
-                const code = $("#code").val().replace('+', '%2B');
+                const code = $("#code").val()
+                    .replace('#', '%23')
+                    .replace('+', '%2B')
+                    .replace('*', '%4A');
+                console.log(editor);
+                console.log(code);
                 const time_str = "" + new Date().getTime();
                 const uri = encodeURI(
                     "/render?code=" + code +
                     "&time=" + time_str);
+                console.log(uri);
                 $("#preview").attr("src", uri);
             }
         </script>

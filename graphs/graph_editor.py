@@ -19,6 +19,9 @@ def static_file(path):
 @app.route('/render')
 def render():
     # Retrieve generation code and wrap in required boilerplate
+    import datetime
+    print(datetime.datetime.utcnow())
+    print(request.args)
     generation_code = request.args.get('code')
     if not generation_code:
         print('No generation code given')
