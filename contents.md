@@ -589,13 +589,6 @@ Theano: The reference deep-learning library for Python with an API largely compa
 * Built-in support for RNN memory cells
 * Good visualisation tools
 
-[NEXT]
-### Installation
-
-```bash
-pip3 install --upgrade tensorflow
-```
-
 
 [NEXT SECTION]
 ## 5. Tensorflow
