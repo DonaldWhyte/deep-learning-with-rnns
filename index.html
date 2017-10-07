@@ -58,123 +58,6 @@
       </div>
     </div>
 
-    <!--
-        <section>
-          <section data-markdown data-notes="
-Good learning resources:
-
-https://medium.com/@camrongodbout/recurrent-neural-networks-for-beginners-7aca4e933b82
-          ">
-            ## 3. Recurrent Neural Networks
-          </section>
-
-          <section data-markdown>
-            TODO: basic definition of RNN w/ loop unrolling
-            ![TODO](images/RNN-rolled.png)
-          </section>
-
-          <section data-markdown>
-            TODO: what these can be used for (sequential data, things that need
-            memory of past inputs for context)
-          </section>
-
-          <section data-markdown>
-            TODO: limitations - in theory can remember all past inputs but in
-            reality this doesn't work with vanilla RNNs
-          </section>
-
-          <section data-markdown>
-            TODO: briely mention LSTMs, but don't go into it deal
-          </section>
-        </section>
-
-        <section>
-          <section data-markdown>
-            ## 4. RNNs in Python
-          </section>
-
-          <section data-markdown data-notes="
-Allows user to write symbolic mathematical expressions, then automatically generates their derivatives, saving the user from having to code gradients or backpropagation. These symbolic expressions are automatically compiled to CUDA code for a fast, on-the-GPU implementation.
-
-Theano: The reference deep-learning library for Python with an API largely compatible with the popular NumPy library.
-">
-            * Libraries that build graph-based math expressions
-            * Automatically generates the derivates of each node
-            * Builds the system of equations to learn model parameters for you
-          </section>
-
-          <section data-markdown>
-            TODO: basic diagram for this
-
-            Low-level compute graph libraries:
-
-            * Theano
-            * Tensorflow (Google)
-            * Caffe (Berkley)
-
-            High-level libraries:
-
-            * Keras
-            * Sonnet (DeepMind)
-          </section>
-
-          <section data-markdown>
-            Let's use *Keras*.
-          </section>
-
-          <section data-markdown>
-            * Built on top of Tensorflow
-            * Can build very complex networks quickly
-            * Easy to extend if required
-            * Built-in support for LSTM nodes
-          </section>
-
-          <section data-markdown data-notes="
-Keras can use many compute backends, such as TensorFlow, Theano and CNTK.
-">
-            ### Installation
-
-            Keras can use many compute backends.
-
-            Let's use TensorFlow.
-
-            ```bash
-            pip3 install tensorflow
-            pip3 install keras
-            ```
-          </section>
-
-          <section data-markdown>
-            ### TODO
-
-            TODO
-          </section>
-
-          <section data-markdown data-notes="
-Source: https://keras.io/visualization/
-">
-            Visualise a Keras model:
-
-            ```bash
-            # Install required dependencies to generate graphs
-            brew install graphviz
-            pip3 install pydot
-            ```
-
-            ```python
-            from keras.utils import plot_model
-            plot_model(model, to_file='model.svg')
-            ```
-
-            <img src="TODO: plotted graph" />
-          </section>
-        </section>
-
-      </div>
-
-    </div>
-    -->
-
     <script src="lib/js/head.min.js"></script>
     <script src="js/reveal.js"></script>
 
@@ -192,9 +75,9 @@ Source: https://keras.io/visualization/
 
         transition: 'none', // none/fade/slide/convex/concave/zoom
 
+        // See http://docs.mathjax.org/en/latest/config-files.html
         math: {
             mathjax: 'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js',
-            // See http://docs.mathjax.org/en/latest/config-files.html
             config: 'TeX-AMS_HTML-full'
         },
 
@@ -333,95 +216,15 @@ Source: https://keras.io/visualization/
           lineWidth: 5,
           lineColor: 'black'
         });
-
-        var shapeChartComplex = jQuery.extend(
-          true, {}, baseShapeChart);
-        shapeChartComplex['series'].push({
-          type: 'spline',
-          name: 'Discriminant',
-          data: [
-            [3.65, 1.9], [3.2, 1.0], [3.5, 0.65], [4.2, 0.8]
-          ],
-          marker: { enabled: false },
-          enableMouseTracking: false,
-          showInLegend: false,
-          lineWidth: 5,
-          lineColor: 'black'
+        var shapeChartWithClassifiedPoint = jQuery.extend(
+          true, {}, shapeChartWithDiscriminant);
+        shapeChartWithClassifiedPoint["series"].push({
+          name: 'Classified',
+          marker: { symbol: 'triangle' },
+          color: '#2c2',
+          // TODO: make size larger too!
+          data: [[3.0, 1.0]]
         });
-
-        var shapeChartOverfitting = jQuery.extend(
-          true, {}, shapeChartComplex);
-        shapeChartOverfitting['series'].push({
-          name: 'Square-Wrong',
-          marker: { symbol: 'square' },
-          color: '#0f0',
-          showInLegend: false,
-          data: [
-            [3.35, 1.75], [3.2, 1.7], [3.4, 1.5], [3.1, 1.5], [3.3, 1.55]
-          ]
-        });
-
-        var deepLearningGrowthChart = {
-          chart: {
-            type: 'column',
-            backgroundColor: 'rgba(0, 0, 0, 0)',
-            events: { load: loadChartEvent },
-            marginTop: 64,
-            marginBottom: 32
-          },
-          title: { text: '' },
-          xAxis: {
-            categories: [
-              '2015', '2016', '2017', '2018', '2019',
-              '2020', '2021', '2022', '2023', '2024'
-            ],
-            crosshair: true,
-            labels: {
-              style: {
-                color: 'black',
-                'font-weight': 'strong',
-                'font-size': '18px'
-              }
-            }
-          },
-          yAxis: {
-            min: 0,
-            tickInterval: 2000,
-            title: {
-              text: '$ millions',
-              style: {
-                color: 'black',
-                'font-weight': 'strong',
-                'font-size': '28px'
-              }
-            },
-            labels: {
-              formatter: function () {
-                return '$' + this.value
-              },
-              style: {
-                color: 'black',
-                'font-weight': 'strong',
-                'font-size': '18px'
-              }
-            }
-          },
-          legend: { enabled: false },
-          tooltip: { enabled: false },
-          exporting: { enabled: false },
-          plotOptions: {
-            column: {
-              pointPadding: 0.2,
-              borderWidth: 0
-            }
-          },
-          series: [
-            {
-              name: 'Revenue',
-              data: [ 100, 200, 400, 800, 1900, 3950, 6000, 7800, 9600, 10200 ]
-            }
-          ]
-        };
 
         var baseActivationFunctionChart =  {
           chart: {
@@ -540,28 +343,11 @@ Source: https://keras.io/visualization/
           })()
         };
 
-        var modernActivationFunctionsChart = jQuery.extend(
-          true, {}, baseActivationFunctionChart);
-        modernActivationFunctionsChart.series = [
-          sigmoidDataSeries,
-          reluDataSeries,
-          softplusDataSeries
-        ];
-        modernActivationFunctionsChart.legend = commonLegendConfig;
-        modernActivationFunctionsChart.xAxis.min = -5;
-        modernActivationFunctionsChart.xAxis.max = 5;
-        modernActivationFunctionsChart.xAxis.tickInterval = 5;
-        modernActivationFunctionsChart.yAxis.min = -1;
-        modernActivationFunctionsChart.yAxis.max = 5;
-        modernActivationFunctionsChart.yAxis.tickInterval = 1;
-
         $('#shape-plot').highcharts(baseShapeChart);
-        $('#shape-plot-discriminant').highcharts(shapeChartWithDiscriminant);
-        $('#shape-plot-complex').highcharts(shapeChartComplex);
-        $('#shape-plot-overfitting').highcharts(shapeChartOverfitting);
-        $('#deep-learning-growth-chart').highcharts(deepLearningGrowthChart);
+        $('#shape-plot-discriminant1').highcharts(shapeChartWithDiscriminant);
+        $('#shape-plot-discriminant2').highcharts(shapeChartWithDiscriminant);
+        $('#shape-plot-classified-point').highcharts(shapeChartWithClassifiedPoint);
         $('#sigmoid-activation-function-chart').highcharts(sigmoidActivationFunctionChart);
-        $('#modern-activation-functions-chart').highcharts(modernActivationFunctionsChart);
 
         // Force a re-render after slides have loaded to ensure all math
         // equations are picked up.

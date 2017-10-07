@@ -1,21 +1,25 @@
 <h2>Deep Learning with Recurrent Neural Networks</h2>
 <h4>In Python</h4>
 <p>
-    <a href="http://donaldwhyte.co.uk">Alejandro Saucedo</a>
-    / <a href="http://twitter.com/axsauze">@axsauze</a><br/>
     <a href="http://donaldwhyte.co.uk">Donald Whyte</a>
     / <a href="http://twitter.com/donald_whyte">@donald_whyte</a>
+    <a href="http://donaldwhyte.co.uk">Alejandro Saucedo</a>
+    / <a href="http://twitter.com/axsauze">@axsauze</a><br/>
   <br />
 </p>
 <p>
 
 [NEXT]
-By the end of this talk...
+## GOAL
 
-Build a TODO.
+Build an AI story writer in Python.
 
-TODO: state exatcl whay we're going to build and what data we're using from
-the very start
+![author](images/author.jpg)
+
+[NEXT]
+Create a neural network that can write novels.
+
+Use 30,000 English novels to train the network.
 
 
 [NEXT SECTION]
@@ -51,7 +55,7 @@ a 2D feature space.
 <div class="left-col">
   <ul>
     <li>Training data is used to produce a model</li>
-    <li> *f(x&#x0304;)* = *mx&#x0304;* + *c*</li>
+    <li>$f(x̄) = mx̄ + c$</li>
     <li>Model divides feature space into segments</li>
     <li>Each segment corresponds to one <strong>output class</strong></li>
   </ul>
@@ -59,22 +63,86 @@ a 2D feature space.
 
 <div class="right-col">
   <center>
-    <div id="shape-plot-discriminant"></div>
+    <div id="shape-plot-discriminant1"></div>
   </center>
 </div>
 
 <div class="clear-col"></div>
 
 [NEXT]
-Use trained model to predict outcome of new, unseen inputs.
+Use trained model to predict outcome of new, unseen data.
 
-TODO: example in equation
+[NEXT]
+### Example
+
+<div class="left-col">
+  <center>
+    <div id="shape-plot-discriminant2"></div>
+  </center>
+</div>
+
+<div class="right-col">
+  <br />
+  <br />
+  <p>$m = ()$</p>
+  <p>$c = 1$</p>
+</div>
+
+[NEXT]
+
+Using this model, let's predict what shape an object is.
+
+Object propeties: **area** = 3, **perimeter** = 0.5
+
+Input becomes:
+
+$x̄ = (3, 0.5)$
+
+[NEXT]
+
+TODO: fill in once you know how to compute weights and biases
+
+$f(x̄) = mx̄ + c$
+
+$f((3, 0.5)) = (TODO, TODO)(3, 0.5) + TODO$
+
+$f((3, 0.5)) = (TODO, TODO)(3, 0.5) + c$
+
+$f(x) = ()$
+
+[NEXT]
+<div class="left-col">
+  <center>
+    <div id="shape-plot-classified-point"></div>
+  </center>
+</div>
+
+<div class="right-col">
+  <p>$x̄ = (3, 0.5)$</p>
+  <p>$f(x̄) = TODO$</p>
+  <p>TODO < 0</p>
+  <p>left side of the line</p>
+  <p>means input is a **triangle**</p>
+</div>
+
+_note_
+Point is on the left hand of the side. With the model we've used, this means
+that we classify the input point as a triangle!
+
+Point out that this same technique can used to predicting continuous, numerical
+values too (like how much house prices will cost, or how much a stock's price
+will go up or down).
+
+[NEXT]
+### The Hard Part
+
+Learning $m$ and $c$.
 
 [NEXT]
 Can this be used to learn how to write novels?
 
 [NEXT]
-No.
+**No.**
 
 [NEXT]
 Generating coherent text requires memory of what was written previously.
@@ -158,28 +226,21 @@ For `n` features, the perceptron is defined as:
 [NEXT]
 ### Activation Function
 
-Simulates the 'firing' of a physical neuron
+Simulates the 'firing' of a physical neuron.
 
-1 = neuron fires, 0 = neuron does not fire
-
-$$
-  f(x) = \begin{cases}1 & \text{if }w \cdot x + b > 0\\\\0
-  & \text{otherwise}\end{cases}
-$$
+Takes the weighted sum and squashes it into a smaller range.
 
 [NEXT]
 ### Sigmoid Function
 
-* Can make perceptron produce continuous output
-* Required to learn weights (more info on this later)
-
-TODO: make this more relevant to current talk
+* Squashes perceptron output into range [0,1]
+* Used to learn weights (`w`)
 
 PLACEHOLDER<!-- .element id="sigmoid-activation-function-chart" -->
 
 _note_
-We'll find having a continuous activation function very useful for when we
-combine many perceptrons together.
+We'll find having a continuous activation function is very useful when we want
+to learn the values of the perceptron weights.
 
 [NEXT]
 How do we learn `w` and `b`?
@@ -232,6 +293,13 @@ We will use characters as the inputs.
 _note_
 There are pros and cons with either representation. Both techniques use the
 same principle. You use the input token to _predict_ the next token.
+
+Both words and characters are valid ways of representing text in neural
+networks. Representing the input as characters is an easier approach and for
+many tasks, actually results in better performing networks.
+
+We don't have time to go into more detail in this talk, but feel free to ask
+us for more details afterwards.
 
 TODO: note down some reasons why we're using chars not words, but no need to
 go into detail in the talk unless someone asks
@@ -635,6 +703,7 @@ TODO
 
 [NEXT]
 ### The Computation Graph
+
 |                |                                                                                   |
 | -------------  | --------------------------------------------------------------------------------- |
 | `tf.Tensor`    | Unit of data. An _n_ dimensional array of numbers.        |
@@ -642,6 +711,13 @@ TODO
 | `tf.Graph`     | Collection of connected `tf.Tensor`s and `tf.Operation`s. |
 
 Operations are nodes and tensors are edges.
+
+[NEXT]
+`tf.Operation`
+
+Receives constants or `tf.Tensor`s as inputs.
+
+Outputs `tf.Tensor`s.
 
 [NEXT]
 ```python
@@ -793,49 +869,136 @@ TODO: optimiser
 ## 6. Training the Model
 
 [NEXT]
-TODO: loading the data details
+We need data to train the network.
+
+[NEXT]
+#### Gutenberg Datatset
+
+30000 English novels
+
+[NEXT]
+
+TODO: illustration of this
+
+1. merge all 30000 novels into a single text document
+2. map each char to an integer
+  - integer decides which _input value_ is set to 0
+
+**Result**: sequence of integers
 
 _note_
 Emphasise the fact that you load all of the textual data in as integer-coded
 chars. All documents are flattened into a single large sequence.
 
 [NEXT]
-TODO: creating session and init vars
+
+```python
+# Create the session and initialize its variables to 0
+init = tf.global_variables_initializer()
+session = tf.Session()
+session.run(init)
+```
 
 [NEXT]
-TODO: init run to initialise state to zeros
+Recap: **gradient descent**
+
+![gradient_descent](images/gradient_descent_cropped.gif)
 
 [NEXT]
-TODO: concept of mini-batching
+In practice, three different types:
+
+|                |     |
+| -------------- | ---- |
+| **Stochastic** | Run backpropogation after processing **one** sequence |
+| **Batch**      | Run backprogogation after processing **all** sequences |
+| **Mini-Batch** | Run backprogogation after processing a **smaller batch** of $b$ sequences |
 
 [NEXT]
-TODO: some code to split things to into batches.
+We'll use mini-batch.
 
-(probably omit the details, show explain the underlying concept of splitting
-one big large sequence)
+TODO: visualiation of splitting sequence of ints into smaller batches
 
 [NEXT]
-DEMO!
+We then iterate across all $b$ batches
+
+And do this $e$ times
+
+Where $e$ is the number of epochs
 
 _note_
-Briefly show real code and and start running training. Run through one batch
-and see how the loss is reduced.
+Split all the sequences into smaller batches of sequences.
+
+Typically, batch size is between 30 and 100.
+
+[NEXT]
+```python
+# Contains: [Training Data, Test Data, Epoch Number]
+Batch = Tuple[np.matrix, np.matrix, int]
+
+def rnn_minibatch_generator(
+        data: List[int],
+        batch_size: int,
+        num_epochs: int) -> Generator[Batch, None, None]:
+
+    for epoch in range(num_epochs):
+        for batch in range(num_batches):
+            training_data = ...
+            test_data = ...
+            yield training_data, c, epoch
+```
+
+_note_
+Omit the details, just explain the underlying concept of splitting one big
+large sequence into more sequences.
+
+[NEXT]
+### Demo
+
+_note_
+Briefly show real code and start running training. Run through one batch and
+see how the loss is reduced.
 
 [NEXT]
 ### Tensorboard
 
-TODO: what it is
+![tensorboard](images/tensorboard.png)
+
+_note_
+Explain what tensorboard is.
+
 
 [NEXT]
-Add stats logging to your code:
+When building your model:
 
 ```python
-TODO
+seq_loss = tf.reduce_mean(loss, 1)
+batch_loss = tf.reduce_mean(seq_loss)
+accuracy = tf.reduce_mean(
+    tf.cast(tf.equal(Y_, tf.cast(Y, tf.uint8)), tf.float32))
+loss_summary = tf.summary.scalar("batch_loss", batch_loss)
+acc_summary = tf.summary.scalar("batch_accuracy", accuracy)
+summaries = tf.summary.merge([loss_summary, acc_summary])
+
+summary_writer = tf.summary.FileWriter('log/training_progress')
 ```
 
-Run Tensorboard:
+[NEXT]
 
+After each batch iteration:
+
+```python
+..., new_summary = session.run(
+    [..., summaries],
+    feed_dict=feed_dict)
+
+summary_writer.add_summary(new_summary, batch_step)
 ```
+
+[NEXT]
+
+Run Tensorboard while your model is training:
+
+```bash
 tensorboard --logdir logs
 ```
 
@@ -848,23 +1011,14 @@ Run tensorboard and show the following:
 * computation graph
 * accuracy measures
 
-
-[NEXT SECTION]
-## 7. Using Trained Models
-
 [NEXT]
-TODO: how to save the model weights (the Saver object)
-
-[NEXT]
-TODO: loading model from scratch
-
-[TEXT]
-TODO: using it to generate new text
+### Final Result
 
 _note_
-Demonstrate this using a pre-trained model that is good at generating the
-target text. It will take too long for the model to be trained from scratch
-live.
+Show what text a pre-trained model can generate. Show multiple examples of what
+it generates to bring the point home.
+
+State how long it took to train that model.
 
 
 [NEXT SECTION]
@@ -899,3 +1053,21 @@ TODO: further reading
   </div>
   <div class="alejandro"></div>
 </div>
+
+
+[NEXT SECTION]
+## A. Using Trained Models
+
+[NEXT]
+TODO: how to save the model weights (the Saver object)
+
+[NEXT]
+TODO: loading model from scratch
+
+[TEXT]
+TODO: using it to generate new text
+
+_note_
+Demonstrate this using a pre-trained model that is good at generating the
+target text. It will take too long for the model to be trained from scratch
+live.

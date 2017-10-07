@@ -34,6 +34,11 @@ a.small {
     font-size: 32px;
 }
 
+code.small {
+    font-size: 16px;
+    line-height: 18px;
+}
+
 /* Custom Coding Style */
 code {
     color: #22F;
