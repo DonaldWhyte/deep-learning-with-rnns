@@ -114,7 +114,7 @@ img[alt="deep_rnn_diagram"] {
 }
 
 img[alt="rnn_long_term_deps"] {
-    width: 460px;
+    width: 580px;
 }
 
 img[alt="rnn_unrolled"] {
@@ -123,6 +123,10 @@ img[alt="rnn_unrolled"] {
 
 img[alt="rnn_hiddenstate"] {
     width: 520px;
+}
+
+img[alt="rnn_unrolled_chars"] {
+    max-width: 700px;
 }
 
 img[alt="tensorflow"] {

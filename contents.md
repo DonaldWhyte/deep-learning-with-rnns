@@ -17,6 +17,9 @@ Build an AI story writer in Python.
 ![author](images/author.jpg)
 
 [NEXT]
+TODO: example of its output (after we've got a network fully trained)
+
+[NEXT]
 Create a neural network that can write novels.
 
 Use 30,000 English novels to train the network.
@@ -199,7 +202,7 @@ No need for for manual feature extraction.
 
 * Equivalent to the straight line equation from before
 * Linearly splits feature space
-* Modelled after a neuron in the human brain
+* Modeled after a neuron in the human brain
 
 [NEXT]
 ![perceptron](images/perceptron.svg)
@@ -585,16 +588,31 @@ Each prediction is a **time step**.
 ![rnn_unrolled](images/rnn-unrolled.svg)
 
 [NEXT]
-![rnn_diagram](images/rnn-unrolled-chars1.svg)
+![rnn_unrolled_chars](images/rnn-unrolled-chars1.svg)
 
 [NEXT]
-![rnn_diagram](images/rnn-unrolled-chars2.svg)
+![rnn_unrolled_chars](images/rnn-unrolled-chars2.svg)
 
 [NEXT]
-![rnn_diagram](images/rnn-unrolled-chars3.svg)
+![rnn_unrolled_chars](images/rnn-unrolled-chars3.svg)
 
 [NEXT]
-![rnn_diagram](images/rnn-unrolled-chars4.svg)
+![rnn_unrolled_chars](images/rnn-unrolled-chars4.svg)
+
+[NEXT]
+![rnn_unrolled_chars](images/rnn-unrolled-chars5.svg)
+
+[NEXT]
+![rnn_unrolled_chars](images/rnn-unrolled-chars6.svg)
+
+[NEXT]
+![rnn_unrolled_chars](images/rnn-unrolled-chars7.svg)
+
+[NEXT]
+![rnn_unrolled_chars](images/rnn-unrolled-chars8.svg)
+
+[NEXT]
+![rnn_unrolled_chars](images/rnn-unrolled-chars9.svg)
 
 [NEXT]
 ### Problem: Long-Term Dependencies
@@ -604,34 +622,65 @@ Each prediction is a **time step**.
 [NEXT]
 ### Cell States
 
-![rnn_compressed](images/rnn-stateloopcompressed.svg)
-
-* TODO
-* TODO
+* TODO: fill in when have internet
 * Many variants: LSTM, GRU, etc.
+
+_note_
+These cells are just neural network nodes
+
+Unfortunately, we don't have time to TODO.
+
+[NEXT]
+![rnn_compressed](images/rnn-stateloopcompressed.svg)
 
 [NEXT]
 ![rnn_hiddenstate](images/rnn-hiddenstate.svg)
 
 [NEXT]
-TODO: re-emphasize what these networks are good for
+Hidden layer output _and_ cell state is feed into next time step.
+
+Gives network ability to handle long-term dependencies in sequences.
+
+_note_
+Feeding the output of a hidden layer _and_ its internal cell state back into
+itself at the next time step allows the network to express long-term
+dependencies in sequences.
+
+For example, the network will be able to remember the subject at the start of
+a paragraph of text at the very end of the paragraph, allowing it to generate
+text that makes sense in context.
+
+This works because the cell state is built to store past time steps in a
+memory and CPU efficient way. So even though the cell state memory footprint is
+small (e.g. 100-200 bytes), it can remember things quite far in the past.
 
 [NEXT]
+![rnn_long_term_deps](images/rnn-long-term-deps-solved.svg)
 
-TODO: explain how training the RNN is basically the same as before!!
+_note_
 
-TODO: just introduce the fact that we do two loops (one per input,
-one per char in sequence)
+Note that there is still a limit to how far back networks with cell states can
+remember. So we reduce the problems expressing long-term dependencies, but we
+don't get rid of it entirely.
+
+[NEXT]
+These recurrent networks are trained in the same way as regular network.
+
+**Backpropagation / gradient descent**.
 
 
 [NEXT SECTION]
-## 4. RNNs in Python
+## 4. Neural Nets in Python
 
 [NEXT]
 Building a neural network involves:
 
-* defining its architecture
-* learning the weight matrices for that architecture
+1. defining its architecture
+2. learning the weight matrices for that architecture
+
+_note_
+1. e.g. number of layers, whether to have loops, what type of cell state to use
+2. running an optimiser like gradient descent to train network on training dataset
 
 [NEXT]
 ![nn_computation_graph](images/nn_computation_graph.png)
@@ -649,7 +698,7 @@ _note_
 Source: https://geekyisawesome.blogspot.co.uk/2016/06/the-backpropagation-algorithm-for.html
 
 This is some of the algebra require for one step of backpropagaiton/training
-for a single layer. And this is basic neural network with loops or cell states.
+for a single layer. And this is basic neural network with lno oops or cell states.
 
 [NEXT]
 ### Python Neural Net Libraries
@@ -686,9 +735,6 @@ TODO: diagram of full desired architecture (no tensorflow artefacts)
 
 Build a computation graph that learns the weights of this network.
 
-_note_
-TODO
-
 [NEXT]
 ### The Computation Graph
 
@@ -699,6 +745,9 @@ TODO
 | `tf.Graph`     | Collection of connected `tf.Tensor`s and `tf.Operation`s. |
 
 Operations are nodes and tensors are edges.
+
+[NEXT]
+TODO: show example graph
 
 [NEXT]
 `tf.Operation`
@@ -756,7 +805,7 @@ Output:
 [NEXT]
 `tf.Placeholder`
 
-Defines a node whose vlaue is not yet determined.
+Defines a node whose value is not yet determined.
 
 The value is filled in later, before the graph is executed.
 
@@ -798,9 +847,8 @@ Output
 ```
 
 [NEXT]
-TODO: graph that shows visualisation of this input grapbh
+TODO: graph that shows visualisation of this input graph (show same graph as
 
-^--- need to do on home network
 
 [NEXT]
 
@@ -897,9 +945,9 @@ In practice, three different types:
 
 |                |     |
 | -------------- | ---- |
-| **Stochastic** | Run backpropogation after processing **one** sequence |
-| **Batch**      | Run backprogogation after processing **all** sequences |
-| **Mini-Batch** | Run backprogogation after processing a **smaller batch** of $b$ sequences |
+| **Stochastic** | Run backpropagation after processing **one** sequence |
+| **Batch**      | Run backpropagation after processing **all** sequences |
+| **Mini-Batch** | Run backpropagation after processing a **smaller batch** of $b$ sequences |
 
 [NEXT]
 We'll use mini-batch.
@@ -1021,6 +1069,12 @@ TODO: further reading
 [NEXT]
 ### Slides
 [http://donaldwhyte.co.uk/deep-learning-with-rnns](http://donaldwhyte.co.uk/deep-learning-with-rnns)
+
+[NEXT]
+### Sources:
+
+* Martin Gomer
+* music NN blog post
 
 [NEXT]
 ### Get In Touch
