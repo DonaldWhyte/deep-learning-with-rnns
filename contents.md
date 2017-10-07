@@ -559,28 +559,30 @@ http://www.hexahedria.com/2015/08/03/composing-music-with-recurrent-neural-netwo
 [NEXT]
 ### Simplified Visualisation
 
-![rnn_diagram](images/rnn-compress.svg)
+![rnn_compressed](images/rnn-compress.svg)
 
 One node represents a full layer of neurons.
 
-_note_
-TODO: clearly graph the expansion of one node to an input layer
+[NEXT]
+![rnn_compress_expanded](images/rnn-compress-expanded.svg)
 
 [NEXT]
 ### Recurrent Networks
 
-![rnn_diagram](images/rnn-loopcompressed.svg)
+![rnn_compressed](images/rnn-loopcompressed.svg)
 
 Each node's input includes the output of itself during the last run of the
 network.
 
+Output of node $i$ is denoted by $H_i$.
+
 [NEXT]
 ### Unrolled Recurrent Network
-![rnn_diagram](images/rnn-unrolled.svg)
-
 Previous predictions help make the _next_ prediction.
 
 Each prediction is a **time step**.
+
+![rnn_unrolled](images/rnn-unrolled.svg)
 
 [NEXT]
 ![rnn_diagram](images/rnn-unrolled-chars1.svg)
@@ -594,36 +596,22 @@ Each prediction is a **time step**.
 [NEXT]
 ![rnn_diagram](images/rnn-unrolled-chars4.svg)
 
-_note_
-TODO: notes on chars example?
-
 [NEXT]
-### Problem:
+### Problem: Long-Term Dependencies
 
-Long-term dependencies
-
-[NEXT]
-
-TODO: update diagram to higlight long term dependencies between time axes
-TODO: also add letters from preivous one
-
-![rnn_diagram](images/rnn-unrolled-dependencies.svg)
+![rnn_long_term_deps](images/rnn-long-term-deps.svg)
 
 [NEXT]
 ### Cell States
 
-TODO: update diagram to include hidden cell lines
-
-TODO: mark hidden state as H (a "hidden state")
-
-![rnn_diagram](images/rnn-stateloopcompressed.svg)
+![rnn_compressed](images/rnn-stateloopcompressed.svg)
 
 * TODO
 * TODO
 * Many variants: LSTM, GRU, etc.
 
 [NEXT]
-![rnn_diagram](images/rnn-hiddenstate.svg)
+![rnn_hiddenstate](images/rnn-hiddenstate.svg)
 
 [NEXT]
 TODO: re-emphasize what these networks are good for

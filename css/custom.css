@@ -69,8 +69,12 @@ img[alt="perceptron_learning"] {
     -moz-transform: scale(0.5);  /* Firefox */
 }
 
-img[alt="rnn-diagram"] {
+img[alt="rnn_diagram"] {
     width: 512px;
+}
+
+img[alt="rnn_compressed"] {
+    width: 640px;
 }
 
 img[alt="perceptron"] {
@@ -107,6 +111,18 @@ img[alt="rnn_diagram"] {
 
 img[alt="deep_rnn_diagram"] {
     width: 600px;
+}
+
+img[alt="rnn_long_term_deps"] {
+    width: 460px;
+}
+
+img[alt="rnn_unrolled"] {
+    width: 460px;
+}
+
+img[alt="rnn_hiddenstate"] {
+    width: 520px;
 }
 
 img[alt="tensorflow"] {
