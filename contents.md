@@ -1,8 +1,11 @@
+<!-- .slide: data-background="images/books_opened.jpg" class="background" -->
+
 <h2>Deep Learning with Recurrent Neural Networks</h2>
 <h4>In Python</h4>
 <p>
     <a href="http://donaldwhyte.co.uk">Donald Whyte</a>
     / <a href="http://twitter.com/donald_whyte">@donald_whyte</a>
+    <br />
     <a href="http://donaldwhyte.co.uk">Alejandro Saucedo</a>
     / <a href="http://twitter.com/axsauze">@axsauze</a><br/>
   <br />
@@ -10,16 +13,22 @@
 <p>
 
 [NEXT]
-## GOAL
+<!-- .slide: data-background="images/books_opened.jpg" class="background large" -->
 
-Build an AI story writer in Python.
-
-![author](images/author.jpg)
+Create an AI author.
 
 [NEXT]
+<!-- .slide: data-background="images/books_opened.jpg" class="background" -->
+
+> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque viverra imperdiet erat, nec ultricies sem elementum eget. Phasellus velit ligula, efficitur ac orci quis, aliquet malesuada tellus. Aliquam a elit pulvinar, pellentesque nunc a, rutrum est. Etiam rhoncus dignissim est et lobortis. Vivamus porta tincidunt congue. In tempor dapibus enim. Ut et arcu augue.
+
+_note_
 TODO: example of its output (after we've got a network fully trained)
 
+TODO: if find time, disable transition between bg and non-bg slides
+
 [NEXT]
+<!-- .slide: data-background="images/books_opened.jpg" class="background" -->
 Create a neural network that can write novels.
 
 Use 30,000 English novels to train the network.
@@ -93,9 +102,14 @@ Use trained model to predict outcome of new, unseen data.
 
 [NEXT]
 
+-2area + 1perim = 0
+
+3.5 * 2 +
+
+
 Using this model, let's predict what shape an object is.
 
-Object propeties: **area** = 3, **perimeter** = 0.5
+Object properties: **area** = 3, **perimeter** = 0.5
 
 Input becomes:
 
@@ -267,9 +281,6 @@ Training dataset, which is a collection of known input/output pairs
 
 [NEXT]
 ![perceptron_learning](images/perceptron_learning1.png)
-
-_note_
-TODO: have this learning section? or just make it better?
 
 [NEXT]
 ![perceptron_learning](images/perceptron_learning2.png)
@@ -622,15 +633,22 @@ Each prediction is a **time step**.
 [NEXT]
 ### Cell States
 
-* TODO: fill in when have internet
-* Many variants: LSTM, GRU, etc.
+Add **extra state** to each layer of the network.
+
+Remembers inputs **far into the past**.
+
+Transforms layer's original output into something that is **relevant** to
+the current context.
 
 _note_
-These cells are just neural network nodes
+This extra state stores information on inputs from much earlier time steps.
 
-Unfortunately, we don't have time to TODO.
+The state transforms the hidden layer's original output into something that is
+relevant to the current context, given what's happened in the past.
 
 [NEXT]
+TODO"
+
 ![rnn_compressed](images/rnn-stateloopcompressed.svg)
 
 [NEXT]
@@ -664,13 +682,89 @@ remember. So we reduce the problems expressing long-term dependencies, but we
 don't get rid of it entirely.
 
 [NEXT]
+http://colah.github.io/posts/2015-08-Understanding-LSTMs/
+
+_note_
+
+Unfortunately, we don't have time in this talk to go into detail on how cell
+states are represented and the different types.
+
+So for this talk, we will treat the state as a "§box" and believe it
+solves the long-term dependency problem.
+
+Here's a link to a great article that explains the most commonly used cell
+state technique in great detail.
+
+[NEXT SECTION]
+### 4. Training RNNs
+
+[NEXT]
 These recurrent networks are trained in the same way as regular network.
 
-**Backpropagation / gradient descent**.
+[NEXT]
+**Backpropagation and gradient descent**.
+
+![gradient_descent_small](images/gradient_descent_cropped.gif)
+
+[NEXT]
+![backprop_back_pass](images/backprop_backpass_3.svg)
+
+[NEXT]
+We need data to train the network.
+
+[NEXT]
+#### Gutenberg Datatset
+
+Contains 34,000 English novels.
+
+**https://www.gutenberg.org/**
+
+_note_
+Project Gutenberg offers over 54,000 free eBooks: Choose among free epub books, free kindle books, download them or read them online. You will find the world's great literature here, especially older works for which copyright has expired. We digitized and diligently proofread them with the help of thousands of volunteers.
+
+[NEXT]
+![novel_preprocessing](images/novel_preprocessing.svg)
+
+_note_
+1. merge all 30000 novels into a single text document
+2. load single document as a flat sequence of characters
+3. filter out characters we don't care about
+4. map each char to an integer
+  - integer decides which _input value_ is set to 0
+
+**Result**: sequence of integers
+
+_notes_
+Emphasise the fact that you load all of the textual data in as integer-coded
+chars. All documents are flattened into a single large sequence.
+
+[NEXT]
+Common training methods:
+
+|                |     |
+| -------------- | ---- |
+| **Stochastic** | Run backpropagation after processing **one** sequence |
+| **Batch**      | Run backpropagation after processing **all** sequences |
+| **Mini-Batch** | Run backpropagation after processing a **smaller batch** of $b$ sequences |
+
+[NEXT]
+We'll use mini-batch.
+
+[NEXT]
+Iterate across all batches.
+
+Run backpropagation after processing each batch.
+
+![mini_batch_chars](images/mini-batch-chars.svg)
+
+_note_
+Split all the sequences into smaller batches of sequences.
+
+Typically, batch size is between 30 and 100.
 
 
 [NEXT SECTION]
-## 4. Neural Nets in Python
+## 5. Neural Nets in Python
 
 [NEXT]
 Building a neural network involves:
@@ -725,7 +819,9 @@ Theano: The reference deep-learning library for Python with an API largely compa
 
 
 [NEXT SECTION]
-## 5. Tensorflow
+## 6. Tensorflow
+
+#### The Basics
 
 [NEXT]
 TODO: diagram of full desired architecture (no tensorflow artefacts)
@@ -848,7 +944,7 @@ Output
 
 [NEXT]
 TODO: graph that shows visualisation of this input graph (show same graph as
-
+previous example)
 
 [NEXT]
 
@@ -861,32 +957,149 @@ TODO: graph that shows visualisation of this input graph (show same graph as
 4. Define `tf.Session`
   - call `run()` and pass in root of computation graph
 
+
+[NEXT SECTION]
+## 7. Tensorflow
+
+#### Building our Model
+
 [NEXT]
 TODO: diagram of full desired architecture (no tensorflow artefacts)
 
 [NEXT]
+```python
+SEQUENCE_LEN = 30
+BATCH_SIZE = 200
+ALPHABET_SIZE = 98
+```
+
+[NEXT]
 TODO: marked diagram with raw input layer
+
+```python
+# Dimensions: [ BATCH_SIZE, SEQUENCE_LEN ]
+X = tf.placeholder(tf.uint8, [None, None], name='X')
+```
 
 [NEXT]
 TODO: marked diagram with one-hot input layer
 
-[NEXT]
-TODO: marked diagram with expected output and expected one-hot layers
+```python
+# Dimensions: [ BATCH_SIZE, SEQUENCE_LEN, ALPHABET_SIZE ]
+Xo = tf.one_hot(X, ALPHABET_SIZE, 1.0, 0.0)
+```
 
 [NEXT]
 TODO: marked diagram with deep RNN cell layers
 
-[NEXT]
-TODO: create tuple of placeholders of cell states (this are placeheholders)
+_note_
+Recap how the deep RNN cell layers work.
 
 [NEXT]
-TODO: dynamic RNN and the H node
+TODO: marked diagram with deep RNN cell layers
+
+```python
+HIDDEN_LAYER_SIZE = 512
+NUM_HIDDEN_LAYERS = 3
+```
 
 [NEXT]
-TODO: softmax layer implementation + flattening for the output
+TODO: marked diagram with deep RNN cell layers
+
+Define hidden layers and cell states:
+
+```python
+from tensorflow.contrib import rnn
+
+# [ BATCH_SIZE, HIDDEN_LAYER_SIZE * NUM_HIDDEN_LAYERS]
+H_in = tf.placeholder(
+  tf.float32,
+  [None, HIDDEN_LAYER_SIZE * NUM_HIDDEN_LAYERS],
+  name='H_in')
+
+# Create desired number of hiddens layers that use the `GRUCell` for
+# managing state.
+cells = [rnn.GRUCell(HIDDEN_LAYER_SIZE) for _ in range(NUM_HIDDEN_LAYERS)]
+multicell = rnn.MultiRNNCell(cells)
+```
+
+_note_
+Point out that GRU cells is one of the most common methods for storing cell
+states in hidden layers.
+
+LSTM vs GRU difference:
+
+From: https://www.quora.com/Are-GRU-Gated-Recurrent-Unit-a-special-case-of-LSTM
+
+The other answer is already great. Just to add, GRU is related to LSTM as both
+are utilizing different way if gating information to prevent vanishing gradient
+problem.
+
+GRU is relatively new, and from what I can see it's performance is on par with
+LSTM, but computationally more efficient (less complex structure as pointed
+out). So we are seeing it being used more and more.
 
 [NEXT]
-TODO: output one-hot to single char
+Wrap recurrent hidden layers in `tf.dynamic_rnn`.
+
+Unroll the loops when the computation graph is running.
+
+The loops will be unrolled `SEQUENCE_LENGTH` times.
+
+```
+# Outputs:
+#    * TODO
+#    * TODO
+
+Yr, H_out = tf.nn.dynamic_rnn(
+    multicell,
+    Xo,
+    dtype=tf.float32,
+    initial_state=H_in)
+```
+
+_note_
+The loops will be unrolled `SEQUENCE_LENGTH` times. You can think of this as us
+copying all the hidden layer nodes for each unroll, creating a computation
+graph that has 30 sets of hidden layers.
+
+[NEXT]
+TODO: mark on graph softmax layer
+
+[NEXT]
+```python
+from tensorflow.contrib import layers
+
+# [ BATCH_SIZE x SEQUENCE_LEN, HIDDEN_LAYER_SIZE ]
+Yflat = tf.reshape(Yr, [-1, HIDDEN_LAYER_SIZE])
+# [ BATCH_SIZE x SEQUENCE_LEN, ALPHABET_SIZE ]
+Ylogits = layers.linear(Yflat, ALPHABET_SIZE)
+# [ BATCH_SIZE x SEQUENCE_LEN, ALPHABET_SIZE ]
+Yo = tf.nn.softmax(Ylogits, name='Yo')
+```
+
+_note_
+Flatten the first two dimensions of the output:
+
+[ BATCHSIZE, SEQLEN, ALPHASIZE ] => [ BATCHSIZE x SEQLEN, ALPHASIZE ]
+
+Then apply softmax readout layer. The output of the softmax `Yo` is the
+probability distribution
+
+With this readout layer, the weights and biases are shared across unrolled time
+steps. Doing this treats values coming from a single sequence time step (one
+char) and values coming from a mini-batch run as the same thing.
+
+[NEXT]
+TODO: mark on graph the one-hot layer and final output
+
+```
+# [ BATCH_SIZE * SEQUENCE_LEN ]
+Y = tf.argmax(Yo, 1)
+# [ BATCH_SIZE, SEQUENCE_LEN ]
+Y = tf.reshape(Y, [BATCH_SIZE, -1], name="Y")
+```
+
 
 [NEXT]
 Remaining tasks:
@@ -895,76 +1108,74 @@ Remaining tasks:
 * decide what weight optimiser to use
 
 [NEXT]
-TODO: loss function (only actual loss function, forget about stats)
+### Loss Function
+
+Needs:
+
+1. the **real** output of the network after each batch
+2. the **expected** output (from our training data)
+
+Used to compute a "loss" number that indicates how well the networking is
+is predicting the next char.
 
 [NEXT]
-TODO: optimiser
-
-
-[NEXT SECTION]
-## 6. Training the Model
-
-[NEXT]
-We need data to train the network.
-
-[NEXT]
-#### Gutenberg Datatset
-
-30000 English novels
-
-[NEXT]
-
-TODO: illustration of this
-
-1. merge all 30000 novels into a single text document
-2. map each char to an integer
-  - integer decides which _input value_ is set to 0
-
-**Result**: sequence of integers
-
-_note_
-Emphasise the fact that you load all of the textual data in as integer-coded
-chars. All documents are flattened into a single large sequence.
-
-[NEXT]
+TODO: marked diagram with expected output and expected one-hot layers
 
 ```python
-# Create the session and initialize its variables to 0
-init = tf.global_variables_initializer()
-session = tf.Session()
-session.run(init)
+# [ BATCH_SIZE, SEQUENCE_LEN ]
+Y_ = tf.placeholder(tf.uint8, [None, None], name='Y_')
+# [ BATCH_SIZE, SEQUENCE_LEN, ALPHABET_SIZE ]
+Yo_ = tf.one_hot(Y_, ALPHABET_SIZE, 1.0, 0.0)
+
+# [ BATCH_SIZE x SEQUENCE_LEN, ALPHABET_SIZE ]
+Yflat_ = tf.reshape(Yo_, [-1, ALPHABET_SIZE])
 ```
 
 [NEXT]
-Recap: **gradient descent**
+Defining the loss function:
 
-![gradient_descent](images/gradient_descent_cropped.gif)
-
-[NEXT]
-In practice, three different types:
-
-|                |     |
-| -------------- | ---- |
-| **Stochastic** | Run backpropagation after processing **one** sequence |
-| **Batch**      | Run backpropagation after processing **all** sequences |
-| **Mini-Batch** | Run backpropagation after processing a **smaller batch** of $b$ sequences |
-
-[NEXT]
-We'll use mini-batch.
-
-TODO: visualiation of splitting sequence of ints into smaller batches
-
-[NEXT]
-We then iterate across all $b$ batches
-
-And do this $e$ times
-
-Where $e$ is the number of epochs
+```
+# [ BATCH_SIZE * SEQUENCE_LEN ]
+loss = tf.nn.softmax_cross_entropy_with_logits(
+    logits=Ylogits,
+    labels=Yflat_)
+# [ BATCH_SIZE, SEQUENCE_LEN ]
+loss = tf.reshape(loss, [BATCH_SIZE, -1])
+```
 
 _note_
-Split all the sequences into smaller batches of sequences.
+We don't have time to cover the details of this loss function. All you need to
+know for this talk is that is a commonly used loss function when predicting
+discrete values like characters.
 
-Typically, batch size is between 30 and 100.
+[NEXT]
+Choose an optimiser.
+
+Will adjust network weights to minimise the `loss`.
+
+```
+train_step = tf.train.AdamOptimizer(lr).minimize(loss)
+```
+
+[NEXT SECTION]
+## 7. Tensorflow
+
+#### Training the Model
+
+[NEXT]
+### Epochs
+
+We run mini-batch training on the network.
+
+Train network on _all_ batches multiple times.
+
+Each run across all batches is an **epoch**.
+
+**More epochs = better weights = better accuracy.**
+
+_note_
+Of course, the downside of running loads of epochs is that it takes much
+longer to train the network.
 
 [NEXT]
 ```python
@@ -974,10 +1185,13 @@ Batch = Tuple[np.matrix, np.matrix, int]
 def rnn_minibatch_generator(
         data: List[int],
         batch_size: int,
+        sequence_length: int,
         num_epochs: int) -> Generator[Batch, None, None]:
 
     for epoch in range(num_epochs):
         for batch in range(num_batches):
+            # split data into batches, where each batch contains `b` sequences
+            # of length `sequence_length`.
             training_data = ...
             test_data = ...
             yield training_data, c, epoch
@@ -986,6 +1200,51 @@ def rnn_minibatch_generator(
 _note_
 Omit the details, just explain the underlying concept of splitting one big
 large sequence into more sequences.
+
+[NEXT]
+```python
+# Initialize the hidden cell states to 0 before running any steps.
+input_state = np.zeros([BATCH_SIZE, HIDDEN_LAYER_SIZE * NUM_HIDDEN_LAYERS])
+
+# Create the session and initialize its variables to 0
+init = tf.global_variables_initializer()
+session = tf.Session()
+session.run(init)
+```
+
+[NEXT]
+Load dataset and construct mini-batch generator:
+
+```python
+char_integer_list = []
+generator = rnn_minibatch_generator(
+    char_integer_list,
+    BATCH_SIZE,
+    SEQUENCE_LENGTH,
+    num_epochs=10)
+```
+
+[NEXT]
+Run training step on all mini-batches for multiple epochs:
+
+```python
+step = 0
+for batch_input, expected_batch_output, epoch in generator:
+    # Define inputs
+    feed_dict = {
+        X: batch_input,
+        Y_: expected_batch_output,
+        Hin: input_state,
+        batch_size: BATCH_SIZE
+    }
+
+    _, output, output_state = session.run(
+        [train_step, Y, H], feed_dict=feed_dict)
+
+    # Loop state around for next recurrent run
+    input_state = output_state
+    step += BATCH_SIZE * SEQUENCE_LENGTH
+```
 
 [NEXT]
 ### Demo
@@ -1001,7 +1260,6 @@ see how the loss is reduced.
 
 _note_
 Explain what tensorboard is.
-
 
 [NEXT]
 When building your model:
@@ -1050,6 +1308,8 @@ Run tensorboard and show the following:
 [NEXT]
 ### Final Result
 
+TODO: generate example of what network can generate
+
 _note_
 Show what text a pre-trained model can generate. Show multiple examples of what
 it generates to bring the point home.
@@ -1060,45 +1320,46 @@ State how long it took to train that model.
 [NEXT SECTION]
 ## Fin
 
-[TEXT]
+[NEXT]
 TODO: conclusion
-
-[TEXT]
-TODO: further reading
 
 [NEXT]
 ### Slides
 [http://donaldwhyte.co.uk/deep-learning-with-rnns](http://donaldwhyte.co.uk/deep-learning-with-rnns)
 
 [NEXT]
-### Sources:
+### Sources
 
-* Martin Gomer
-* music NN blog post
+![Martin Görner -- Tensorflow RNN Shakespeare](https://github.com/martin-gorner/tensorflow-rnn-shakespeare)
+![Composing Music with Recurrent Neural Networks](http://www.hexahedria.com/2015/08/03/composing-music-with-recurrent-neural-networks/)
 
 [NEXT]
 ### Get In Touch
 
-<div class="left-col">
-  <div class="donald"></div>
-  <div class="contact-details">
-    [a@e-x.io](mailto:a@e-x.io)<br />
-    [@AxSaucedo](http://twitter.com/AxSaucedo)<br />
-    https://github.com/axsauze
-  </div>
-</div>
-<div class="right-col">
-  <div class="contact-details">
-    [donaldwhyte0@gmail.com](mailto:donaldwhyte0@gmail.com)<br />
-    [@donald_whyte](http://twitter.com/donald_whyte)<br />
-    https://github.com/DonaldWhyte
-  </div>
-  <div class="alejandro"></div>
-</div>
+<table class="bio-table">
+  <tr>
+    <td>![donald](images/donald.jpg)</td>
+    <td>![alejandro](images/alejandro.jpg)</td>
+  </tr>
+  <tr>
+    <td>
+      [don@donsoft.io](mailto:don@donsoft.io)<br />
+      [@donald_whyte](http://twitter.com/donald_whyte)<br />
+      <span class="github">https://github.com/DonaldWhyte</span>
+    </td>
+    <td>
+      [a@e-x.io](mailto:a@e-x.io)<br />
+      [@AxSaucedo](http://twitter.com/AxSaucedo)<br />
+      <span class="github">https://github.com/axsauze</span>
+    </td>
+  </tr>
+</table>
 
 
 [NEXT SECTION]
 ## A. Using Trained Models
+
+#### Using Trained Models
 
 [NEXT]
 TODO: how to save the model weights (the Saver object)

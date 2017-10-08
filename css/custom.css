@@ -55,6 +55,31 @@ code.medium {
 }
 
 
+/* Background Slides */
+
+.background h1,
+.background h2,
+.background h3,
+.background h4,
+.background h5,
+.background p
+{
+    color: white !important;
+}
+
+.background blockquote {
+    background-color: rgba(255, 255, 255, 0.075);
+}
+
+.background a {
+    color: #4c98ff;
+}
+
+.large p {
+    font-size: 64px !important;
+    font-weight: bold !important;
+}
+
 /* Padding Styles */
 
 .low-padding p,
@@ -74,7 +99,7 @@ img[alt="rnn_diagram"] {
 }
 
 img[alt="rnn_compressed"] {
-    width: 640px;
+    width: 800px;
 }
 
 img[alt="perceptron"] {
@@ -105,6 +130,10 @@ img[alt="gradient_descent"] {
     width: 500px;
 }
 
+img[alt="gradient_descent_small"] {
+    width: 400px;
+}
+
 img[alt="rnn_diagram"] {
     width: 400px;
 }
@@ -122,7 +151,7 @@ img[alt="rnn_unrolled"] {
 }
 
 img[alt="rnn_hiddenstate"] {
-    width: 520px;
+    width: 600px;
 }
 
 img[alt="rnn_unrolled_chars"] {
@@ -135,6 +164,16 @@ img[alt="tensorflow"] {
 
 img[alt="nn_backprop_algebra"] {
     width: 550px;
+}
+
+img[alt="donald"] {
+    width: 225px;
+    border: 2px solid black !important;
+}
+
+img[alt="alejandro"] {
+    width: 225px;
+    border: 2px solid black !important;
 }
 
 /* Library Icons */
@@ -160,19 +199,22 @@ img[alt="icon_theano"] {
       padding: 0px 32px 0px 32px;
 }
 
-.donald {
-    background-image: url('../images/donald.jpg');
-    background-repeat: no-repeat;
-    border-radius: 40px;
-    width: 200px;
-    height: 200px;
+img[alt="novel_preprocessing"] {
+    width: 550px;
+    padding-left: 128px;
 }
 
-.alejandro {
-    background-image: url('../images/alejandro.jpg');
-    background-repeat: no-repeat;
-    background-position: 50%;
-    border-radius: 40px;
-    width: 200px;
-    height: 200px;
+img[alt="mini_batch_chars"] {
+    padding-top: 32px;
+    width: 1000px;
+}
+
+.bio-table td {
+    text-align: center !important;
+    border: 0px !important;
+    max-width: 400px;
+}
+
+.github {
+    font-size: 20px !important;
 }

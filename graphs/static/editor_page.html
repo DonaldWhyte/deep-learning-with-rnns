@@ -1,16 +1,13 @@
 <html>
     <head>
-        <script
-          src="https://code.jquery.com/jquery-3.2.1.min.js"
-          integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
-          crossorigin="anonymous"></script>
+        <script src="jquery-3.2.1.min.js"></script>
         <link rel="stylesheet" href="codemirror.css">
         <script src="codemirror.js"></script>
         <script>
             function generate() {
                 editor.save();
-                // encodeURI will not encoded the + char, so we do it manually
-                // before encoding the code.
+                // encodeURI will not encode the + char and some other chars,
+                // so we do it manually before encoding the code.
                 const code = $("#code").val()
                     .replace('#', '%23')
                     .replace('+', '%2B')
