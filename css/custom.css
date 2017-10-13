@@ -34,7 +34,7 @@ a.small {
     font-size: 32px;
 }
 
-code.small {
+.small code {
     font-size: 16px;
     line-height: 18px;
 }
@@ -44,16 +44,10 @@ code {
     color: #22F;
 }
 
-code.small {
-    font-size: 16px;
-    line-height: 18px;
-}
-
 code.medium {
     font-size: 18px;
     line-height: 20px;
 }
-
 
 /* Background Slides */
 
@@ -209,10 +203,31 @@ img[alt="mini_batch_chars"] {
     width: 1000px;
 }
 
+img[alt="full_network"] {
+    width: 650px;
+}
+
+img[alt="full_network_small"] {
+    width: 550px;
+}
+
+img[alt="full_network_smaller"] {
+    width: 400px;
+}
+
+img[alt="full_network_loss"] {
+    width: 700px;
+    padding-bottom: 300px !important;
+}
+
 .bio-table td {
     text-align: center !important;
     border: 0px !important;
     max-width: 400px;
+}
+
+.bio-table a {
+
 }
 
 .github {

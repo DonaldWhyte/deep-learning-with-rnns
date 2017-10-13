@@ -973,7 +973,7 @@ ALPHABET_SIZE = 98
 ```
 
 [NEXT]
-![full_network](images/full_network_input.svg)
+![full_network_small](images/full_network_input.svg)
 
 ```python
 # Dimensions: [ BATCH_SIZE, SEQUENCE_LEN ]
@@ -981,7 +981,7 @@ X = tf.placeholder(tf.uint8, [None, None], name='X')
 ```
 
 [NEXT]
-![full_network](images/full_network_onehot.svg)
+![full_network_small](images/full_network_onehot.svg)
 
 ```python
 # Dimensions: [ BATCH_SIZE, SEQUENCE_LEN, ALPHABET_SIZE ]
@@ -989,36 +989,33 @@ Xo = tf.one_hot(X, ALPHABET_SIZE, 1.0, 0.0)
 ```
 
 [NEXT]
-![full_network](images/full_network_hidden.svg)
-
-_note_
-Recap how the deep RNN cell layers work.
-
-[NEXT]
-![full_network](images/full_network_hidden.svg)
+![full_network_small](images/full_network_hidden.svg)
 
 ```python
 HIDDEN_LAYER_SIZE = 512
 NUM_HIDDEN_LAYERS = 3
 ```
 
+_note_
+Recap how the deep RNN cell layers work.
+
 [NEXT]
-![full_network](images/full_network_hidden.svg)
-
-Define hidden layers and cell states:
-
 ```python
 from tensorflow.contrib import rnn
 
+# Cell State
 # [ BATCH_SIZE, HIDDEN_LAYER_SIZE * NUM_HIDDEN_LAYERS]
 H_in = tf.placeholder(
-  tf.float32,
-  [None, HIDDEN_LAYER_SIZE * NUM_HIDDEN_LAYERS],
-  name='H_in')
+    tf.float32,
+    [None, HIDDEN_LAYER_SIZE * NUM_HIDDEN_LAYERS],
+    name='H_in')
 
-# Create desired number of hiddens layers that use the `GRUCell` for
-# managing state.
-cells = [rnn.GRUCell(HIDDEN_LAYER_SIZE) for _ in range(NUM_HIDDEN_LAYERS)]
+# Create desired number of hiddens layers that use the `GRUCell`
+# for managing hidden state.
+cells = [
+    rnn.GRUCell(HIDDEN_LAYER_SIZE)
+    for _ in range(NUM_HIDDEN_LAYERS)
+]
 multicell = rnn.MultiRNNCell(cells)
 ```
 
@@ -1041,9 +1038,9 @@ out). So we are seeing it being used more and more.
 [NEXT]
 Wrap recurrent hidden layers in `tf.dynamic_rnn`.
 
-Unroll the loops when the computation graph is running.
+Unrolls loops when computation graph is running.
 
-The loops will be unrolled `SEQUENCE_LENGTH` times.
+Loops will be unrolled `SEQUENCE_LENGTH` times.
 
 ```python
 Yr, H_out = tf.nn.dynamic_rnn(
@@ -1052,7 +1049,7 @@ Yr, H_out = tf.nn.dynamic_rnn(
     dtype=tf.float32,
     initial_state=H_in)
 
-#    Yr = output of network. probability distribution of
+# Yr =    output of network. probability distribution of
 #         next character.
 # H_out = the altered hidden cell state after processing
 #         last input.
@@ -1067,9 +1064,8 @@ Note that `H_out` is the input hidden cell state that's been updated by the
 last input. `H_out` is used as the next character's input (`H_in`).
 
 [NEXT]
-![full_network](images/full_network_softmax.svg)
+![full_network_small](images/full_network_softmax.svg)
 
-[NEXT]
 ```python
 from tensorflow.contrib import layers
 
@@ -1094,10 +1090,9 @@ steps. Doing this treats values coming from a single sequence time step (one
 char) and values coming from a mini-batch run as the same thing.
 
 [NEXT]
-![full_network](images/full_network_output.svg)
+![full_network_small](images/full_network_output.svg)
 
-[NEXT]
-```
+```python
 # [ BATCH_SIZE * SEQUENCE_LEN ]
 Y = tf.argmax(Yo, 1)
 # [ BATCH_SIZE, SEQUENCE_LEN ]
@@ -1126,9 +1121,13 @@ is predicting the next char.
 ![full_network_loss](images/full_network_loss.svg)
 
 [NEXT]
+
+Input expected next chars into network:
+
 ```python
 # [ BATCH_SIZE, SEQUENCE_LEN ]
 Y_ = tf.placeholder(tf.uint8, [None, None], name='Y_')
+
 # [ BATCH_SIZE, SEQUENCE_LEN, ALPHABET_SIZE ]
 Yo_ = tf.one_hot(Y_, ALPHABET_SIZE, 1.0, 0.0)
 
@@ -1144,6 +1143,7 @@ Defining the loss function:
 loss = tf.nn.softmax_cross_entropy_with_logits(
     logits=Ylogits,
     labels=Yflat_)
+
 # [ BATCH_SIZE, SEQUENCE_LEN ]
 loss = tf.reshape(loss, [BATCH_SIZE, -1])
 ```
@@ -1323,22 +1323,21 @@ State how long it took to train that model.
 
 
 [NEXT SECTION]
+<!-- .slide: data-background="images/books_opened.jpg" class="background" -->
 ## Fin
 
 [NEXT]
+<!-- .slide: data-background="images/books_opened.jpg" class="background" -->
 TODO: conclusion
 
 [NEXT]
+<!-- .slide: data-background="images/books_opened.jpg" class="background" -->
+
 ### Slides
 [http://donaldwhyte.co.uk/deep-learning-with-rnns](http://donaldwhyte.co.uk/deep-learning-with-rnns)
 
 [NEXT]
-### Sources
-
-![Martin Görner -- Tensorflow RNN Shakespeare](https://github.com/martin-gorner/tensorflow-rnn-shakespeare)
-![Composing Music with Recurrent Neural Networks](http://www.hexahedria.com/2015/08/03/composing-music-with-recurrent-neural-networks/)
-
-[NEXT]
+<!-- .slide: data-background="images/books_opened.jpg" class="background" -->
 ### Get In Touch
 
 <table class="bio-table">
@@ -1360,6 +1359,15 @@ TODO: conclusion
   </tr>
 </table>
 
+[NEXT]
+<!-- .slide: data-background="images/books_opened.jpg" class="background" -->
+
+### Sources
+
+> [Martin Görner -- Tensorflow RNN Shakespeare](https://github.com/martin-gorner/tensorflow-rnn-shakespeare)
+
+> [Composing Music with Recurrent Neural Networks](http://www.hexahedria.com/2015/08/03/composing-music-with-recurrent-neural-networks/)
+
 
 [NEXT SECTION]
 ## A. Using Trained Models
@@ -1372,7 +1380,7 @@ how to save the model weights (the Saver object)
 [NEXT]
 loading model from scratch
 
-[TEXT]
+[NEXT]
 using it to generate new text
 
 _note_
