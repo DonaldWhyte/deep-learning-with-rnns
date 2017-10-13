@@ -1,26 +1,26 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<svg width="410px" height="84px" viewBox="0 0 410 84" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-    <!-- Generator: Sketch 46.2 (44496) - http://www.bohemiancoding.com/sketch -->
-    <title>Group 2</title>
+<svg width="410px" height="106px" viewBox="0 0 410 106" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 47 (45396) - http://www.bohemiancoding.com/sketch -->
+    <title>Group</title>
     <desc>Created with Sketch.</desc>
     <defs>
-        <rect id="path-1" x="41" y="0" width="16" height="11"></rect>
-        <rect id="path-2" x="41" y="0" width="16" height="11"></rect>
-        <rect id="path-3" x="41" y="0" width="16" height="11"></rect>
+        <rect id="path-1" x="121" y="16" width="16" height="11"></rect>
+        <rect id="path-2" x="227" y="16" width="16" height="11"></rect>
+        <rect id="path-3" x="334" y="16" width="16" height="11"></rect>
     </defs>
     <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-        <g id="Group-2" transform="translate(1.000000, 1.000000)">
-            <text id="H_0" font-family="Helvetica-BoldOblique, Helvetica" font-size="12" font-style="italic" font-weight="bold" fill="#000000">
-                <tspan x="112" y="57">H</tspan>
-                <tspan x="120.666016" y="57" font-family="Helvetica-Bold, Helvetica">_0</tspan>
+        <g id="Group" transform="translate(1.000000, 1.000000)">
+            <text id="O_0" font-family="Helvetica-BoldOblique, Helvetica" font-size="12" font-style="italic" font-weight="bold" fill="#000000">
+                <tspan x="112" y="57">O</tspan>
+                <tspan x="121.333984" y="57" font-family="Helvetica-Bold, Helvetica">_0</tspan>
             </text>
-            <text id="H_1" font-family="Helvetica-BoldOblique, Helvetica" font-size="12" font-style="italic" font-weight="bold" fill="#000000">
-                <tspan x="219" y="57">H_</tspan>
-                <tspan x="234.339844" y="57" font-family="Helvetica-Bold, Helvetica">1</tspan>
+            <text id="O_1" font-family="Helvetica-BoldOblique, Helvetica" font-size="12" font-style="italic" font-weight="bold" fill="#000000">
+                <tspan x="219" y="57">O_</tspan>
+                <tspan x="235.007812" y="57" font-family="Helvetica-Bold, Helvetica">1</tspan>
             </text>
-            <text id="H_2" font-family="Helvetica-BoldOblique, Helvetica" font-size="12" font-style="italic" font-weight="bold" fill="#000000">
-                <tspan x="325" y="57">H</tspan>
-                <tspan x="333.666016" y="57" font-family="Helvetica-Bold, Helvetica">_2</tspan>
+            <text id="O_2" font-family="Helvetica-BoldOblique, Helvetica" font-size="12" font-style="italic" font-weight="bold" fill="#000000">
+                <tspan x="325" y="57">O</tspan>
+                <tspan x="334.333984" y="57" font-family="Helvetica-Bold, Helvetica">_2</tspan>
             </text>
             <polygon id="path22" stroke="#000000" stroke-width="0.9962625" fill="#FFF880" fill-rule="nonzero" transform="translate(17.716744, 17.716744) scale(-1, 1) rotate(-180.000000) translate(-17.716744, -17.716744) " points="0 0 35.4334875 0 35.4334875 35.4334875 0 35.4334875"></polygon>
             <path d="M142.4335,17.7167375 C142.4335,27.5015375 134.501563,35.433475 124.71675,35.433475 C114.931938,35.433475 107,27.5015375 107,17.7167375 C107,7.9319375 114.931938,0 124.71675,0 C134.501563,0 142.4335,7.9319375 142.4335,17.7167375 Z" id="path32" stroke="#000000" stroke-width="0.9962625" fill="#8080FF" fill-rule="nonzero" transform="translate(124.716750, 17.716737) scale(-1, 1) rotate(-180.000000) translate(-124.716750, -17.716737) "></path>
@@ -40,39 +40,37 @@
             <path d="M312,21.57165 C312.2366,20.15195 314.83935,18.0224125 315.549175,17.785825 C314.83935,17.5492375 312.2366,15.4197 312,14" id="path122" stroke="#000000" stroke-width="1.59402505" stroke-linecap="round" stroke-linejoin="round" transform="translate(313.774587, 17.785825) scale(-1, 1) rotate(-180.000000) translate(-313.774587, -17.785825) "></path>
             <path d="M358,17 L406.100063,17" id="path126" stroke="#000000" stroke-width="1.99255005" transform="translate(382.050031, 17.625000) scale(-1, 1) rotate(-180.000000) translate(-382.050031, -17.625000) "></path>
             <path d="M404,21.57165 C404.2366,20.15195 406.83935,18.0224125 407.549175,17.785825 C406.83935,17.5492375 404.2366,15.4197 404,14" id="path132" stroke="#000000" stroke-width="1.59402505" stroke-linecap="round" stroke-linejoin="round" transform="translate(405.774587, 17.785825) scale(-1, 1) rotate(-180.000000) translate(-405.774587, -17.785825) "></path>
-            <text id="cell_states_0" font-family="Helvetica-BoldOblique, Helvetica" font-size="12" font-style="italic" font-weight="bold" fill="#0000FF">
-                <tspan x="83" y="81">cell_states_0</tspan>
+            <text id="H_0-(cell-state)" font-family="Helvetica-BoldOblique, Helvetica" font-size="12" font-style="italic" font-weight="bold" fill="#0000FF">
+                <tspan x="110.993164" y="84">H_0</tspan>
+                <tspan x="107.161133" y="98" font-family="Helvetica-Bold, Helvetica" font-size="6">(cell state)</tspan>
             </text>
-            <text id="cell_states_1" font-family="Helvetica-BoldOblique, Helvetica" font-size="12" font-style="italic" font-weight="bold" fill="#0000FF">
-                <tspan x="189" y="81">cell_states_1</tspan>
+            <text id="H_2-(cell-state)" font-family="Helvetica-BoldOblique, Helvetica" font-size="12" font-style="italic" font-weight="bold" fill="#0000FF">
+                <tspan x="322.993164" y="84">H_2</tspan>
+                <tspan x="319.161133" y="98" font-family="Helvetica-Bold, Helvetica" font-size="6">(cell state)</tspan>
             </text>
-            <text id="cell_states_2" font-family="Helvetica-BoldOblique, Helvetica" font-size="12" font-style="italic" font-weight="bold" fill="#0000FF">
-                <tspan x="295" y="81">cell_states_2</tspan>
+            <text id="H_1-(cell-state)" font-family="Helvetica-BoldOblique, Helvetica" font-size="12" font-style="italic" font-weight="bold" fill="#0000FF">
+                <tspan x="216.993164" y="84">H_1</tspan>
+                <tspan x="213.161133" y="98" font-family="Helvetica-Bold, Helvetica" font-size="6">(cell state)</tspan>
             </text>
-            <g id="Group" transform="translate(80.000000, 16.000000)">
-                <path d="M18,11.57165 C18.2366,10.15195 20.83935,8.0224125 21.549175,7.785825 C20.83935,7.5492375 18.2366,5.4197 18,4" id="path102" stroke="#0000FF" stroke-width="1.59402505" stroke-linecap="round" stroke-linejoin="round" transform="translate(19.774587, 7.785825) scale(-1, 1) rotate(-180.000000) translate(-19.774587, -7.785825) "></path>
-                <g id="Rectangle">
-                    <use fill="#7ED321" fill-rule="evenodd" xlink:href="#path-1"></use>
-                    <rect stroke="#000000" stroke-width="1" x="41.5" y="0.5" width="15" height="10"></rect>
-                </g>
-                <path d="M56.3320313,4.81640625 C66.8080622,-0.728988082 88.0661371,-0.786707491 84.3476563,17.9335938 C82.0473534,29.5142266 67.2538958,43.1722398 56.6132812,47.1025391 C42.8368175,52.1911198 32.7482157,51.901919 17.6152344,47.2519531 C-8.65802062,39.1788751 -3.25372234,14.8838723 20.0820313,7.60058594" id="Path-2" stroke="#0000FF" stroke-width="2"></path>
+            <path d="M98,27.57165 C98.2366,26.15195 100.83935,24.0224125 101.549175,23.785825 C100.83935,23.5492375 98.2366,21.4197 98,20" id="path102" stroke="#0000FF" stroke-width="1.59402505" stroke-linecap="round" stroke-linejoin="round" transform="translate(99.774587, 23.785825) scale(-1, 1) rotate(-180.000000) translate(-99.774587, -23.785825) "></path>
+            <g id="Rectangle">
+                <use fill="#7ED321" fill-rule="evenodd" xlink:href="#path-1"></use>
+                <rect stroke="#000000" stroke-width="1" x="121.5" y="16.5" width="15" height="10"></rect>
             </g>
-            <g id="Group" transform="translate(186.000000, 16.000000)">
-                <path d="M18,11.57165 C18.2366,10.15195 20.83935,8.0224125 21.549175,7.785825 C20.83935,7.5492375 18.2366,5.4197 18,4" id="path102" stroke="#0000FF" stroke-width="1.59402505" stroke-linecap="round" stroke-linejoin="round" transform="translate(19.774587, 7.785825) scale(-1, 1) rotate(-180.000000) translate(-19.774587, -7.785825) "></path>
-                <g id="Rectangle">
-                    <use fill="#7ED321" fill-rule="evenodd" xlink:href="#path-2"></use>
-                    <rect stroke="#000000" stroke-width="1" x="41.5" y="0.5" width="15" height="10"></rect>
-                </g>
-                <path d="M56.3320313,4.81640625 C66.8080622,-0.728988082 88.0661371,-0.786707491 84.3476563,17.9335938 C82.0473534,29.5142266 67.2538958,43.1722398 56.6132812,47.1025391 C42.8368175,52.1911198 32.7482157,51.901919 17.6152344,47.2519531 C-8.65802062,39.1788751 -3.25372234,14.8838723 20.0820313,7.60058594" id="Path-2" stroke="#0000FF" stroke-width="2"></path>
+            <path d="M136.332031,20.8164063 C146.808062,15.2710119 168.066137,15.2132925 164.347656,33.9335938 C162.047353,45.5142266 147.253896,59.1722398 136.613281,63.1025391 C122.836817,68.1911198 112.748216,67.901919 97.6152344,63.2519531 C71.3419794,55.1788751 76.7462777,30.8838723 100.082031,23.6005859" id="Path-2" stroke="#0000FF" stroke-width="2"></path>
+            <path d="M204,27.57165 C204.2366,26.15195 206.83935,24.0224125 207.549175,23.785825 C206.83935,23.5492375 204.2366,21.4197 204,20" id="path102" stroke="#0000FF" stroke-width="1.59402505" stroke-linecap="round" stroke-linejoin="round" transform="translate(205.774587, 23.785825) scale(-1, 1) rotate(-180.000000) translate(-205.774587, -23.785825) "></path>
+            <g id="Rectangle">
+                <use fill="#7ED321" fill-rule="evenodd" xlink:href="#path-2"></use>
+                <rect stroke="#000000" stroke-width="1" x="227.5" y="16.5" width="15" height="10"></rect>
             </g>
-            <g id="Group" transform="translate(293.000000, 16.000000)">
-                <path d="M18,11.57165 C18.2366,10.15195 20.83935,8.0224125 21.549175,7.785825 C20.83935,7.5492375 18.2366,5.4197 18,4" id="path102" stroke="#0000FF" stroke-width="1.59402505" stroke-linecap="round" stroke-linejoin="round" transform="translate(19.774587, 7.785825) scale(-1, 1) rotate(-180.000000) translate(-19.774587, -7.785825) "></path>
-                <g id="Rectangle">
-                    <use fill="#7ED321" fill-rule="evenodd" xlink:href="#path-3"></use>
-                    <rect stroke="#000000" stroke-width="1" x="41.5" y="0.5" width="15" height="10"></rect>
-                </g>
-                <path d="M56.3320313,4.81640625 C66.8080622,-0.728988082 88.0661371,-0.786707491 84.3476563,17.9335938 C82.0473534,29.5142266 67.2538958,43.1722398 56.6132812,47.1025391 C42.8368175,52.1911198 32.7482157,51.901919 17.6152344,47.2519531 C-8.65802062,39.1788751 -3.25372234,14.8838723 20.0820313,7.60058594" id="Path-2" stroke="#0000FF" stroke-width="2"></path>
+            <path d="M242.332031,20.8164063 C252.808062,15.2710119 274.066137,15.2132925 270.347656,33.9335938 C268.047353,45.5142266 253.253896,59.1722398 242.613281,63.1025391 C228.836817,68.1911198 218.748216,67.901919 203.615234,63.2519531 C177.341979,55.1788751 182.746278,30.8838723 206.082031,23.6005859" id="Path-2" stroke="#0000FF" stroke-width="2"></path>
+            <path d="M311,27.57165 C311.2366,26.15195 313.83935,24.0224125 314.549175,23.785825 C313.83935,23.5492375 311.2366,21.4197 311,20" id="path102" stroke="#0000FF" stroke-width="1.59402505" stroke-linecap="round" stroke-linejoin="round" transform="translate(312.774587, 23.785825) scale(-1, 1) rotate(-180.000000) translate(-312.774587, -23.785825) "></path>
+            <g id="Rectangle">
+                <use fill="#7ED321" fill-rule="evenodd" xlink:href="#path-3"></use>
+                <rect stroke="#000000" stroke-width="1" x="334.5" y="16.5" width="15" height="10"></rect>
             </g>
+            <path d="M349.332031,20.8164063 C359.808062,15.2710119 381.066137,15.2132925 377.347656,33.9335938 C375.047353,45.5142266 360.253896,59.1722398 349.613281,63.1025391 C335.836817,68.1911198 325.748216,67.901919 310.615234,63.2519531 C284.341979,55.1788751 289.746278,30.8838723 313.082031,23.6005859" id="Path-2" stroke="#0000FF" stroke-width="2"></path>
+            <rect id="Rectangle-2" fill="#FFFFFF" x="218" y="99" width="19" height="6"></rect>
         </g>
     </g>
 </svg>

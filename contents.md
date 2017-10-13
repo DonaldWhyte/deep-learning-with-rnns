@@ -585,10 +585,8 @@ One node represents a full layer of neurons.
 
 ![rnn_compressed](images/rnn-loopcompressed.svg)
 
-Each node's input includes the output of itself during the last run of the
+Hidden layer's input includes the output of itself during the last run of the
 network.
-
-Output of node $i$ is denoted by $H_i$.
 
 [NEXT]
 ### Unrolled Recurrent Network
@@ -647,8 +645,6 @@ The state transforms the hidden layer's original output into something that is
 relevant to the current context, given what's happened in the past.
 
 [NEXT]
-TODO"
-
 ![rnn_compressed](images/rnn-stateloopcompressed.svg)
 
 [NEXT]
@@ -824,7 +820,10 @@ Theano: The reference deep-learning library for Python with an API largely compa
 #### The Basics
 
 [NEXT]
-TODO: diagram of full desired architecture (no tensorflow artefacts)
+![full_network](images/full_network_no_marks.svg)
+
+_note_
+This is a preview of the network we're going to build in Tensorflow.
 
 [NEXT]
 ### Goal
@@ -964,7 +963,7 @@ previous example)
 #### Building our Model
 
 [NEXT]
-TODO: diagram of full desired architecture (no tensorflow artefacts)
+![full_network](images/full_network_no_marks.svg)
 
 [NEXT]
 ```python
@@ -974,7 +973,7 @@ ALPHABET_SIZE = 98
 ```
 
 [NEXT]
-TODO: marked diagram with raw input layer
+![full_network](images/full_network_input.svg)
 
 ```python
 # Dimensions: [ BATCH_SIZE, SEQUENCE_LEN ]
@@ -982,7 +981,7 @@ X = tf.placeholder(tf.uint8, [None, None], name='X')
 ```
 
 [NEXT]
-TODO: marked diagram with one-hot input layer
+![full_network](images/full_network_onehot.svg)
 
 ```python
 # Dimensions: [ BATCH_SIZE, SEQUENCE_LEN, ALPHABET_SIZE ]
@@ -990,13 +989,13 @@ Xo = tf.one_hot(X, ALPHABET_SIZE, 1.0, 0.0)
 ```
 
 [NEXT]
-TODO: marked diagram with deep RNN cell layers
+![full_network](images/full_network_hidden.svg)
 
 _note_
 Recap how the deep RNN cell layers work.
 
 [NEXT]
-TODO: marked diagram with deep RNN cell layers
+![full_network](images/full_network_hidden.svg)
 
 ```python
 HIDDEN_LAYER_SIZE = 512
@@ -1004,7 +1003,7 @@ NUM_HIDDEN_LAYERS = 3
 ```
 
 [NEXT]
-TODO: marked diagram with deep RNN cell layers
+![full_network](images/full_network_hidden.svg)
 
 Define hidden layers and cell states:
 
@@ -1046,16 +1045,17 @@ Unroll the loops when the computation graph is running.
 
 The loops will be unrolled `SEQUENCE_LENGTH` times.
 
-```
-# Outputs:
-#    * TODO
-#    * TODO
-
+```python
 Yr, H_out = tf.nn.dynamic_rnn(
     multicell,
     Xo,
     dtype=tf.float32,
     initial_state=H_in)
+
+#    Yr = output of network. probability distribution of
+#         next character.
+# H_out = the altered hidden cell state after processing
+#         last input.
 ```
 
 _note_
@@ -1063,8 +1063,11 @@ The loops will be unrolled `SEQUENCE_LENGTH` times. You can think of this as us
 copying all the hidden layer nodes for each unroll, creating a computation
 graph that has 30 sets of hidden layers.
 
+Note that `H_out` is the input hidden cell state that's been updated by the
+last input. `H_out` is used as the next character's input (`H_in`).
+
 [NEXT]
-TODO: mark on graph softmax layer
+![full_network](images/full_network_softmax.svg)
 
 [NEXT]
 ```python
@@ -1091,8 +1094,9 @@ steps. Doing this treats values coming from a single sequence time step (one
 char) and values coming from a mini-batch run as the same thing.
 
 [NEXT]
-TODO: mark on graph the one-hot layer and final output
+![full_network](images/full_network_output.svg)
 
+[NEXT]
 ```
 # [ BATCH_SIZE * SEQUENCE_LEN ]
 Y = tf.argmax(Yo, 1)
@@ -1119,8 +1123,9 @@ Used to compute a "loss" number that indicates how well the networking is
 is predicting the next char.
 
 [NEXT]
-TODO: marked diagram with expected output and expected one-hot layers
+![full_network_loss](images/full_network_loss.svg)
 
+[NEXT]
 ```python
 # [ BATCH_SIZE, SEQUENCE_LEN ]
 Y_ = tf.placeholder(tf.uint8, [None, None], name='Y_')
@@ -1362,13 +1367,13 @@ TODO: conclusion
 #### Using Trained Models
 
 [NEXT]
-TODO: how to save the model weights (the Saver object)
+how to save the model weights (the Saver object)
 
 [NEXT]
-TODO: loading model from scratch
+loading model from scratch
 
 [TEXT]
-TODO: using it to generate new text
+using it to generate new text
 
 _note_
 Demonstrate this using a pre-trained model that is good at generating the

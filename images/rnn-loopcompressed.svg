@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<svg width="408px" height="66px" viewBox="0 0 408 66" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-    <!-- Generator: Sketch 46.2 (44496) - http://www.bohemiancoding.com/sketch -->
+<svg width="408px" height="91px" viewBox="0 0 408 91" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 47 (45396) - http://www.bohemiancoding.com/sketch -->
     <title>Group</title>
     <desc>Created with Sketch.</desc>
     <defs></defs>
@@ -24,18 +24,22 @@
             <path d="M311.510288,22.000825 C311.746888,20.581125 314.349638,18.4515875 315.059462,18.215 C314.349638,17.9784125 311.746888,15.848875 311.510288,14.429175" id="path122" stroke="#000000" stroke-width="1.59402505" stroke-linecap="round" stroke-linejoin="round" transform="translate(313.284875, 18.215000) scale(-1, 1) rotate(-180.000000) translate(-313.284875, -18.215000) "></path>
             <path d="M358.376688,16.965 L406.47675,16.965" id="path126" stroke="#000000" stroke-width="1.99255005" transform="translate(382.426719, 17.590000) scale(-1, 1) rotate(-180.000000) translate(-382.426719, -17.590000) "></path>
             <path d="M403.6374,22.000825 C403.874,20.581125 406.47675,18.4515875 407.186575,18.215 C406.47675,17.9784125 403.874,15.848875 403.6374,14.429175" id="path132" stroke="#000000" stroke-width="1.59402505" stroke-linecap="round" stroke-linejoin="round" transform="translate(405.411988, 18.215000) scale(-1, 1) rotate(-180.000000) translate(-405.411988, -18.215000) "></path>
-            <text id="H_0" font-family="Helvetica-BoldOblique, Helvetica" font-size="16" font-style="italic" font-weight="bold" fill="#000000">
-                <tspan x="110" y="64">H_</tspan>
-                <tspan x="130.453125" y="64" font-family="Helvetica-Bold, Helvetica">0</tspan>
+            <text id="O_0-(layer-0-output)" font-family="Helvetica-BoldOblique, Helvetica" font-size="16" font-style="italic" font-weight="bold" fill="#000000">
+                <tspan x="107.878906" y="66">O_</tspan>
+                <tspan x="129.222656" y="66" font-family="Helvetica-Bold, Helvetica">0</tspan>
+                <tspan x="90.4980469" y="85" font-family="Helvetica-Bold, Helvetica" font-size="9">(layer 0 output)</tspan>
             </text>
-            <text id="H_1" font-family="Helvetica-BoldOblique, Helvetica" font-size="16" font-style="italic" font-weight="bold" fill="#000000">
-                <tspan x="216" y="64">H_</tspan>
-                <tspan x="236.453125" y="64" font-family="Helvetica-Bold, Helvetica">1</tspan>
+            <text id="O_1-(layer-1-output)" font-family="Helvetica-BoldOblique, Helvetica" font-size="16" font-style="italic" font-weight="bold" fill="#000000">
+                <tspan x="214.878906" y="66">O_</tspan>
+                <tspan x="236.222656" y="66" font-family="Helvetica-Bold, Helvetica">1</tspan>
+                <tspan x="197.498047" y="85" font-family="Helvetica-Bold, Helvetica" font-size="9">(layer 1 output)</tspan>
             </text>
-            <text id="H_2" font-family="Helvetica-BoldOblique, Helvetica" font-size="16" font-style="italic" font-weight="bold" fill="#000000">
-                <tspan x="322" y="64">H</tspan>
-                <tspan x="333.554688" y="64" font-family="Helvetica-Bold, Helvetica">_2</tspan>
+            <text id="O_2-(layer-2-output)" font-family="Helvetica-BoldOblique, Helvetica" font-size="16" font-style="italic" font-weight="bold" fill="#000000">
+                <tspan x="320.878906" y="66">O_</tspan>
+                <tspan x="342.222656" y="66" font-family="Helvetica-Bold, Helvetica">2</tspan>
+                <tspan x="303.498047" y="85" font-family="Helvetica-Bold, Helvetica" font-size="9">(layer 2 output)</tspan>
             </text>
+            <rect id="Rectangle-2" fill="#FFFFFF" x="218" y="85" width="19" height="6"></rect>
         </g>
     </g>
 </svg>
