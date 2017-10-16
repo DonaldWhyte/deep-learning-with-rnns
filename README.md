@@ -22,3 +22,7 @@ The presentation can now be accessed on `localhost:8080`. Note that this web app
 ## Workshop
 
 TODO
+
+## Acknowledgements
+
+Huge credit to [Martin Görner](https://github.com/martin-gorner/) for his awesome [Tensorflow RNN Shakespere](https://github.com/martin-gorner/tensorflow-rnn-shakespeare) talk, which inspired a lot of the code in this talk/workshop.
