@@ -53,9 +53,7 @@ What **features** of the input tell us about the output?
 * Features represented as a vector in **feature space**
 * **Abstract** complexity of raw input for easier processing
 
-<center>
-  <div id="shape-plot"></div>
-</center>
+![classification](images/classification-points.png)
 
 _note_
 In this case, we have 2 features, so inputs are 2D vector that lie in
@@ -74,9 +72,7 @@ a 2D feature space.
 </div>
 
 <div class="right-col">
-  <center>
-    <div id="shape-plot-discriminant1"></div>
-  </center>
+  ![classification_small](images/classification-line.png)
 </div>
 
 <div class="clear-col"></div>
@@ -88,12 +84,11 @@ Use trained model to predict outcome of new, unseen data.
 ### Example
 
 <div class="left-col">
-  <center>
-    <div id="shape-plot-discriminant2"></div>
-  </center>
+  ![classification_small](images/classification-line.png)
 </div>
 
 <div class="right-col">
+  <br />
   <br />
   <p>$x̄ = (area, perimeter)$</p>
   <p>$m = (1, -3.5)$</p>
@@ -110,9 +105,7 @@ Using this model, let's predict what shape an object is.
 
 [NEXT]
 <div class="left-col">
-  <center>
-    <div id="shape-plot-classified-point"></div>
-  </center>
+  ![classification_small](images/classification-newinput.png)
 </div>
 
 <div class="right-col">
@@ -236,7 +229,7 @@ Takes the weighted sum and squashes it into a smaller range.
 * Squashes perceptron output into range [0,1]
 * Used to learn weights (`w`)
 
-PLACEHOLDER<!-- .element id="sigmoid-activation-function-chart" -->
+![sigmoid_function](images/sigmoid-function.png)
 
 _note_
 We'll find having a continuous activation function is very useful when we want
@@ -1337,10 +1330,6 @@ Significant computation required, but only a small amount of code.
 _note_
 Significant computation required, but only a small amount of code (thanks to
 Tensorflow).
-
-[NEXT]
-<!-- .slide: data-background="images/books_opened.jpg" class="background" -->
-TODO: further resources??
 
 [NEXT]
 <!-- .slide: data-background="images/books_opened.jpg" class="background" -->

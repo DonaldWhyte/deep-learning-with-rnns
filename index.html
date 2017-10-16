@@ -26,7 +26,9 @@
 
     <link rel="stylesheet" href="css/reveal.css">
     <link rel="stylesheet" href="css/theme/white.css" id="theme">
+    <!--<link rel="stylesheet" href="css/print/pdf.css">-->
     <link rel="stylesheet" href="css/custom.css">
+
 
     <!-- Code syntax highlighting -->
     <link rel="stylesheet" href="lib/css/zenburn.css">
@@ -37,7 +39,8 @@
       link.rel = 'stylesheet';
       link.type = 'text/css';
       link.href = window.location.search.match( /print-pdf/gi )
-        ? 'css/print/pdf.css' : 'css/print/paper.css';
+        ? 'css/print/pdf.css'
+        : 'css/print/paper.css';
       document.getElementsByTagName( 'head' )[0].appendChild( link );
     </script>
 
@@ -63,7 +66,6 @@
 
     <!-- Custom JS libraries -->
     <script src="lib/js/jquery-3.2.1.min.js"></script>
-    <script src="lib/js/highcharts.js"></script>
 
     <!-- Reveal initialisation -->
     <script>
@@ -105,249 +107,7 @@
     </script>
 
     <script>
-      // CONSTANTS
-      var MIN_X = -5;
-      var MAX_X = 5;
-      var POINT_INTERVAL = 0.001;
-
-      // FUNCTIONS
-      function loadChartEvent() {
-        $("text:contains('Highcharts.com')").remove();
-      }
-
-      function generatePoints(minX, maxX, pointInterval, func) {
-        var pointsToGenerate = Math.abs(maxX - minX) / pointInterval;
-        var data = [];
-        for (var i = 0; i < pointsToGenerate; ++i) {
-          var x = minX + (i * pointInterval)
-          data.push([x, func(x)]);
-        }
-        return data;
-      }
-
       Reveal.addEventListener('ready', function(event) {
-        var baseShapeChart = {
-          chart: {
-            type: 'scatter',
-            zoomType: 'xy',
-            backgroundColor: 'rgba(0, 0, 0, 0)',
-            events: { load: loadChartEvent }
-          },
-          title: { text: '' },
-          xAxis: {
-            title: {
-              text: 'Area',
-              style: {
-                fontSize: '24px',
-                color: 'black',
-                'font-weight': 'strong'
-              }
-            },
-            labels: {
-              style: {
-                color: 'black',
-                'font-weight': 'strong',
-                'font-size': '14px'
-              }
-            }
-          },
-          yAxis: {
-            title: {
-              text: 'Perimeter',
-              style: {
-                fontSize: '24px',
-                color: 'black'
-              }
-            },
-            labels: {
-              style: {
-                color: 'black',
-                'font-weight': 'strong',
-                'font-size': '14px'
-              }
-            }
-          },
-          legend: { enabled: false },
-          tooltip: { enabled: false },
-          exporting: { enabled: false },
-          plotOptions: {
-            scatter: {
-              marker: {
-                radius: 10,
-                states: {
-                  hover: { enabled: true, lineColor: '#000' }
-                }
-              }
-            }
-          },
-          series: [
-            {
-              name: 'Square',
-              marker: { symbol: 'square' },
-              color: 'rgba(223, 83, 83, 1)',
-              data: [
-                [3.7, 0.9], [3.9, 1.7], [3.9, 0.9], [4.2, 1.2], [3.5, 1.4],
-                [3.85, 1.3], [3.4, 1.0], [3.7, 1.25]
-              ]
-            }, {
-              name: 'Triangle',
-              marker: { symbol: 'triangle' },
-              color: 'rgba(119, 152, 191, 1)',
-              data: [
-                [2.75, 0.18], [3.2, 0.22], [4.2, 0.65], [4.1, 0.20], [3.5, 0.4],
-                [4.0, 0.24], [4.15, 0.5], [3.8, 0.5], [2.8, 0.6], [3.8, 0.5],
-                [2.9, 0.8], [2.7, 1.4], [3.1, 0.5], [2.8, 1.3], [2.7, 1.1],
-                [2.8, 0.9], [3.15, 1.25], [3.5, 1.9]
-              ]
-            }
-          ]
-        };
-        var shapeChartWithDiscriminant = jQuery.extend(
-          true, {}, baseShapeChart);
-        shapeChartWithDiscriminant["series"].push({
-          type: 'line',
-          name: 'Discriminant',
-          data: [[4.2, 0.1], [2.8, 1.9]],
-          marker: {
-            enabled: false
-          },
-          enableMouseTracking: false,
-          showInLegend: false,
-          lineWidth: 5,
-          lineColor: 'black'
-        });
-        var shapeChartWithClassifiedPoint = jQuery.extend(
-          true, {}, shapeChartWithDiscriminant);
-        shapeChartWithClassifiedPoint["series"].push({
-          name: 'Classified',
-          marker: { symbol: 'triangle', radius: 20 },
-          color: '#2c2',
-          data: [[3.0, 1.0]]
-        });
-
-        var baseActivationFunctionChart =  {
-          chart: {
-            backgroundColor: 'rgba(0, 0, 0, 0)',
-            events: { load: loadChartEvent },
-            marginTop: 32,
-            marginBottom: 64
-          },
-          title: { text: '' },
-          xAxis: {
-            title: {
-              text: 'Weighted Sum (x)',
-              style: {
-                color: 'black',
-                'font-weight': 'strong',
-                'font-size': '32px'
-              }
-            },
-            min: -2,
-            max: 2,
-            tickInterval: 1.0,
-            minorTickLength: 0,
-            tickLength: 0,
-            labels: {
-              style: {
-                color: 'black',
-                'font-weight': 'strong',
-                'font-size': '26px'
-              }
-            }
-          },
-          yAxis: {
-            title: {
-              text: 'f(x)',
-              style: {
-                color: 'black',
-                'font-weight': 'strong',
-                'font-style': 'italic',
-                'font-size': '32px'
-              }
-            },
-            min: -0.2,
-            max: 1.2,
-            tickInterval: 0.2,
-            labels: {
-              style: {
-                color: 'black',
-                'font-weight': 'strong',
-                'font-size': '26px'
-              }
-            },
-          },
-          tooltip: { enabled: false },
-          exporting: { enabled: false },
-          legend: { enabled: false },
-          series: []
-        };
-
-        var commonLegendConfig = {
-          layout: 'vertical',
-          align: 'right',
-          verticalAlign: 'middle',
-          borderWidth: 0,
-          symbolWidth: 64,
-          itemStyle: {
-            color: 'black',
-            'font-weight': 'strong',
-            fontSize: '36px'
-          },
-          itemHoverStyle: {
-            color: 'black',
-            'font-weight': 'strong',
-            fontSize: '36px'
-          }
-        };
-
-        var sigmoidDataSeries = {
-          name: 'Sigmoid',
-          lineWidth: 5,
-          color: '#ED561B',
-          type: 'spline',
-          data: (function() {
-            var STEEPNESS = 3.0;
-            function sigmoid(x) {
-              var exponent = STEEPNESS * -x;
-              return 1 / (1 + Math.exp(exponent));
-            }
-
-            return generatePoints(MIN_X, MAX_X, POINT_INTERVAL, sigmoid);
-          })()
-        };
-
-        var sigmoidActivationFunctionChart = jQuery.extend(
-          true, {}, baseActivationFunctionChart);
-        sigmoidActivationFunctionChart.series.push(sigmoidDataSeries);
-
-        var reluDataSeries = {
-          name: 'ReLU',
-          lineWidth: 5,
-          color: '#99BADD',
-          data: (function() {
-            return generatePoints(MIN_X, MAX_X, POINT_INTERVAL, function(x) {
-              return Math.max(0, x);
-            });
-          })()
-        };
-
-        var softplusDataSeries = {
-          name: 'Softplus',
-          lineWidth: 5,
-          color: 'green',
-          data: (function() {
-            return generatePoints(MIN_X, MAX_X, POINT_INTERVAL, function(x) {
-              return Math.log(1 + Math.exp(x))
-            });
-          })()
-        };
-
-        $('#shape-plot').highcharts(baseShapeChart);
-        $('#shape-plot-discriminant1').highcharts(shapeChartWithDiscriminant);
-        $('#shape-plot-discriminant2').highcharts(shapeChartWithDiscriminant);
-        $('#shape-plot-classified-point').highcharts(shapeChartWithClassifiedPoint);
-        $('#sigmoid-activation-function-chart').highcharts(sigmoidActivationFunctionChart);
-
         // Force a re-render after slides have loaded to ensure all math
         // equations are picked up.
         MathJax.Hub.Rerender();

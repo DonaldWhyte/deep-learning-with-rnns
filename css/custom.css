@@ -217,7 +217,6 @@ img[alt="full_network_smaller"] {
 
 img[alt="full_network_loss"] {
     width: 700px;
-    padding-bottom: 300px !important;
 }
 
 img[alt="tensorflow_graph"] {
@@ -228,6 +227,14 @@ img[alt="tensorflow_graph_marked"] {
     width: 400px;
 }
 
+img[alt="classification"] {
+    width: 550px;
+}
+
+img[alt="classification_small"] {
+    width: 450px;
+}
+
 .bio-table td {
     text-align: center !important;
     border: 0px !important;
@@ -236,8 +243,4 @@ img[alt="tensorflow_graph_marked"] {
 
 .github {
     font-size: 20px !important;
-}
-
-#shape-plot-classified-point {
-    padding-right: 32px;
 }
