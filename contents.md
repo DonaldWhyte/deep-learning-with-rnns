@@ -95,37 +95,18 @@ Use trained model to predict outcome of new, unseen data.
 
 <div class="right-col">
   <br />
-  <br />
-  <p>$m = ()$</p>
-  <p>$c = 1$</p>
+  <p>$x̄ = (area, perimeter)$</p>
+  <p>$m = (1, -3.5)$</p>
+  <p>$c = 0$</p>
 </div>
 
 [NEXT]
-
--2area + 1perim = 0
-
-3.5 * 2 +
-
-
 Using this model, let's predict what shape an object is.
 
-Object properties: **area** = 3, **perimeter** = 0.5
-
-Input becomes:
-
-$x̄ = (3, 0.5)$
-
-[NEXT]
-
-TODO: fill in once you know how to compute weights and biases
-
-$f(x̄) = mx̄ + c$
-
-$f((3, 0.5)) = (TODO, TODO)(3, 0.5) + TODO$
-
-$f((3, 0.5)) = (TODO, TODO)(3, 0.5) + c$
-
-$f(x) = ()$
+| **Feature** |  **Value** |
+| ----------- | ---------- |
+| Area        | 3          |
+| Perimeter   | 1          |
 
 [NEXT]
 <div class="left-col">
@@ -135,17 +116,19 @@ $f(x) = ()$
 </div>
 
 <div class="right-col">
-  <p>$x̄ = (3, 0.5)$</p>
-  <p>$f(x̄) = TODO$</p>
-  <p>TODO < 0</p>
-  <p>left side of the line</p>
-  <p>means input is a **triangle**</p>
+  <p>$x̄ = (3, 1)$</p>
+  <p>$f(x̄) = 1(3) + -3.5(1) + 0$</p>
+  <p>$f(x̄) = 3 - 3.5 + 0$</p>
+  <p>$f(x̄) = -0.5$</p>
+  <p>$-0.5 < 0$</p>
 </div>
 
-_note_
-Point is on the left hand of the side. With the model we've used, this means
-that we classify the input point as a triangle!
+<div class="clear-col"></div>
+$-0.5 < 0$ means left side of the line.
 
+Input shape is a **triangle**.
+
+_note_
 Point out that this same technique can used to predicting continuous, numerical
 values too (like how much house prices will cost, or how much a stock's price
 will go up or down).
@@ -692,7 +675,7 @@ Here's a link to a great article that explains the most commonly used cell
 state technique in great detail.
 
 [NEXT SECTION]
-### 4. Training RNNs
+## 4. Training RNNs
 
 [NEXT]
 These recurrent networks are trained in the same way as regular network.
@@ -842,7 +825,7 @@ Build a computation graph that learns the weights of this network.
 Operations are nodes and tensors are edges.
 
 [NEXT]
-TODO: show example graph
+![tensorflow_graph_marked](images/tensorflow_graph_marked.png)
 
 [NEXT]
 `tf.Operation`
@@ -942,8 +925,7 @@ Output
 ```
 
 [NEXT]
-TODO: graph that shows visualisation of this input graph (show same graph as
-previous example)
+![tensorflow_graph](images/tensorflow_graph.png)
 
 [NEXT]
 
@@ -1163,7 +1145,7 @@ train_step = tf.train.AdamOptimizer(lr).minimize(loss)
 ```
 
 [NEXT SECTION]
-## 7. Tensorflow
+## 8. Tensorflow
 
 #### Training the Model
 

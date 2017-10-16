@@ -220,16 +220,24 @@ img[alt="full_network_loss"] {
     padding-bottom: 300px !important;
 }
 
+img[alt="tensorflow_graph"] {
+    width: 400px;
+}
+
+img[alt="tensorflow_graph_marked"] {
+    width: 400px;
+}
+
 .bio-table td {
     text-align: center !important;
     border: 0px !important;
     max-width: 400px;
 }
 
-.bio-table a {
-
-}
-
 .github {
     font-size: 20px !important;
+}
+
+#shape-plot-classified-point {
+    padding-right: 32px;
 }
