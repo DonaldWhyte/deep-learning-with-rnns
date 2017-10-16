@@ -27,9 +27,27 @@ class RNNTextModel:
                  gru_internal_size: int,
                  num_hidden_layers: int,
                  stats_log_dir: str):
-        """Construct `RNNTextModel` with TODO.
+        """Construct `RNNTextModel` with specified hyperparameters.
 
-        TODO: document all inputs
+        This model is a deep recurrent neural network that uses GRU cells for
+        long-term memory.
+
+        `sequence_length` is the length of each input sequence. Longer
+        sequences mean the model has longer-term memory, but networks that use
+        longer sequences (and thus, have more time steps) are harder/take
+        longer to learn.
+
+        `batch_size` is the number of sequences to put in each mini-batch. The
+        network's weights are onlt adjusted after each mini-batch.
+
+        `gru_internal_size` specifies the number of nodes inside each hidden
+        GRU cell layer.
+
+        `num_hidden_layers` specifies the number of hidden layers (number of
+        GRU cell lateys) to use in the deep RNN.
+
+        The model's loss and graph will be periodically logged to the
+        `stats_log_dir` directory.
         """
         # Mark time this text model was initially created
         self._timestamp = str(math.trunc(time.time()))
@@ -101,8 +119,8 @@ class RNNTextModel:
         #
         # Yr: [ batch_size, sequence_length, gru_internal_size ]
         # H:  [ batch_size, gru_internal_size * num_hidden_layers ]
-        # H is the last state in the sequence.
-        Yr, H = tf.nn.dynamic_rnn(
+        # H_out is the last state in the sequence.
+        Yr, H_out = tf.nn.dynamic_rnn(
             self._multicell,
             self._inputs['Xo'],
             dtype=tf.float32,
@@ -111,10 +129,6 @@ class RNNTextModel:
         # ---------------------------------------------------------------------
         # Outputs
         # ---------------------------------------------------------------------
-
-        # Output cell state after running a time step of the recurrent network.
-        # We specify this just to give H a identifiable name.
-        self._H = tf.identity(H, name='H')
 
         # Softmax layer implementation:
         # Flatten the first two dimensions of the output. This performs the
@@ -135,26 +149,34 @@ class RNNTextModel:
         Y = tf.argmax(Yo, 1)                                           # [ batch_size x sequence_length ]
         Y = tf.reshape(Y, [self._inputs['batch_size'], -1], name='Y')  # [ batch_size, sequence_length ]
 
-        # TODO: comment why define these here
-        self._actual_outputs = {'Y': Y}
+        # Store the output nodes in a dictionary for easy access later.
+        self._outputs = {
+            'Y': Y,
+            # Output cell state after running a time step of the recurrent
+            # network. We specify this just to give H_out a identifiable name.
+            'H_out': tf.identity(H_out, name='H_out')
+        }
 
-        # TODO: comment on why these are here
+        # Commpute the loss (error) of the network.
         self._loss = tf.nn.softmax_cross_entropy_with_logits(          # [ batch_size x sequence_length ]
             logits=Ylogits, labels=Yflat_)
         self._loss = tf.reshape(                                       # [ batch_size, sequence_length ]
             self._loss, [self._inputs['batch_size'], -1])
+
+        # Used to adjust the weights at each training step, sich that the
+        # loss function is minimised.
+        self._train_step = tf.train.AdamOptimizer().minimize(self._loss)
+
+        # Stats not used to directly train the network, but are logged so they
+        # can be viewed by the human user.
         self._sequence_loss = tf.reduce_mean(self._loss, 1)
         self._batch_loss = tf.reduce_mean(self._sequence_loss)
         self._batch_accuracy = tf.reduce_mean(
             tf.cast(
                 tf.equal(
                     self._expected_outputs['Y'],
-                    tf.cast(self._actual_outputs['Y'], tf.uint8)),
+                    tf.cast(self._outputs['Y'], tf.uint8)),
                 tf.float32))
-
-        # Used to adjust the weights at each training step, sich that the
-        # loss function is minimised.
-        self._train_step = tf.train.AdamOptimizer().minimize(self._loss)
 
         self._initialise_tf_session()
         self._build_statistics(stats_log_dir)
@@ -184,9 +206,29 @@ class RNNTextModel:
                           checkpoint_dir: str,
                           on_step_complete: Callable[[int], None],
                           should_stop: Callable[[int], bool]):
-        """TODO
+        """Run training loop on the model object.
 
-        TODO: document all args
+        `data` contains the training and test text sequences (encoded as
+        integers for dircect input in the neural network).
+
+        `num_epochs` and `learning_rate` specify the number of training epochs
+        (iterations) and speed of learning respectively. If `learning_rate` is
+        too low, then network will take a very long time to train. If it is too
+        high, then the network will not converge on a good set of weights.
+
+        `checkpoint_dir` specifies the directory the trained model will be
+        periodically saved to.
+
+        `display_every_n_batches` specifies the number of batches that should
+        run before displaying the network's current loss and example output.
+
+        `on_step_complete` is called when a training step is complete. Users
+        can implement their own logic for when a step is completed, or pass in
+        an empty function to do nothing after each step.
+
+        `should_stop` is called after every step. It should return `True` if
+        the training loop should continue running and `False` if it should not.
+        This is used to implement custom stopping criteria.
         """
         training_text, test_text, file_index = data
 
@@ -232,12 +274,13 @@ class RNNTextModel:
                 self._expected_outputs['Y']: y_
             }
 
-            # This is the call that actually trains on the batch.
+            # This is the call that actually trains on the batch. We pass in
+            # the Tensorflow graph nodes we wish to compute the output of.
             _, y, output_state, summary = self._session.run(
                 [
                     self._train_step,
-                    self._actual_outputs['Y'],
-                    self._H,
+                    self._outputs['Y'],
+                    self._outputs['H_out'],
                     self._summaries
                 ],
                 feed_dict=feed_dict)
@@ -262,7 +305,7 @@ class RNNTextModel:
                 }
                 y, losses, batch_loss, batch_accuracy = self._session.run(
                     [
-                        self._actual_outputs['Y'],
+                        self._outputs['Y'],
                         self._sequence_loss,
                         self._batch_loss,
                         self._batch_accuracy

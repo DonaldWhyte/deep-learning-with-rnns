@@ -17,7 +17,8 @@ def _main():
         size_of_bar_in_chars=111 + 2,
         header_message=f'Training on next {display_every_n_batches} batches')
     def on_step_complete(step: int):
-        # TODO: explain
+        # After each step, update the display progress bar to reflect a step
+        # has been taken. After a certain number of steps, we reset the bar.
         max_steps = display_every_n_batches * batch_size * sequence_length
         should_reset = (step % max_steps == 0)
         progress.step(reset=should_reset)

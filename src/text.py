@@ -8,11 +8,13 @@ import numpy as np
 _logger = logging.getLogger(__name__)
 
 
-# Size of the alphabet that we work with.
+# Size of the alphabet that we work with. This contains alphanumeric characters
+# and some additional special ones.
 ALPHABET_SIZE = 98
 
 
-# TODO: explain what this is
+# 3-tuple containing training text sequence, test text sequence and a file
+# index for the training text sequence.
 SequenceData = Tuple[List[int], List[int], List[dict]]
 
 
@@ -160,7 +162,6 @@ class ProgressBar:
                  steps_to_finish: int,
                  size_of_bar_in_chars: int=100,
                  header_message: str=""):
-        """TODO."""
         self._steps_to_finish = steps_to_finish
         self._size_of_bar_in_chars = size_of_bar_in_chars
         self._header_message = header_message
@@ -170,7 +171,6 @@ class ProgressBar:
         self._header_printed = False
 
     def step(self, reset: bool=False):
-        """TODO."""
         if reset:
             self.__init__(
                 self._steps_to_finish,
@@ -207,20 +207,19 @@ class ProgressBar:
         return print_progress
 
 
-def print_learning_learned_comparison(X,
-                                      Y,
-                                      losses,
-                                      file_index,
-                                      batch_loss,
-                                      batch_accuracy,
-                                      epoch_size,
-                                      index,
-                                      epoch):
+def print_learning_learned_comparison(X: np.array,
+                                      Y: np.array,
+                                      losses: : np.array,
+                                      file_index: List[dict],
+                                      batch_loss: float,
+                                      batch_accuracy: float,
+                                      epoch_size: int,
+                                      index: int,
+                                      epoch: int):
     """Display utility for printing learning statistics.
 
-    TODO: document type of each thing.
-
-    TODO: better explain what this is printing
+    Displays the input text and the predicted text for a number of batches.
+    This is useful for humans to see at a glance how well the network is doing.
     """
     print()
     # epoch_size in number of batches
