@@ -1191,9 +1191,10 @@ large sequence into more sequences.
 [NEXT]
 ```python
 # Initialize the hidden cell states to 0 before running any steps.
-input_state = np.zeros([BATCH_SIZE, HIDDEN_LAYER_SIZE * NUM_HIDDEN_LAYERS])
+input_state = np.zeros(
+    [BATCH_SIZE, HIDDEN_LAYER_SIZE * NUM_HIDDEN_LAYERS])
 
-# Create the session and initialize its variables to 0
+# Create the session and initialize its variables to 0.
 init = tf.global_variables_initializer()
 session = tf.Session()
 session.run(init)
@@ -1310,13 +1311,35 @@ State how long it took to train that model.
 
 [NEXT]
 <!-- .slide: data-background="images/books_opened.jpg" class="background" -->
-TODO: conclusion
+Machine learning often used for prediction.
+
+Deep learning used to predict in domains where regular ML techniques cannot.
+
+Deep recurrent neural networks good for predicting time-series data.
 
 [NEXT]
 <!-- .slide: data-background="images/books_opened.jpg" class="background" -->
+Used RNNs to predict next chars in novels.
 
+Trained RNN in Python using Tensorflow.
+
+Trained model then used to generate real-looking text.
+
+Significant computation required, but only a small amount of code.
+
+_note_
+Significant computation required, but only a small amount of code (thanks to
+Tensorflow).
+
+[NEXT]
+<!-- .slide: data-background="images/books_opened.jpg" class="background" -->
+TODO: further resources??
+
+[NEXT]
+<!-- .slide: data-background="images/books_opened.jpg" class="background" -->
 ### Slides
-[http://donaldwhyte.co.uk/deep-learning-with-rnns](http://donaldwhyte.co.uk/deep-learning-with-rnns)
+
+http://donaldwhyte.co.uk/deep-learning-with-rnns
 
 [NEXT]
 <!-- .slide: data-background="images/books_opened.jpg" class="background" -->
