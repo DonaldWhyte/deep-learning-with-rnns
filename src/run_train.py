@@ -39,10 +39,12 @@ def _main():
 
 
 def _parse_args() -> argparse.Namespace:
-    parser = argparse.ArgumentParser(description='TODO')
+    parser = argparse.ArgumentParser(
+        description='Helper program for training RNNs on textual data')
     parser.add_argument(
         '-f', '--files', type=str,
-        help='Glob pattern of files to train on')
+        help='Glob pattern of files to train on',
+        required=True)
     return parser.parse_args()
 
 

@@ -1,6 +1,7 @@
 import datetime
 import logging
 import math
+import numpy as np
 import os
 import time
 from typing import Callable, List, Optional
@@ -26,7 +27,7 @@ class RNNTextModel:
                  gru_internal_size: int,
                  num_hidden_layers: int,
                  stats_log_dir: str):
-        """TODO
+        """Construct `RNNTextModel` with TODO.
 
         TODO: document all inputs
         """
@@ -36,16 +37,29 @@ class RNNTextModel:
         # Store hyperparameters
         self._sequence_length = sequence_length
         self._batch_size = batch_size
+        self._gru_internal_size = gru_internal_size
+        self._num_hidden_layers = num_hidden_layers
 
-        # Define RNN inputs.
+        # ---------------------------------------------------------------------
+        # Graph Inputs
+        # ---------------------------------------------------------------------
         X = tf.placeholder(tf.uint8, [None, None], name='X')
         self._inputs = {
+            # Hyperparameters.
             'learning_rate': tf.placeholder(tf.float32, name='learning_rate'),
             'batch_size': tf.placeholder(tf.int32, name='batch_size'),
+
             # Dimensions: [ batch_size, sequence_length ]
             'X': X,
             # Dimensions: [ batch_size, sequence_length, ALPHABET_SIZE ]
-            'Xo': tf.one_hot(X, ALPHABET_SIZE, 1.0, 0.0)
+            'Xo': tf.one_hot(X, ALPHABET_SIZE, 1.0, 0.0),
+
+            # Input cell state.
+            # Dimensions: [batch_size, gru_internal_size * num_hidden_layers]
+            'H_in': tf.placeholder(
+                tf.float32,
+                [None, self._gru_internal_size * self._num_hidden_layers],
+                name='Hin')
         }
 
         # Define expected RNN outputs. This is used for training.
@@ -59,24 +73,20 @@ class RNNTextModel:
             'Yo': tf.one_hot(Y_exp, ALPHABET_SIZE, 1.0, 0.0)
         }
 
+        # ---------------------------------------------------------------------
+        # Hidden Layers
+        # ---------------------------------------------------------------------
+
         # Define internal/hidden RNN layers. The RNN is composed of a certain
         # number of hidden layers, where each node is `GruCell` that uses
         # `gru_internal_size` as the internal state size of a single cell. A
         # higher `gru_internal_size` means more complex state can be stored in
         # a single cell.
         self._cells = [
-            rnn.GRUCell(gru_internal_size) for _ in range(num_hidden_layers)]
-        self._multicell = rnn.MultiRNNCell(self._cells, state_is_tuple=True)
-
-        # When using state_is_tuple=True, you must use multicell.zero_state to
-        # to create a tuple of placeholders for the input states (one state
-        # per layer).
-        #
-        # When executed using session.run(self._zero_state), this also returns
-        # the correctly shaped initial zero state to use when starting your
-        # training loop.
-        self._zero_state = self._multicell.zero_state(
-            self._batch_size, dtype=tf.float32)
+            rnn.GRUCell(self._gru_internal_size)
+            for _ in range(self._num_hidden_layers)
+        ]
+        self._multicell = rnn.MultiRNNCell(self._cells, state_is_tuple=False)
 
         # Using `dynamic_rnn` means Tensorflow "performs fully dynamic
         # unrolling" of the network. This is faster than compiling the full
@@ -96,9 +106,14 @@ class RNNTextModel:
             self._multicell,
             self._inputs['Xo'],
             dtype=tf.float32,
-            initial_state=self._zero_state)
+            initial_state=self._inputs['H_in'])
 
-        # Do this just to give H a identifiable name
+        # ---------------------------------------------------------------------
+        # Outputs
+        # ---------------------------------------------------------------------
+
+        # Output cell state after running a time step of the recurrent network.
+        # We specify this just to give H a identifiable name.
         self._H = tf.identity(H, name='H')
 
         # Softmax layer implementation:
@@ -107,7 +122,7 @@ class RNNTextModel:
         #
         # [ batch_size, sequence_length, ALPHABET_SIZE ]
         #     => [ batch_size x sequence_length, ALPHABET_SIZE ]
-        Yflat = tf.reshape(Yr, [-1, gru_internal_size])
+        Yflat = tf.reshape(Yr, [-1, self._gru_internal_size])
 
         # After this transformation, apply softmax readout layer. This way, the
         # weights and biases are shared across unrolled time steps. From the
@@ -137,7 +152,8 @@ class RNNTextModel:
                     tf.cast(self._actual_outputs['Y'], tf.uint8)),
                 tf.float32))
 
-        # TODO: explain what this is
+        # Used to adjust the weights at each training step, sich that the
+        # loss function is minimised.
         self._train_step = tf.train.AdamOptimizer().minimize(self._loss)
 
         self._initialise_tf_session()
@@ -191,34 +207,31 @@ class RNNTextModel:
             os.mkdir(checkpoint_dir)
         saver = tf.train.Saver(max_to_keep=1)
 
-        # Initial zero input state (a tuple).
-        input_state = self._session.run(self._zero_state)
+        # Initialise input cell state to all zeros.
+        input_state = np.zeros([
+            self._batch_size,
+            self._gru_internal_size * self._num_hidden_layers,
+        ])
 
+        # Split training data into mini-batches and iterate over all batches
+        # `num_epochs` times.
         batch_sequencer = rnn_minibatch_generator(
-            training_text, self._batch_size, self._sequence_length, num_epochs)
+            training_text,
+            self._batch_size,
+            self._sequence_length,
+            num_epochs)
+
         step = 0
         for x, y_, epoch in batch_sequencer:
             # Train on one minibatch.
             feed_dict = {
-                self._inputs['X']: x,
-                self._expected_outputs['Y']: y_,
                 self._inputs['learning_rate']: learning_rate,
-                self._inputs['batch_size']: self._batch_size
+                self._inputs['batch_size']: self._batch_size,
+                self._inputs['X']: x,
+                self._inputs['H_in']: input_state,
+                self._expected_outputs['Y']: y_
             }
 
-            # This is how you add the input state to feed dictionary when
-            # `state_is_tuple=True`.
-            #
-            #`self._zero_state` is a tuple of the placeholders for the
-            # `num_hidden_layers` input states of our multi-layer RNN cell.
-            # Those placeholders must be used as keys in `feed_dict`.
-            #
-            # `input_state` is a tuple holding the actual values of the input
-            # states (one per layer). Iterate on the input state placeholders
-            # and use them as keys in the dictionary to add actual input state
-            # values.
-            for i, v in enumerate(self._zero_state):
-                feed_dict[v] = input_state[i]
             # This is the call that actually trains on the batch.
             _, y, output_state, summary = self._session.run(
                 [
@@ -244,10 +257,9 @@ class RNNTextModel:
                 feed_dict = {
                     self._inputs['X']: x,
                     self._expected_outputs['Y']: y_,
-                    self._inputs['batch_size']: self._batch_size
+                    self._inputs['batch_size']: self._batch_size,
+                    self._inputs['H_in']: input_state
                 }
-                for i, v in enumerate(self._zero_state):
-                    feed_dict[v] = input_state[i]
                 y, losses, batch_loss, batch_accuracy = self._session.run(
                     [
                         self._actual_outputs['Y'],

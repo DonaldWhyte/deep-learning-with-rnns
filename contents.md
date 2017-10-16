@@ -1216,7 +1216,13 @@ generator = rnn_minibatch_generator(
 Run training step on all mini-batches for multiple epochs:
 
 ```python
+# Initialise input state
 step = 0
+input_state = np.zeros([
+  BATCH_SIZE, HIDDEN_LAYER_SIZE * NUM_HIDDEN_LAYERS
+])
+
+# Run training step loop
 for batch_input, expected_batch_output, epoch in generator:
     # Define inputs
     feed_dict = {
@@ -1227,7 +1233,8 @@ for batch_input, expected_batch_output, epoch in generator:
     }
 
     _, output, output_state = session.run(
-        [train_step, Y, H], feed_dict=feed_dict)
+        [train_step, Y, H],
+        feed_dict=feed_dict)
 
     # Loop state around for next recurrent run
     input_state = output_state
