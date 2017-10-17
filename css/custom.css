@@ -26,7 +26,12 @@
 
 p.small,
 a.small {
-    font-size: 20px;
+    font-size: 18px;
+}
+
+p.medium,
+a.medium {
+    font-size: 28px;
 }
 
 .small td,
@@ -50,6 +55,10 @@ a.small {
 
 .smallquote blockquote {
     font-size: 32px !important;
+}
+
+.smallestquote blockquote {
+    font-size: 28px !important;
 }
 
 /* Custom Coding Style */

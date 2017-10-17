@@ -634,6 +634,10 @@ _note_
 ![backprop_forward_pass](images/backprop_forwardpass_2.svg)
 
 [NEXT]
+### Forward Pass
+![backprop_forward_pass](images/backprop_forwardpass_3.svg)
+
+[NEXT]
 ### Backward Pass
 ![backprop_back_pass](images/backprop_backpass_0.svg)
 
@@ -1367,7 +1371,6 @@ generator = rnn_minibatch_generator(
 ```
 
 [NEXT]
-
 Run training step on all mini-batches for multiple epochs:
 
 ```python
@@ -1410,55 +1413,65 @@ _note_
 Explain what tensorboard is.
 
 [NEXT]
-When building your model:
-
-```python
-seq_loss = tf.reduce_mean(loss, 1)
-batch_loss = tf.reduce_mean(seq_loss)
-accuracy = tf.reduce_mean(
-    tf.cast(tf.equal(Y_, tf.cast(Y, tf.uint8)), tf.float32))
-loss_summary = tf.summary.scalar("batch_loss", batch_loss)
-acc_summary = tf.summary.scalar("batch_accuracy", accuracy)
-summaries = tf.summary.merge([loss_summary, acc_summary])
-
-summary_writer = tf.summary.FileWriter('log/training_progress')
-```
+### Final Results
 
 [NEXT]
+<!-- .slide: class="smallestquote" -->
 
-TODO: ditch the tensorboard shit and cut it short
+**Epoch 1**
 
-After each batch iteration:
+> TODO
 
-```python
-..., new_summary = session.run(
-    [..., summaries],
-    feed_dict=feed_dict)
+Training time: TODO
+<!-- .element class="medium" -->
 
-summary_writer.add_summary(new_summary, batch_step)
-```
-
-[NEXT]
-
-Run Tensorboard while your model is training:
-
-```bash
-tensorboard --logdir logs
-```
-
-_note_
-Show what code you need to add in the real example code. Explain that it logs
-data to a file and is then picked up by a local web server.
-
-Run tensorboard and show the following:
-
-* computation graph
-* accuracy measures
+(AWS p2.16x instance)
+<!-- .element class="small" -->
 
 [NEXT]
-### Final Result
+<!-- .slide: class="smallestquote" -->
 
-TODO: generate example of what network can generate
+**Epoch 5**
+
+> TODO
+
+Training time: TODO
+<!-- .element class="medium" -->
+
+(AWS p2.16x instance)
+<!-- .element class="small" -->
+
+
+[NEXT]
+<!-- .slide: class="smallestquote" -->
+
+**Epoch 10**
+
+> TODO
+
+Training time: TODO
+<!-- .element class="medium" -->
+
+(AWS p2.16x instance)
+<!-- .element class="small" -->
+
+[NEXT]
+<!-- .slide: class="smallestquote" -->
+
+**Epoch 100**
+
+> Gradually drawing away from the rest, two of the combatants are striving; each devoting every nerve, every energy, to the overthrow of the other.
+>
+> But each attack is met by counter attack, each terrible swinging stroke by the crash of equally hard wood or the dull slap of tough hide shield opposed in parry.
+>
+> More men are down, about even numbers on each side, these two combatants strive on.
+
+Training time: TODO
+<!-- .element class="medium" -->
+
+(AWS p2.16x instance)
+<!-- .element class="small" -->
+
 
 _note_
 Show what text a pre-trained model can generate. Show multiple examples of what
@@ -1529,23 +1542,3 @@ http://donaldwhyte.co.uk/deep-learning-with-rnns
 > [Martin Görner -- Tensorflow RNN Shakespeare](https://github.com/martin-gorner/tensorflow-rnn-shakespeare)
 
 > [Composing Music with Recurrent Neural Networks](http://www.hexahedria.com/2015/08/03/composing-music-with-recurrent-neural-networks/)
-
-
-[NEXT SECTION]
-## A. Using Trained Models
-
-#### Using Trained Models
-
-[NEXT]
-how to save the model weights (the Saver object)
-
-[NEXT]
-loading model from scratch
-
-[NEXT]
-using it to generate new text
-
-_note_
-Demonstrate this using a pre-trained model that is good at generating the
-target text. It will take too long for the model to be trained from scratch
-live.
