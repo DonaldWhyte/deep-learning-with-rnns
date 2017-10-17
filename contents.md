@@ -642,8 +642,6 @@ _note_
 ![backprop_back_pass](images/backprop_backpass_0.svg)
 
 _note_
-TODO: loss function -- add a loss function
-
 1. Compare the target output to the actual output
   - calculate the errors of the output neurons
 2. Calculate weight updates associated with output neurons using perceptron learning principle
@@ -982,9 +980,6 @@ Operations are nodes and tensors are edges.
 [NEXT]
 ![tensorflow_graph_marked](images/tensorflow_graph_marked.png)
 
-_note_
-TODO: add tensorboard screenshot of the graph
-
 [NEXT]
 `tf.Operation`
 
@@ -1052,32 +1047,31 @@ For us, the inputs will be those one-hot vector inputs that represent
 characters which I showed you before.
 
 [NEXT]
-```python
-# Build a graph to compute total cost of order.
-# Input is a 2D vector containing: [price, quantity]
-inputs = tf.placeholder(tf.float32, [2])
-```
-
+Build a graph that triples multiple numbers and sums them.
 [NEXT]
 
 ```python
 # Graph Node 1: inputs
+# Input is a 2D vector containing the two numbers to triple.
 inputs = tf.placeholder(tf.float32, [2])
+
 # Graph Node 2: an internal operation
-multiplied_inputs = tf.scalar_mul(3, inputs)
-# Graph Node 3: final output
-output_sum = tf.reduce_sum(multiplied_inputs)
+tripled_numbers = tf.scalar_mul(3, inputs)
+
+# Graph Node 3: final output.
+# Sum the previously tripled inputs.
+output_sum = tf.reduce_sum(tripled_numbers)
 
 # Run the graph.
 session = tf.Session()
 result = session.run(output_sum, feed_dict={inputs: [300, 10]})
-print(f'₽{result}')
+print(result})
 ```
 
 Output
 
 ```
-₽30000
+930
 ```
 
 [NEXT]

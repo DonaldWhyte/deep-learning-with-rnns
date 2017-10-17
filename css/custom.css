@@ -249,11 +249,11 @@ img[alt="full_network_loss"] {
 }
 
 img[alt="tensorflow_graph"] {
-    width: 400px;
+    width: 800px;
 }
 
 img[alt="tensorflow_graph_marked"] {
-    width: 400px;
+    width: 800px;
 }
 
 img[alt="classification"] {
