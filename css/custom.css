@@ -39,6 +39,19 @@ a.small {
     line-height: 18px;
 }
 
+.smallest code {
+    font-size: 8px;
+    line-height: 10px;
+}
+
+.two-col-code {
+    min-height: 400px;
+}
+
+.smallquote blockquote {
+    font-size: 32px !important;
+}
+
 /* Custom Coding Style */
 code {
     color: #22F;
@@ -81,8 +94,21 @@ code.medium {
     margin: 0px !important;
 }
 
-
 /* Images */
+img[alt="portrait"] {
+    width: 350px;
+    border: 2px solid black !important;
+}
+
+img[alt="small_portrait"] {
+    width: 220px;
+    border: 2px solid black !important;
+}
+
+img[alt="prize"] {
+    width: 250px;
+}
+
 img[alt="perceptron_learning"] {
     zoom: 0.5; /* all browsers */
     -moz-transform: scale(0.5);  /* Firefox */
@@ -162,12 +188,6 @@ img[alt="nn_backprop_algebra"] {
 
 img[alt="donald"] {
     width: 225px;
-    border: 2px solid black !important;
-}
-
-img[alt="alejandro"] {
-    width: 225px;
-    border: 2px solid black !important;
 }
 
 /* Library Icons */

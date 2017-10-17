@@ -7,10 +7,26 @@
     / <a href="http://twitter.com/donald_whyte">@donald_whyte</a>
     <br />
     <a href="http://donaldwhyte.co.uk">Alejandro Saucedo</a>
-    / <a href="http://twitter.com/axsauze">@axsauze</a><br/>
+    / <a href="http://twitter.com/AxSaucedo">@AxSaucedo</a><br/>
   <br />
 </p>
 <p>
+
+[NEXT]
+<!-- .slide: data-background="images/books_opened.jpg" class="background" -->
+
+### About Us
+
+<table class="bio-table">
+  <tr>
+    <td>![portrait](images/alejandro.jpg)</td>
+    <td>![portrait](images/donald.jpg)</td>
+  </tr>
+  <tr>
+    <td><span style="color: white; font-weight: bold">Alejandro Saucedo</span></td>
+    <td><span style="color: white; font-weight: bold">Donald Whyte</span></td>
+  </tr>
+</table>
 
 [NEXT]
 <!-- .slide: data-background="images/books_opened.jpg" class="background large" -->
@@ -18,20 +34,156 @@
 Create an AI author.
 
 [NEXT]
-<!-- .slide: data-background="images/books_opened.jpg" class="background" -->
+<!-- .slide: data-background="images/books_opened.jpg" class="background smallquote" -->
 
-> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque viverra imperdiet erat, nec ultricies sem elementum eget. Phasellus velit ligula, efficitur ac orci quis, aliquet malesuada tellus. Aliquam a elit pulvinar, pellentesque nunc a, rutrum est. Etiam rhoncus dignissim est et lobortis. Vivamus porta tincidunt congue. In tempor dapibus enim. Ut et arcu augue.
-
-_note_
-TODO: example of its output (after we've got a network fully trained)
-
-TODO: if find time, disable transition between bg and non-bg slides
+> Gradually drawing away from the rest, two of the combatants are striving; each devoting every nerve, every energy, to the overthrow of the other.
+>
+> But each attack is met by counter attack, each terrible swinging stroke by the crash of equally hard wood or the dull slap of tough hide shield opposed in parry.
+>
+> More men are down, about even numbers on each side, these two combatants strive on.
 
 [NEXT]
 <!-- .slide: data-background="images/books_opened.jpg" class="background" -->
 Create a neural network that can write novels.
 
 Use 30,000 English novels to train the network.
+
+
+[NEXT]
+<!-- .slide: data-background="images/books_opened.jpg" class="background smallest" -->
+
+<div class="left-col">
+  <pre><code class="two-col-code python hljs"># ONE
+
+import tensorflow as tf
+from tensorflow.contrib import layers, rnn
+import os
+import time
+import math
+import numpy as np
+tf.set_random_seed(0)
+
+# model parameters
+SEQLEN = 30
+BATCHSIZE = 200
+ALPHASIZE = 89
+INTERNALSIZE = 512
+NLAYERS = 3
+learning_rate = 0.001
+dropout_pkeep = 0.8
+
+codetext, valitext, bookranges = load_data()
+
+# the model
+lr = tf.placeholder(tf.float32, name='lr')  # learning rate
+pkeep = tf.placeholder(tf.float32, name='pkeep')  # dropout parameter
+batchsize = tf.placeholder(tf.int32, name='batchsize')
+
+# inputs
+X = tf.placeholder(tf.uint8, [None, None], name='X')
+Xo = tf.one_hot(X, ALPHASIZE, 1.0, 0.0)
+# expected outputs
+Y_ = tf.placeholder(tf.uint8, [None, None], name='Y_')
+Yo_ = tf.one_hot(Y_, ALPHASIZE, 1.0, 0.0)
+# input state
+Hin = tf.placeholder(tf.float32, [None, INTERNALSIZE*NLAYERS], name='Hin')
+
+# hidden layers
+cells = [rnn.GRUCell(INTERNALSIZE) for _ in range(NLAYERS)]
+multicell = rnn.MultiRNNCell(cells, state_is_tuple=False)
+  </code></pre>
+</div>
+
+<div class="right-col">
+  <pre><code class="two-col-code python hljs"># TWO
+
+Yr, H = tf.nn.dynamic_rnn(multicell, Xo, dtype=tf.float32, initial_state=Hin)
+H = tf.identity(H, name='H')
+
+# Softmax layer implementation
+Yflat = tf.reshape(Yr, [-1, INTERNALSIZE])
+Ylogits = layers.linear(Yflat, ALPHASIZE)
+Yflat_ = tf.reshape(Yo_, [-1, ALPHASIZE])
+loss = tf.nn.softmax_cross_entropy_with_logits(logits=Ylogits, labels=Yflat_)
+loss = tf.reshape(loss, [batchsize, -1])
+Yo = tf.nn.softmax(Ylogits, name='Yo')
+Y = tf.argmax(Yo, 1)
+Y = tf.reshape(Y, [batchsize, -1], name="Y")
+train_step = tf.train.AdamOptimizer(lr).minimize(loss)
+
+# Init for saving models
+if not os.path.exists("checkpoints"):
+    os.mkdir("checkpoints")
+saver = tf.train.Saver(max_to_keep=1000)
+
+# init
+istate = np.zeros([BATCHSIZE, INTERNALSIZE*NLAYERS])
+init = tf.global_variables_initializer()
+sess = tf.Session()
+sess.run(init)
+step = 0
+
+# train on one minibatch at a time
+for x, y_, epoch in txt.rnn_minibatch_sequencer(codetext, BATCHSIZE, SEQLEN, nb_epochs=10):
+    feed_dict = {X: x, Ye: ye, Hin: istate, lr: learning_rate, pkeep: dropout_pkeep, batchsize: BATCHSIZE}
+    _, y, ostate = sess.run([train_step, Y, H], feed_dict=feed_dict)
+
+    if step // 10 % _50_BATCHES == 0:
+        saved_file = saver.save(sess, 'checkpoints/rnn_train_' + timestamp, global_step=step)
+        print("Saved file: " + saved_file)
+
+    istate = ostate
+    step += BATCHSIZE * SEQLEN
+  </code></pre>
+</div>
+
+<div class="clear-col"></div>
+
+<!-- .element style="color: white;" -->
+75 lines of Tensorflow code!
+
+[NEXT]
+#### Gutenberg Datatset
+
+Contains 34,000 English novels.
+
+**https://www.gutenberg.org/**
+
+_note_
+Project Gutenberg offers over 54,000 free eBooks: Choose among free epub books,
+free kindle books, download them or read them online. You will find the world's
+great literature here, especially older works for which copyright has expired.
+We digitized and diligently proofread them with the help of thousands of
+volunteers.
+
+[NEXT]
+![novel_preprocessing](images/novel_preprocessing_intro.svg)
+
+_note_
+1. merge all 30000 novels into a single text document
+2. load single document as a flat sequence of characters
+3. filter out characters we don't care about
+4. map each char to an integer
+  - integer decides which _input value_ is set to 0
+
+**Result**: sequence of integers
+
+_notes_
+Emphasise the fact that you load all of the textual data in as integer-coded
+chars. All documents are flattened into a single large sequence.
+
+
+[NEXT]
+### Best AI Author Prize
+
+![prize](images/prize.jpg)
+
+_note_
+We're also running a workshop later today where we guide you through the code
+from this talk so you can build your own AI author.
+
+We're awarding prizes to the best performing models, so be sure to come along
+to that!
 
 
 [NEXT SECTION]
@@ -49,7 +201,7 @@ What **features** of the input tell us about the output?
 [NEXT]
 ### Feature Space
 
-* A feature is some property that describes raw input data</li>
+* A feature is some property that describes raw input data
 * Features represented as a vector in **feature space**
 * **Abstract** complexity of raw input for easier processing
 
@@ -141,7 +293,7 @@ Can this be used to learn how to write novels?
 Generating coherent text requires memory of what was written previously.
 
 [NEXT]
-> <span style="font-weight: bold; color: red">Boris'</span> favourite
+> <span style="font-weight: bold; color: red">Valentin's</span> favourite
 > <span style="font-weight: bold; color: blue">drink</span> is
 > <span style="font-weight: bold; color: blue">beer.</span>
 > <span style="font-weight: bold; color: red">He</span> likes
@@ -150,7 +302,7 @@ Generating coherent text requires memory of what was written previously.
 <table>
   <tr>
     <th>Male Person</th>
-    <td><span style="font-weight: bold; color: red">Boris, he</span></td>
+    <td><span style="font-weight: bold; color: red">Valentin, he</span></td>
   </tr>
   <tr>
     <th>Drinks</th>
@@ -291,9 +443,6 @@ many tasks, actually results in better performing networks.
 We don't have time to go into more detail in this talk, but feel free to ask
 us for more details afterwards.
 
-TODO: note down some reasons why we're using chars not words, but no need to
-go into detail in the talk unless someone asks
-
 [NEXT]
 ![char_perceptron](images/char_perceptron1.svg)
 
@@ -323,6 +472,10 @@ go into detail in the talk unless someone asks
   <td><strong>Predicted char:</strong> <span style="color: red">d</span></td></tr>
   <tr><td><strong>Current sentence:</strong> <span style="color: blue">ba</span><span style="color: red">d</span></td></tr>
 </table>
+
+TODO: numbers marked next to alphabets
+
+TODO: expand example further (full sentence)
 
 [NEXT]
 ### Problem
@@ -402,6 +555,9 @@ Keep adjusting the weights of each hidden layer
 In such a way that we minimise incorrect predictions
 
 [NEXT]
+TODO: loss function
+
+[NEXT]
 ![gradient_descent](images/gradient_descent_cropped.gif)
 
 Uses **derivatives** of activation functions to adjust weights
@@ -473,6 +629,8 @@ _note_
 ![backprop_back_pass](images/backprop_backpass_0.svg)
 
 _note_
+TODO: loss function -- add a loss function
+
 1. Compare the target output to the actual output
   - calculate the errors of the output neurons
 2. Calculate weight updates associated with output neurons using perceptron learning principle
@@ -502,7 +660,7 @@ Predict next character by running the last character through the
 [NEXT]
 ### However...
 
-> <span style="font-weight: bold; color: red">Boris'</span> favourite
+> <span style="font-weight: bold; color: red">Valentin's</span> favourite
 > <span style="font-weight: bold; color: blue">drink</span> is
 > <span style="font-weight: bold; color: blue">beer.</span>
 > <span style="font-weight: bold; color: red">He</span> likes
@@ -691,36 +849,25 @@ Contains 34,000 English novels.
 
 **https://www.gutenberg.org/**
 
-_note_
-Project Gutenberg offers over 54,000 free eBooks: Choose among free epub books, free kindle books, download them or read them online. You will find the world's great literature here, especially older works for which copyright has expired. We digitized and diligently proofread them with the help of thousands of volunteers.
-
 [NEXT]
 ![novel_preprocessing](images/novel_preprocessing.svg)
 
-_note_
-1. merge all 30000 novels into a single text document
-2. load single document as a flat sequence of characters
-3. filter out characters we don't care about
-4. map each char to an integer
-  - integer decides which _input value_ is set to 0
-
-**Result**: sequence of integers
-
-_notes_
-Emphasise the fact that you load all of the textual data in as integer-coded
-chars. All documents are flattened into a single large sequence.
-
 [NEXT]
-Common training methods:
+#### Common Training Methods
 
-|                |     |
-| -------------- | ---- |
-| **Stochastic** | Run backpropagation after processing **one** sequence |
-| **Batch**      | Run backpropagation after processing **all** sequences |
-| **Mini-Batch** | Run backpropagation after processing a **smaller batch** of $b$ sequences |
+Run backpropagation after:
+
+|                |                                |
+| -------------- | ------------------------------ |
+| **Stochastic** | one sequence                   |
+| **Batch**      | all sequences                  |
+| **Mini-Batch** | smaller batch of $b$ sequences |
 
 [NEXT]
 We'll use mini-batch.
+
+_note_
+TODO: explain why mini-batch
 
 [NEXT]
 Iterate across all batches.
@@ -749,6 +896,8 @@ _note_
 2. running an optimiser like gradient descent to train network on training dataset
 
 [NEXT]
+### Problem: complex graphs
+
 ![nn_computation_graph](images/nn_computation_graph.png)
 
 _note_
@@ -793,18 +942,12 @@ Theano: The reference deep-learning library for Python with an API largely compa
 [NEXT SECTION]
 ## 6. Tensorflow
 
-#### The Basics
-
-[NEXT]
-![full_network](images/full_network_no_marks.svg)
-
-_note_
-This is a preview of the network we're going to build in Tensorflow.
+#### Quick Start
 
 [NEXT]
 ### Goal
 
-Build a computation graph that learns the weights of this network.
+Build a computation graph that learns the weights of our network.
 
 [NEXT]
 ### The Computation Graph
@@ -819,6 +962,9 @@ Operations are nodes and tensors are edges.
 
 [NEXT]
 ![tensorflow_graph_marked](images/tensorflow_graph_marked.png)
+
+_note_
+TODO: add tensorboard screenshot of the graph
 
 [NEXT]
 `tf.Operation`
@@ -888,10 +1034,8 @@ characters which I showed you before.
 
 [NEXT]
 ```python
-# Define a 2D input vector that stores the two input features
-# for shape classification.
-#
-# The features were: [area, perimeter]
+# Build a graph to compute total cost of order.
+# Input is a 2D vector containing: [price, quantity]
 inputs = tf.placeholder(tf.float32, [2])
 ```
 
@@ -907,14 +1051,14 @@ output_sum = tf.reduce_sum(multiplied_inputs)
 
 # Run the graph.
 session = tf.Session()
-result = session.run(output_sum, feed_dict={inputs: [10, 15]})
-print(result)
+result = session.run(output_sum, feed_dict={inputs: [300, 10]})
+print(f'₽{result}')
 ```
 
 Output
 
 ```
-75.0
+₽30000
 ```
 
 [NEXT]
@@ -922,14 +1066,12 @@ Output
 
 [NEXT]
 
-1. Define graph nodes: `tf.Placeholder`s
-  - input data
-  - e.g. the previous char used to predict the next char
-2. Define graph edges: `tf.Operation`s
-  - architecture of the network
-  - evaluation and optimiser operations
-4. Define `tf.Session`
-  - call `run()` and pass in root of computation graph
+1. Define graph inputs: `tf.Placeholder`s
+  - previous char that is used to predict the next char
+2. Define graph operations: `tf.Operation`s
+  - architecture of the network (hidden layers)
+3. Use `tf.Session` to execute graph
+  - call `run()`, passing in root node of graph
 
 
 [NEXT SECTION]
@@ -985,7 +1127,7 @@ H_in = tf.placeholder(
     [None, HIDDEN_LAYER_SIZE * NUM_HIDDEN_LAYERS],
     name='H_in')
 
-# Create desired number of hiddens layers that use the `GRUCell`
+# Create desired number of hidden layers that use the `GRUCell`
 # for managing hidden state.
 cells = [
     rnn.GRUCell(HIDDEN_LAYER_SIZE)
@@ -1039,6 +1181,9 @@ Note that `H_out` is the input hidden cell state that's been updated by the
 last input. `H_out` is used as the next character's input (`H_in`).
 
 [NEXT]
+![rnn_unrolled](images/rnn-unrolled.svg)
+
+[NEXT]
 ![full_network_small](images/full_network_softmax.svg)
 
 ```python
@@ -1089,6 +1234,7 @@ Needs:
 1. the **real** output of the network after each batch
 2. the **expected** output (from our training data)
 
+_note_
 Used to compute a "loss" number that indicates how well the networking is
 is predicting the next char.
 
@@ -1134,6 +1280,7 @@ Choose an optimiser.
 Will adjust network weights to minimise the `loss`.
 
 ```
+# TODO: gradient descent
 train_step = tf.train.AdamOptimizer(lr).minimize(loss)
 ```
 
@@ -1225,6 +1372,8 @@ for batch_input, expected_batch_output, epoch in generator:
         batch_size: BATCH_SIZE
     }
 
+    # TODO: fix this
+
     _, output, output_state = session.run(
         [train_step, Y, H],
         feed_dict=feed_dict)
@@ -1265,6 +1414,8 @@ summary_writer = tf.summary.FileWriter('log/training_progress')
 ```
 
 [NEXT]
+
+TODO: ditch the tensorboard shit and cut it short
 
 After each batch iteration:
 
@@ -1334,7 +1485,6 @@ Tensorflow).
 [NEXT]
 <!-- .slide: data-background="images/books_opened.jpg" class="background" -->
 ### Slides
-
 http://donaldwhyte.co.uk/deep-learning-with-rnns
 
 [NEXT]
@@ -1343,8 +1493,8 @@ http://donaldwhyte.co.uk/deep-learning-with-rnns
 
 <table class="bio-table">
   <tr>
-    <td>![donald](images/donald.jpg)</td>
-    <td>![alejandro](images/alejandro.jpg)</td>
+    <td>![small_portrait](images/donald.jpg)</td>
+    <td>![small_portrait](images/alejandro.jpg)</td>
   </tr>
   <tr>
     <td>
