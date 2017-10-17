@@ -473,9 +473,18 @@ us for more details afterwards.
   <tr><td><strong>Current sentence:</strong> <span style="color: blue">ba</span><span style="color: red">d</span></td></tr>
 </table>
 
-TODO: numbers marked next to alphabets
+[NEXT]
+...
 
-TODO: expand example further (full sentence)
+[NEXT]
+![char_perceptron_filled](images/char_perceptron_n.svg)
+
+<table class="small-table"><tr>
+  <td><strong>Input:</strong> <span style="color: blue">e</span></td>
+  <td><strong>Predicted char:</strong> <span style="color: red">d</span></td></tr>
+  <tr><td><strong>Current sentence:</strong> <span style="color: blue">ball games were often playe</span><span style="color: red">d</span></td></tr>
+</table>
+
 
 [NEXT]
 ### Problem
