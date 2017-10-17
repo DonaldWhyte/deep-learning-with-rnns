@@ -866,8 +866,14 @@ Run backpropagation after:
 [NEXT]
 We'll use mini-batch.
 
-_note_
-TODO: explain why mini-batch
+[NEXT]
+### Why?
+
+|                                                   |                                                       |
+| ------------------------------------------------- | ----------------------------------------------------- |
+| <span style="color: red;">**Stochastic**</span>   | long time to converge on good weights                 |
+| <span style="color: red;">**Batch**</span>        | consumes lots of memory, gets stuck on "okay" weights |
+| <span style="color: green;">**Mini-Batch**</span> | quick to converge and memory efficient                |
 
 [NEXT]
 Iterate across all batches.
@@ -1280,8 +1286,7 @@ Choose an optimiser.
 Will adjust network weights to minimise the `loss`.
 
 ```
-# TODO: gradient descent
-train_step = tf.train.AdamOptimizer(lr).minimize(loss)
+train_step = tf.train.GradientDescentOptimizer(lr).minimize(loss)
 ```
 
 [NEXT SECTION]
@@ -1353,6 +1358,7 @@ generator = rnn_minibatch_generator(
 ```
 
 [NEXT]
+
 Run training step on all mini-batches for multiple epochs:
 
 ```python
@@ -1364,24 +1370,20 @@ input_state = np.zeros([
 
 # Run training step loop
 for batch_input, expected_batch_output, epoch in generator:
-    # Define inputs
-    feed_dict = {
-        X: batch_input,
-        Y_: expected_batch_output,
-        Hin: input_state,
-        batch_size: BATCH_SIZE
+    graph_inputs = {
+      X: batch_input,   Y_: expected_batch_output,
+      Hin: input_state, batch_size: BATCH_SIZE
     }
-
-    # TODO: fix this
 
     _, output, output_state = session.run(
         [train_step, Y, H],
-        feed_dict=feed_dict)
+        feed_dict=graph_inputs)
 
     # Loop state around for next recurrent run
     input_state = output_state
     step += BATCH_SIZE * SEQUENCE_LENGTH
 ```
+<!-- .element class="small" -->
 
 [NEXT]
 ### Demo
