@@ -36,17 +36,17 @@ Create an AI author.
 [NEXT]
 <!-- .slide: data-background="images/books_opened.jpg" class="background smallquote" -->
 
-> Gradually drawing away from the rest, two of the combatants are striving; each devoting every nerve, every energy, to the overthrow of the other.
+> Gradually drawing away from the rest, two combatants are striving; each devoting every nerve, every energy, to the overthrow of the other.
 >
-> But each attack is met by counter attack, each terrible swinging stroke by the crash of equally hard wood or the dull slap of tough hide shield opposed in parry.
+> But each attack is met by counter attack, each terrible swinging stroke by the crash of equally hard pain or the dull slap of tough hard shield opposed in parry.
 >
-> More men are down, about even numbers on each side, these two combatants strive on.
+> More men are down. Even numbers of men on each side, these two combatants strive on.
 
 [NEXT]
 <!-- .slide: data-background="images/books_opened.jpg" class="background" -->
 Create a neural network that can write novels.
 
-Use 30,000 English novels to train the network.
+Using 34,000 English novels to train the network.
 
 
 [NEXT]
@@ -850,11 +850,6 @@ Note that there is still a limit to how far back networks with cell states can
 remember. So we reduce the problems expressing long-term dependencies, but we
 don't get rid of it entirely.
 
-[NEXT]
-http://colah.github.io/posts/2015-08-Understanding-LSTMs/
-
-_note_
-
 Unfortunately, we don't have time in this talk to go into detail on how cell
 states are represented and the different types.
 
@@ -1260,7 +1255,6 @@ Y = tf.argmax(Yo, 1)
 Y = tf.reshape(Y, [BATCH_SIZE, -1], name="Y")
 ```
 
-
 [NEXT]
 Remaining tasks:
 
@@ -1427,79 +1421,89 @@ Briefly show real code and start running training. Run through one batch and
 see how the loss is reduced.
 
 [NEXT]
-### Tensorboard
-
-![tensorboard](images/tensorboard.png)
-
-_note_
-Explain what tensorboard is.
+### Final Results
 
 [NEXT]
-### Final Results
+<!-- .slide: class="smallestquote" -->
+
+**Epoch 0.0**
+
+> Dy8v:SH3U 2d4  xZ Vaf%hO kS_0i6 7y U5SUu6nSsR0  x MYiZ5ykLOtG3Q,cu St k  V   ctc_N CQFSbF%]q3ZsWWK8wP gyfYt3DpFo yhZ_ss,"IedX%lj,R%_4ux IX5  R%N3wQNG  PnSl 1DJqLdpc[kLeSYMoE]kf xCe29 J[r_k 6BiUs GUguW Y [Kw8"P Sg" e[2OCL%G mad6,:J[A k  5 jz 46iyQLuuT 9qTn GjT6:dSjv6RXMyjxX8:3 h_ cr sYBgnc8 DP04A8laW
+
+[NEXT]
+<!-- .slide: class="smallestquote" -->
+
+**Epoch 0.1**
+
+> Uum awetuarteeuF toBdU iwObaaMlr o rM OufNJetu iida cZeDbRuZfU m igdaao QH NBJ diace e L  cjoXeu ZDjiMftAeN g  iu O Aoc jdjrmIuaai ie t qmuozPwaEkoihca eXuzRCgZ iW AeqapiwaT VInBosPkqroi s yWbJoj  yKq  oUo jebaYigEouzxVb eyt  Px hiamIf vPOiiPu ky Cut LviPoej iE w hpFVxes h zwsvoidmoWxzgTnL ujDt Pr a
 
 [NEXT]
 <!-- .slide: class="smallestquote" -->
 
 **Epoch 1**
 
-> TODO
-
-Training time: TODO
-<!-- .element class="medium" -->
-
-(AWS p2.16x instance)
-<!-- .element class="small" -->
-
-[NEXT]
-<!-- .slide: class="smallestquote" -->
-
-**Epoch 10**
-
-> TODO
-
-Training time: TODO
-<!-- .element class="medium" -->
-
-(AWS p2.16x instance)
-<!-- .element class="small" -->
-
-
-[NEXT]
-<!-- .slide: class="smallestquote" -->
-
-**Epoch 100**
-
-> TODO
-
-Training time: TODO
-<!-- .element class="medium" -->
-
-(AWS p2.16x instance)
-<!-- .element class="small" -->
-
-[NEXT]
-<!-- .slide: class="smallestquote" -->
-
-**Epoch 1000**
-
-> Gradually drawing away from the rest, two of the combatants are striving; each devoting every nerve, every energy, to the overthrow of the other.
+> Here is the goal of my further. I shouldn't be the shash of no. Sky is bright and blue as running goeg on.
 >
-> But each attack is met by counter attack, each terrible swinging stroke by the crash of equally hard wood or the dull slap of tough hide shield opposed in parry.
+> Paur decided to move downwards to the floor, where the treasure was stored. She then thought to call her friend from ahead.
+
+[NEXT]
+...
+
+[NEXT]
+<!-- .slide: class="smallestquote" -->
+
+**Epoch 50**
+
+> Gradually drawing away from the rest, two combatants are striving; each devoting every nerve, every energy, to the overthrow of the other.
 >
-> More men are down, about even numbers on each side, these two combatants strive on.
+> But each attack is met by counter attack, each terrible swinging stroke by the crash of equally hard pain or the dull slap of tough hard shield opposed in parry.
+>
+> More men are down. Even numbers of men on each side, these two combatants strive on.
 
-Training time: TODO
-<!-- .element class="medium" -->
+[NEXT]
+### Further Examples
 
-(AWS p2.16x instance)
-<!-- .element class="small" -->
+Andrej Karpathy's blog post:
 
+[The Unreasonable Effectiveness of Recurrent Neural Networks ](http://karpathy.github.io/2015/05/21/rnn-effectiveness/)
 
-_note_
-Show what text a pre-trained model can generate. Show multiple examples of what
-it generates to bring the point home.
+[NEXT]
+```c
+/*
+ * Increment the size file of the new incorrect UI_FILTER group information
+ * of the size generatively.
+ */
+static int indicate_policy(void)
+{
+  int error;
+  if (fd == MARN_EPT) {
+    /* The kernel blank will coeld it to userspace. */
+    if (ss->segment < mem_total)
+      unblock_graph_and_set_blocked();
+    else
+      ret = 1;
+    goto bail;
+  }
+  segaddr = in_SB(in.addr);
+  selector = seg / 16;
+  setup_works = true;
+  for (i = 0; i < blocks; i++) {
+    seq = buf[i++];
+    bpf = bd->bd.next + i * search;
+    if (fd) {
+      current = blocked;
+    }
+  }
+  rw->name = "Getjbbregs";
+  bprm_self_clearl(&iv->version);
+  regs->new = blocks[(BPF_STATS << info->historidac)] | PFMR_CLOBATHINC_SECONDS << 12;
+  return segtable;
+}
+```
+<!-- .element class="smaller" -->
 
-State how long it took to train that model.
+[NEXT]
+![latex_generation_example](images/latex-generation-example.png)
 
 
 [NEXT SECTION]
@@ -1570,5 +1574,7 @@ http://donaldwhyte.co.uk/deep-learning-with-rnns
 ### Sources
 
 > [Martin Görner -- Tensorflow RNN Shakespeare](https://github.com/martin-gorner/tensorflow-rnn-shakespeare)
+
+> [Understanding LSTMs](http://colah.github.io/posts/2015-08-Understanding-LSTMs/)
 
 > [Composing Music with Recurrent Neural Networks](http://www.hexahedria.com/2015/08/03/composing-music-with-recurrent-neural-networks/)

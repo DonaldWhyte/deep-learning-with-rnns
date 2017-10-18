@@ -44,6 +44,11 @@ a.medium {
     line-height: 18px;
 }
 
+.smaller code {
+    font-size: 12px;
+    line-height: 13px;
+}
+
 .smallest code {
     font-size: 8px;
     line-height: 10px;
