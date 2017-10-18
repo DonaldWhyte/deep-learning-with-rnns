@@ -557,14 +557,42 @@ Learn the weight matrices!
 Optimisation problem.
 
 [NEXT]
-### Gradient Descent Optimiser
+### Loss Function
 
-Keep adjusting the weights of each hidden layer
+**Inputs:**
 
-In such a way that we minimise incorrect predictions
+1. the **real** output of the network after each batch
+2. the **expected** output (from our training data)
+
+**Outputs:**
+
+Number indicating performance of network.
 
 [NEXT]
-TODO: loss function
+Lower loss values = better performance
+
+Better performance = better prediction accuracy
+
+_note_
+There are many different types of loss functions. Typically they all take the
+real outputs and the known, expected outputs from your training dataset.
+
+We won't cover the details of loss functions here. For now, simply think of
+loss as a way to measure prediction accuracy, and we want to get the network's
+loss as small as possible, to get the _best_ accuracy possible.
+
+[NEXT]
+### Gradient Descent Optimiser
+
+We optimise the network by **minimising its loss**.
+
+Keep adjusting the weights of each hidden layer...
+
+...until loss is not getting any smaller.
+
+_note_
+Used to compute a "loss" number that indicates how well the networking is
+is predicting the next char.
 
 [NEXT]
 ![gradient_descent](images/gradient_descent_cropped.gif)
@@ -1285,7 +1313,7 @@ loss = tf.reshape(loss, [BATCH_SIZE, -1])
 _note_
 We don't have time to cover the details of this loss function. All you need to
 know for this talk is that is a commonly used loss function when predicting
-discrete values like characters.
+discrete, category values like characters.
 
 [NEXT]
 Choose an optimiser.
@@ -1425,20 +1453,6 @@ Training time: TODO
 [NEXT]
 <!-- .slide: class="smallestquote" -->
 
-**Epoch 5**
-
-> TODO
-
-Training time: TODO
-<!-- .element class="medium" -->
-
-(AWS p2.16x instance)
-<!-- .element class="small" -->
-
-
-[NEXT]
-<!-- .slide: class="smallestquote" -->
-
 **Epoch 10**
 
 > TODO
@@ -1449,10 +1463,24 @@ Training time: TODO
 (AWS p2.16x instance)
 <!-- .element class="small" -->
 
+
 [NEXT]
 <!-- .slide: class="smallestquote" -->
 
 **Epoch 100**
+
+> TODO
+
+Training time: TODO
+<!-- .element class="medium" -->
+
+(AWS p2.16x instance)
+<!-- .element class="small" -->
+
+[NEXT]
+<!-- .slide: class="smallestquote" -->
+
+**Epoch 1000**
 
 > Gradually drawing away from the rest, two of the combatants are striving; each devoting every nerve, every energy, to the overthrow of the other.
 >
@@ -1482,28 +1510,36 @@ State how long it took to train that model.
 <!-- .slide: data-background="images/books_opened.jpg" class="background" -->
 Machine learning often used for prediction.
 
+[NEXT]
+<!-- .slide: data-background="images/books_opened.jpg" class="background" -->
 Deep learning used to predict in domains where regular ML techniques cannot.
 
 Deep recurrent neural networks good for predicting time-series data.
 
 [NEXT]
 <!-- .slide: data-background="images/books_opened.jpg" class="background" -->
-Used RNNs to predict next chars in novels.
+Used RNNs to predict next chars in textual data (novels).
 
 Trained RNN in Python using Tensorflow.
 
 Trained model then used to generate real-looking text.
 
-Significant computation required, but only a small amount of code.
+[NEXT]
+<!-- .slide: data-background="images/books_opened.jpg" class="background" -->
+Significant computation required.
 
-_note_
-Significant computation required, but only a small amount of code (thanks to
-Tensorflow).
+But only a small amount of code.
+
+Thanks to Tensorflow.
 
 [NEXT]
 <!-- .slide: data-background="images/books_opened.jpg" class="background" -->
 ### Slides
 http://donaldwhyte.co.uk/deep-learning-with-rnns
+
+[NEXT]
+<!-- .slide: data-background="images/books_opened.jpg" class="background" -->
+## Come to our workshop!
 
 [NEXT]
 <!-- .slide: data-background="images/books_opened.jpg" class="background" -->
