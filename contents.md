@@ -940,90 +940,14 @@ Theano: The reference deep-learning library for Python with an API largely compa
 
 * Good visualisation tools
 
-
 [NEXT SECTION]
 ## 6. Tensorflow
-
-#### Quick Start
-
-
-[NEXT]
-`tf.Operation`
-
-Receives constants or `tf.Tensor`s as inputs.
-
-Outputs `tf.Tensor`s.
-
-[NEXT]
-```python
-node1 = tf.constant(3.0, dtype=tf.float32)
-node2 = tf.constant(4.0) # also tf.float32 implicitly
-print(node1)
-print(node2)
-```
-
-Output:
-
-```bash
-Tensor("Const:0", shape=(), dtype=float32)
-Tensor("Const_1:0", shape=(), dtype=float32)
-```
-
-[NEXT]
-`tf.Session`
-
-Used to execute a computation graph.
-
-[NEXT]
-```python
-# Put an "addition" operation on the graph.
-node3 = tf.add(node1, node2)
-
-# Create a session and run the root node of the graph.
-session = tf.Session()
-print(session.run([node3]))
-```
-
-Output:
-
-```bash
-7.0
-```
-
-[NEXT]
-`tf.Placeholder`
-
-Defines a node whose value is not yet determined.
-
-The value is filled in later, before the graph is executed.
-
-These are used to define neural network inputs.
-
-_note_
-For us, the inputs will be those one-hot vector inputs that represent
-characters which I showed you before.
-
-[NEXT]
-![tensorflow_graph](images/tensorflow_graph.png)
-
-[NEXT]
-
-1. Define graph inputs: `tf.Placeholder`s
-  - previous char that is used to predict the next char
-2. Define graph operations: `tf.Operation`s
-  - architecture of the network (hidden layers)
-3. Use `tf.Session` to execute graph
-  - call `run()`, passing in root node of graph
-
-
-[NEXT SECTION]
-## 7. Tensorflow
 
 #### Building our Model
 
 [NEXT]
 
-![full_network](images/full_network_output.svg)
+![full_network](images/full_network_headers.svg)
 #### Build a recurrent neural network to generate stories in Tensorflow.
 
 [NEXT]
@@ -1051,18 +975,22 @@ Operations are nodes and tensors are edges.
 #### Graph that triples numbers & sums them.
 
 ```python
-# Graph Node 1: inputs
+# 1. Define Inputs
+# ------------------------------------------------------------
 # Input is a 2D vector containing the two numbers to triple.
 inputs = tf.placeholder(tf.float32, [2])
 
-# Graph Node 2: an internal operation
+# 2. Define Internal Operations
+# ------------------------------------------------------------
 tripled_numbers = tf.scalar_mul(3, inputs)
 
-# Graph Node 3: final output.
+# 3. Define Final Output
+# ------------------------------------------------------------
 # Sum the previously tripled inputs.
 output_sum = tf.reduce_sum(tripled_numbers)
 
-# Run the graph.
+# 4. Run the graph with some inputs to produce the output.
+# ------------------------------------------------------------
 session = tf.Session()
 result = session.run(output_sum, feed_dict={inputs: [300, 10]})
 print(result})
@@ -1073,9 +1001,6 @@ Output
 ```
 930
 ```
-
-_note_
-TODO: Change comments
 
 [NEXT]
 ### Defining Hyperparameters
@@ -1091,7 +1016,7 @@ HIDDEN_LAYER_SIZE = 512
 NUM_HIDDEN_LAYERS = 3
 ```
 # 
-![full_network_small](images/full_network_output.svg)
+![full_network_small](images/full_network_headers.svg)
 
 [NEXT]
 ```python
@@ -1302,7 +1227,7 @@ train_step = tf.train.GradientDescentOptimizer(lr).minimize(loss)
 In the workshop we'll use a flavour called `AdamOptimizer`.
 
 [NEXT SECTION]
-## 8. Tensorflow
+## 7. Tensorflow
 
 #### Training the Model
 
