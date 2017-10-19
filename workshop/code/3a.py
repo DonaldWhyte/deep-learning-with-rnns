@@ -17,7 +17,7 @@ from util import ALPHABET_SIZE, read_data_files, rnn_minibatch_generator
 # A. Load Training Data
 # ------------------------------------------------------------------------------
 training_data, validation_data, file_index = read_data_files(
-    '../data/novels/*',
+    '../data/shakespeare/*',
     validation=True)
 
 print(f'Num training characters: {len(training_data)}')
