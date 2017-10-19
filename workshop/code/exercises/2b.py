@@ -52,10 +52,12 @@ print(f'Training data points: {len(inputs)}')
 # ------------------------------------------------------------------------------
 
 # Model hyper parameters
-NUM_INPUTS = 4
-NUM_CLASSES = len(CLASS_MAPPING)
-NUM_HIDDEN_LAYER_NODES = 6
-LEARNING_RATE = 0.001
+NUM_INPUTS = 0  # TODO: set to number of input features
+NUM_CLASSES = 0  # TODO: set number of classes
+NUM_HIDDEN_LAYER_NODES = 6  # TODO: play around with different hidden layer sizes
+                            #       and see what produces the best model
+LEARNING_RATE = 0.001       # TODO: play around with different learning rates
+                            #       and see how it affects the training speed
 
 # Input features
 x = tf.placeholder("float", [None, NUM_INPUTS])
@@ -81,7 +83,8 @@ hidden_layer = tf.add(tf.matmul(x, weights['hidden']), biases['hidden'])
 
 
 logits_output_layer = tf.add(
-    tf.matmul(hidden_layer, weights['output']), biases['output'])
+    tf.matmul(hidden_layer, weights['output']),
+    biases['output'])
 
 softmax_output_layer = tf.nn.softmax(logits_output_layer, 1)
 prediction = tf.argmax(softmax_output_layer, 1)
