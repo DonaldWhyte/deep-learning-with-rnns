@@ -47,7 +47,7 @@ pip3 install --upgrade tensorboard
 Run with `TF_CPP_MIN_LOG_LEVEL=2` to disable verbose warnings:
 
 ```
-TF_CPP_MIN_LOG_LEVEL=2 python3 source.py
+TF_CPP_MIN_LOG_LEVEL=2 python3 exercises/1.py
 ```
 
 Run Tensorboard in the same directory you're running the training scripts like so:

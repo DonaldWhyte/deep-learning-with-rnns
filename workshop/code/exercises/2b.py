@@ -63,6 +63,9 @@ LEARNING_RATE = 0.001       # TODO: play around with different learning rates
 x = tf.placeholder("float", [None, NUM_INPUTS])
 # Expected output
 y = tf.placeholder("int32", [None, 1])
+
+# TODO: you should try having a look at the documentation to see what these
+#       arguments mean!
 yo = tf.one_hot(y, NUM_CLASSES, 1.0, 0.0)
 
 # Build NN model computation graph
