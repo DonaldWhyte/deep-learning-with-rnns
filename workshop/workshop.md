@@ -49,3 +49,9 @@ Run with `TF_CPP_MIN_LOG_LEVEL=2` to disable verbose warnings:
 ```
 TF_CPP_MIN_LOG_LEVEL=2 python3 source.py
 ```
+
+Run Tensorboard in the same directory you're running the training scripts like so:
+
+```
+tensorboard --logdir log
+```
