@@ -2,7 +2,7 @@
 # Deep Learning with Recurrent Neural Networks Workshop
 # By Donald Whyte and Alejandro Saucedo
 #
-# Step 2:
+# Step 2c:
 # Building a Basic Neural Network
 # ==============================================================================
 
@@ -14,7 +14,7 @@ import numpy as np
 import tensorflow as tf
 
 
-# Load Training Data
+# A. Load Training Data
 # ------------------------------------------------------------------------------
 CLASS_MAPPING = {
     'setosa': 0,
@@ -48,7 +48,7 @@ inputs, expected_outputs = load_iris_dataset()
 print(f'Training data points: {len(inputs)}')
 
 
-# Building Neural Network Tensorflow Model
+# B. Building Neural Network Tensorflow Model
 # ------------------------------------------------------------------------------
 
 # Model hyper parameters
@@ -94,14 +94,7 @@ optimizer = tf.train.AdamOptimizer(learning_rate=LEARNING_RATE)
 train_operation = optimizer.minimize(loss)
 
 
-# Add accuracy output to the model. This is used purely for our own visual
-# evaluation of the quality of the model. It is not required to train the model
-# (only the loss is required for that).
-is_correct_prediction = tf.equal(prediction, tf.argmax(yo, 2))
-accuracy = tf.reduce_mean(tf.cast(is_correct_prediction, tf.float32))
-
-
-# Training Model
+# C. Training Model
 # ------------------------------------------------------------------------------
 
 def batch(iterable: Iterable, batch_size: int) -> Generator[list, None, None]:
@@ -130,30 +123,10 @@ with tf.Session() as session:
                 y: batch_y
             }
             session.run(train_operation, feed_dict=step_inputs)
-
-            # Every so often, calculate batch loss and accuracy and display them
-            # to the user.
-            step_should_display_accuracy = (
-                step % DISPLAY_ACC_EVERY_N_STEPS == 0
-                or step == 1)
-
-            if step_should_display_accuracy:
-                batch_loss, batch_acc = session.run(
-                    [loss, accuracy],
-                    feed_dict=step_inputs)
-                print(
-                    f'Epoch {epoch}, '
-                    f'Step {step}, '
-                    f'Minibatch Loss={batch_loss:.4f}, '
-                    f'Training Accuracy={batch_acc * 100:.2f}')
-
             step += 1
 
-    # Display total accuracy after optimisation/training has finished
-    # TODO: fix accuracy
+    # Display final loss on all training data after optimisation/training has
+    # finished.
     all_inputs  = {x: inputs, y: expected_outputs}
-    print(session.run(prediction, feed_dict=all_inputs))
-    print([x[0] for x in session.run(y, feed_dict=all_inputs)])
-
-    final_acc = session.run(accuracy, feed_dict=all_inputs)
-    print(f'Final Accuracy = {final_acc * 100:.2f}')
+    final_loss = session.run(loss, feed_dict=all_inputs)
+    print(f'Final Loss = {final_loss:.4f}')
