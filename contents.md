@@ -6,7 +6,7 @@
     <a href="http://donaldwhyte.co.uk">Donald Whyte</a>
     / <a href="http://twitter.com/donald_whyte">@donald_whyte</a>
     <br />
-    <a href="http://donaldwhyte.co.uk">Alejandro Saucedo</a>
+    <a href="http://e-x.io">Alejandro Saucedo</a>
     / <a href="http://twitter.com/AxSaucedo">@AxSaucedo</a><br/>
   <br />
 </p>
@@ -29,25 +29,24 @@
 </table>
 
 [NEXT]
-<!-- .slide: data-background="images/books_opened.jpg" class="background large" -->
+<!-- .slide: data-background="images/books_opened.jpg" class="background smallquote" -->
 
-Create an AI author.
+# Create an AI author.
+
+> Create a neural network that can write novels.
+>
+> Using 34,000 English novels to train the network.
 
 [NEXT]
 <!-- .slide: data-background="images/books_opened.jpg" class="background smallquote" -->
+
+# The Output
 
 > Gradually drawing away from the rest, two combatants are striving; each devoting every nerve, every energy, to the overthrow of the other.
 >
 > But each attack is met by counter attack, each terrible swinging stroke by the crash of equally hard pain or the dull slap of tough hard shield opposed in parry.
 >
 > More men are down. Even numbers of men on each side, these two combatants strive on.
-
-[NEXT]
-<!-- .slide: data-background="images/books_opened.jpg" class="background" -->
-Create a neural network that can write novels.
-
-Using 34,000 English novels to train the network.
-
 
 [NEXT]
 <!-- .slide: data-background="images/books_opened.jpg" class="background smallest" -->
@@ -290,9 +289,9 @@ Can this be used to learn how to write novels?
 **No.**
 
 [NEXT]
-Generating coherent text requires memory of what was written previously.
+#### Generating coherent text requires memory of what was written previously.
+<br>
 
-[NEXT]
 > <span style="font-weight: bold; color: red">Valentin's</span> favourite
 > <span style="font-weight: bold; color: blue">drink</span> is
 > <span style="font-weight: bold; color: blue">beer.</span>
@@ -319,8 +318,11 @@ Other issues with traditional machine learning:
 * Relies on you to break raw input data into a small set of useful features
 * Good feature engineering requires in-depth domain knowledge and time
 
+[NEXT]
+How do we do this?
 
 [NEXT SECTION]
+
 ## 2. Deep Neural Networks
 
 [NEXT]
@@ -347,25 +349,28 @@ No need for for manual feature extraction.
 * Modeled after a neuron in the human brain
 
 [NEXT]
-![perceptron](images/perceptron.svg)
+### The Mighty Perceptron
 
-[NEXT]
-### Perceptron Definition
+Synonymous to our linear function `f(x) = mx + c`
+
+<br>
 
 For `n` features, the perceptron is defined as:
 
+### `y = f(wx + b)`
+
 * `n`-dimensional weight vector `w`
+* `n`-dimensional input vector `x`
 * bias scalar `b`
 * activation function `f(s)`
+* output `y`
 
 [NEXT]
-|                     |                                            |
-| ------------------- | ------------------------------------------ |
-| Input               | $x = \left(x_0, x_1, \cdots, w_n\right)$   |
-| Weights             | $w = \left(w_0, w_1, \cdots, w_n\right)$   |
-| Bias                | $b$                                        |
-| Weighted Sum        | $\left(\sum_{i=0}^{n} {w_ix_i}\right) + b$ |
-| Activation Function | $f(s)$                                     |
+### The Mighty Perceptron
+
+### `f(wx + b) = y`
+
+![perceptron](images/perceptron.svg)
 
 
 [NEXT]
@@ -376,7 +381,11 @@ Simulates the 'firing' of a physical neuron.
 Takes the weighted sum and squashes it into a smaller range.
 
 [NEXT]
-### Sigmoid Function
+### Activation Function
+
+<br>
+
+#### Sigmoid Function
 
 * Squashes perceptron output into range [0,1]
 * Used to learn weights (`w`)
@@ -430,7 +439,11 @@ Make the input layer represent:
 Use the input to word/char to predict the next.
 
 [NEXT]
-We will use characters as the inputs.
+#### We will use characters as the inputs.
+
+<br>
+
+![char_perceptron](images/char_perceptron1.svg)
 
 _note_
 There are pros and cons with either representation. Both techniques use the
@@ -443,8 +456,6 @@ many tasks, actually results in better performing networks.
 We don't have time to go into more detail in this talk, but feel free to ask
 us for more details afterwards.
 
-[NEXT]
-![char_perceptron](images/char_perceptron1.svg)
 
 [NEXT]
 ![char_perceptron_filled](images/char_perceptron2.svg)
@@ -485,48 +496,36 @@ us for more details afterwards.
   <tr><td><strong>Current sentence:</strong> <span style="color: blue">ball games were often playe</span><span style="color: red">d</span></td></tr>
 </table>
 
+[NEXT]
+
+#### \#Winning
 
 [NEXT]
 ### Problem
 
 Single perceptrons are straight line equations.
 
-Produce a single output.
+Produce a single output, and hence cannot be used for complex problems like language.
 
 Need a *network* of neurons to output the full one-hot vector.
 
 [NEXT]
-### Neural Networks
+### Solution: Neural Networks
 
-Uses *many* perceptrons to:
+Uses *muli-layer perceptrons* to:
 
 * learn patterns in complex data, like language
 * produce the multiple outputs required for text prediction
+* Has multiple layers to provide flexibility on learning
 
-[NEXT]
-![nn_chars_filled_in](images/nn_chars_filled_in.svg)
-
-[NEXT]
 ![nn_chars_filled_in](images/deep_nn_chars_filled_in.svg)
 
 [NEXT]
-|            |                                     |
-| ---------- | ----------------------------------- |
-| **Input**  | $V$ nodes, a single one-hot vector  |
-| **Hidden** | multiple percetrons                 |
-| **Output** | $V$ nodes, a single one-hout vector |
 
-where $V$ is the number of characters.
-
-_note_
-The hidden layers is where all the smarts comes in. I could spend days
-discussing how to choose the number of hidden layers and nodes in each
-layer.
-
-It depends on so many factors. The number of input features, the distribution
-of inputs across feature space.
+## \#Winning
 
 [NEXT]
+
 ### Neuron Connectivity
 
 * Each layer is **fully connected** to the next
@@ -544,9 +543,13 @@ One for each layer
 
 ![weight_matrix](images/weight_matrix.svg)
 
+Which allows us to...
+
 _note_
 Weight matrix produced using the following Latex equation:
 W = \begin{bmatrix} w_{00} & w_{01} & \cdots & w_{0n} \\ w_{10} & w_{11} & \cdots & w_{1n} \\ \vdots & \vdots & \vdots & \vdots \\ w_{m0} & w_{m1} & \cdots & w_{mn} \end{bmatrix}
+
+
 
 [NEXT]
 ### Training Neural Networks
@@ -554,10 +557,11 @@ W = \begin{bmatrix} w_{00} & w_{01} & \cdots & w_{0n} \\ w_{10} & w_{11} & \cdot
 Learn the weight matrices!
 
 [NEXT]
-Optimisation problem.
+## Loss Function
 
-[NEXT]
-### Loss Function
+#### An optimization problem
+
+<br>
 
 **Inputs:**
 
@@ -590,14 +594,7 @@ Keep adjusting the weights of each hidden layer...
 
 ...until loss is not getting any smaller.
 
-_note_
-Used to compute a "loss" number that indicates how well the networking is
-is predicting the next char.
-
-[NEXT]
 ![gradient_descent](images/gradient_descent_cropped.gif)
-
-Uses **derivatives** of activation functions to adjust weights
 
 _note_
 
@@ -640,51 +637,7 @@ http://www.emergentmind.com/neural-network
 
 [NEXT]
 ### Forward Pass
-![backprop_forward_pass](images/ffnn_nclass.svg)
-
-_note_
-1. Start with random weights
-2. Feed input feature vector to input layer
-3. Let the first layer evaluate their activation using
-4. Feed activation into next layer, repeat for all layers
-5. Finally, compute output layer values
-
-[NEXT]
-### Forward Pass
-![backprop_forward_pass](images/backprop_forwardpass_0.svg)
-
-[NEXT]
-### Forward Pass
-![backprop_forward_pass](images/backprop_forwardpass_1.svg)
-
-[NEXT]
-### Forward Pass
-![backprop_forward_pass](images/backprop_forwardpass_2.svg)
-
-[NEXT]
-### Forward Pass
 ![backprop_forward_pass](images/backprop_forwardpass_3.svg)
-
-[NEXT]
-### Backward Pass
-![backprop_back_pass](images/backprop_backpass_0.svg)
-
-_note_
-1. Compare the target output to the actual output
-  - calculate the errors of the output neurons
-2. Calculate weight updates associated with output neurons using perceptron learning principle
-  - same adjustments as the ones made in the Perceptron Algorithm)
-3. For each output neuron, propagate values back to the previous layer
-4. Calculate weight updates associated with hidden neurons using perceptron learning principle
-5. Update weights, then repeat from step 1 (performing another forward and backward pass) until the weight values converge
-
-[NEXT]
-### Backward Pass
-![backprop_back_pass](images/backprop_backpass_1.svg)
-
-[NEXT]
-### Backward Pass
-![backprop_back_pass](images/backprop_backpass_2.svg)
 
 [NEXT]
 ### Backward Pass
@@ -695,6 +648,10 @@ After training the network, we obtain weights which minimise prediction error.
 
 Predict next character by running the last character through the
 **forward pass** step.
+
+[NEXT]
+
+# \#WINNING
 
 [NEXT]
 ### However...
@@ -947,6 +904,8 @@ Here is a small section of the computation graph required to train a simple
 recurrent network.
 
 [NEXT]
+### Problem: Complex Derivations
+
 ![nn_backprop_algebra](images/nn_backprop_algebra.png)
 
 _note_
@@ -956,7 +915,16 @@ This is some of the algebra require for one step of backpropagaiton/training
 for a single layer. And this is basic neural network with lno oops or cell states.
 
 [NEXT]
-### Python Neural Net Libraries
+### Solution
+
+![tensorflow](images/tensorflow.svg)
+
+* Can build very complex networks quickly
+* Easy to extend if required
+* Built-in support for RNN memory cells
+
+[NEXT]
+### Other Python Neural Net Libraries
 
 ![icon_tensorflow](images/tensorflow_icon.svg)
 ![icon_keras](images/keras_icon.svg)
@@ -970,12 +938,6 @@ Allows user to write symbolic mathematical expressions, then automatically gener
 
 Theano: The reference deep-learning library for Python with an API largely compatible with the popular NumPy library.
 
-[NEXT]
-![tensorflow](images/tensorflow.svg)
-
-* Can build very complex networks quickly
-* Easy to extend if required
-* Built-in support for RNN memory cells
 * Good visualisation tools
 
 
