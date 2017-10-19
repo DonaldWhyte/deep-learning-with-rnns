@@ -141,6 +141,7 @@ for x, y_, epoch in txt.rnn_minibatch_sequencer(codetext, BATCHSIZE, SEQLEN, nb_
 <!-- .element style="color: white;" -->
 Less than 100 lines of Tensorflow code!
 
+
 [NEXT]
 #### Gutenberg Datatset
 
@@ -171,11 +172,8 @@ _notes_
 Emphasise the fact that you load all of the textual data in as integer-coded
 chars. All documents are flattened into a single large sequence.
 
-
 [NEXT]
-### Best AI Author Prize
-
-![prize](images/prize.jpg)
+## Come to our workshop!
 
 _note_
 We're also running a workshop later today where we guide you through the code
@@ -512,7 +510,7 @@ Need a *network* of neurons to output the full one-hot vector.
 [NEXT]
 ### Solution: Neural Networks
 
-Uses *muli-layer perceptrons* to:
+Uses _multi-layer perceptrons_ to:
 
 * learn patterns in complex data, like language
 * produce the multiple outputs required for text prediction
@@ -825,7 +823,7 @@ These recurrent networks are trained in the same way as regular network.
 [NEXT]
 **Backpropagation and gradient descent**.
 
-![gradient_descent_small](images/gradient_descent_cropped.gif)
+![gradient_descent](images/gradient_descent_cropped.gif)
 
 [NEXT]
 ![backprop_back_pass](images/backprop_backpass_3.svg)
@@ -960,7 +958,7 @@ Build a computation graph that learns the weights of our network.
 
 |                |                                                                                   |
 | -------------  | --------------------------------------------------------------------------------- |
-| `tf.Tensor`    | Unit of data. An _n_ dimensional array of numbers.        |
+| `tf.Tensor`    | Unit of data. Vectors or matrices of values (floats, ints, etc.).             |
 | `tf.Operation` | Unit of computation. Takes 0+ `tf.Tensor`s as inputs and outputs 0+ `tf.Tensor`s. |
 | `tf.Graph`     | Collection of connected `tf.Tensor`s and `tf.Operation`s. |
 
@@ -972,28 +970,24 @@ Operations are nodes and tensors are edges.
 
 [NEXT]
 
-#### Graph that triples numbers & sums them.
+#### Graph that triples numbers and sums them.
 
 ```python
 # 1. Define Inputs
-# ------------------------------------------------------------
 # Input is a 2D vector containing the two numbers to triple.
 inputs = tf.placeholder(tf.float32, [2])
 
 # 2. Define Internal Operations
-# ------------------------------------------------------------
 tripled_numbers = tf.scalar_mul(3, inputs)
 
 # 3. Define Final Output
-# ------------------------------------------------------------
 # Sum the previously tripled inputs.
 output_sum = tf.reduce_sum(tripled_numbers)
 
 # 4. Run the graph with some inputs to produce the output.
-# ------------------------------------------------------------
 session = tf.Session()
 result = session.run(output_sum, feed_dict={inputs: [300, 10]})
-print(result})
+print(result)
 ```
 
 Output
@@ -1518,12 +1512,6 @@ http://donaldwhyte.co.uk/deep-learning-with-rnns
 [NEXT]
 <!-- .slide: data-background="images/books_opened.jpg" class="background" -->
 ## Come to our workshop!
-
-[NEXT]
-<!-- .slide: data-background="images/books_opened.jpg" class="background" -->
-### Best AI Author Prize
-
-![prize](images/prize.jpg)
 
 
 [NEXT]

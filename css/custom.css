@@ -153,7 +153,7 @@ img[alt="char_perceptron_filled"] {
 }
 
 img[alt="nn_chars_filled_in"] {
-    width: 600px;
+    width: 500px;
 }
 
 img[alt="weight_matrix"] {
@@ -161,7 +161,7 @@ img[alt="weight_matrix"] {
 }
 
 img[alt="gradient_descent"] {
-    width: 500px;
+    width: 400px;
 }
 
 img[alt="gradient_descent_small"] {
