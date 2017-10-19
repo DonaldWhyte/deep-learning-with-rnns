@@ -946,24 +946,6 @@ Theano: The reference deep-learning library for Python with an API largely compa
 
 #### Quick Start
 
-[NEXT]
-### Goal
-
-Build a computation graph that learns the weights of our network.
-
-[NEXT]
-### The Computation Graph
-
-|                |                                                                                   |
-| -------------  | --------------------------------------------------------------------------------- |
-| `tf.Tensor`    | Unit of data. An _n_ dimensional array of numbers.        |
-| `tf.Operation` | Unit of computation. Takes 0+ `tf.Tensor`s as inputs and outputs 0+ `tf.Tensor`s. |
-| `tf.Graph`     | Collection of connected `tf.Tensor`s and `tf.Operation`s. |
-
-Operations are nodes and tensors are edges.
-
-[NEXT]
-![tensorflow_graph_marked](images/tensorflow_graph_marked.png)
 
 [NEXT]
 `tf.Operation`
@@ -986,16 +968,6 @@ Output:
 Tensor("Const:0", shape=(), dtype=float32)
 Tensor("Const_1:0", shape=(), dtype=float32)
 ```
-
-[NEXT]
-Many built-in `tf.Operation`s:
-
-|            |                                                                    |
-| ---------- | ------------------------------------------------------------------ |
-| `constant` | outputs a constant tensor                                          |
-| `reshape`  | reshapes an input tensor to a new tensor with different dimensions |
-| `add`      | add values of two tensors                                          |
-| `matmul`   | multiplys two matrices                                             |
 
 [NEXT]
 `tf.Session`
@@ -1032,8 +1004,51 @@ For us, the inputs will be those one-hot vector inputs that represent
 characters which I showed you before.
 
 [NEXT]
-Build a graph that triples multiple numbers and sums them.
+![tensorflow_graph](images/tensorflow_graph.png)
+
 [NEXT]
+
+1. Define graph inputs: `tf.Placeholder`s
+  - previous char that is used to predict the next char
+2. Define graph operations: `tf.Operation`s
+  - architecture of the network (hidden layers)
+3. Use `tf.Session` to execute graph
+  - call `run()`, passing in root node of graph
+
+
+[NEXT SECTION]
+## 7. Tensorflow
+
+#### Building our Model
+
+[NEXT]
+
+![full_network](images/full_network_output.svg)
+#### Build a recurrent neural network to generate stories in Tensorflow.
+
+[NEXT]
+### How?
+
+Build a computation graph that learns the weights of our network.
+
+[NEXT]
+### The Computation Graph
+
+|                |                                                                                   |
+| -------------  | --------------------------------------------------------------------------------- |
+| `tf.Tensor`    | Unit of data. An _n_ dimensional array of numbers.        |
+| `tf.Operation` | Unit of computation. Takes 0+ `tf.Tensor`s as inputs and outputs 0+ `tf.Tensor`s. |
+| `tf.Graph`     | Collection of connected `tf.Tensor`s and `tf.Operation`s. |
+
+Operations are nodes and tensors are edges.
+
+[NEXT]
+### The Computation Graph
+![tensorflow_graph_marked](images/tensorflow_graph_marked.png)
+
+[NEXT]
+
+#### Graph that triples numbers & sums them.
 
 ```python
 # Graph Node 1: inputs
@@ -1059,62 +1074,53 @@ Output
 930
 ```
 
-[NEXT]
-![tensorflow_graph](images/tensorflow_graph.png)
+_note_
+TODO: Change comments
 
 [NEXT]
+### Defining Hyperparameters
 
-1. Define graph inputs: `tf.Placeholder`s
-  - previous char that is used to predict the next char
-2. Define graph operations: `tf.Operation`s
-  - architecture of the network (hidden layers)
-3. Use `tf.Session` to execute graph
-  - call `run()`, passing in root node of graph
-
-
-[NEXT SECTION]
-## 7. Tensorflow
-
-#### Building our Model
-
-[NEXT]
-![full_network](images/full_network_no_marks.svg)
-
-[NEXT]
 ```python
+# Input Hyperparameters
 SEQUENCE_LEN = 30
 BATCH_SIZE = 200
 ALPHABET_SIZE = 98
+
+# Hidden Recurrent Layer Hyperparameters
+HIDDEN_LAYER_SIZE = 512
+NUM_HIDDEN_LAYERS = 3
 ```
+# 
+![full_network_small](images/full_network_output.svg)
 
 [NEXT]
-![full_network_small](images/full_network_input.svg)
-
 ```python
 # Dimensions: [ BATCH_SIZE, SEQUENCE_LEN ]
 X = tf.placeholder(tf.uint8, [None, None], name='X')
 ```
 
-[NEXT]
-![full_network_small](images/full_network_onehot.svg)
+![full_network_small](images/full_network_input.svg)
 
+[NEXT]
 ```python
 # Dimensions: [ BATCH_SIZE, SEQUENCE_LEN, ALPHABET_SIZE ]
 Xo = tf.one_hot(X, ALPHABET_SIZE, 1.0, 0.0)
 ```
 
+![full_network_small](images/full_network_onehot.svg)
+
 [NEXT]
+
+### Defining Hidden State
+
 ![full_network_small](images/full_network_hidden.svg)
 
-```python
-HIDDEN_LAYER_SIZE = 512
-NUM_HIDDEN_LAYERS = 3
-```
 
 _note_
 Recap how the deep RNN cell layers work.
 
 [NEXT]
+### Defining Hidden State
 ```python
 from tensorflow.contrib import rnn
 
@@ -1151,12 +1157,11 @@ LSTM, but computationally more efficient (less complex structure as pointed
 out). So we are seeing it being used more and more.
 
 [NEXT]
-Wrap recurrent hidden layers in `tf.dynamic_rnn`.
+### Unrolling Recurrent Network Layers
+![rnn_unrolled](images/rnn-unrolled.svg)
 
-Unrolls loops when computation graph is running.
-
-Loops will be unrolled `SEQUENCE_LENGTH` times.
-
+[NEXT]
+### Unrolling Recurrent Network Layers
 ```python
 Yr, H_out = tf.nn.dynamic_rnn(
     multicell,
@@ -1169,6 +1174,12 @@ Yr, H_out = tf.nn.dynamic_rnn(
 # H_out = the altered hidden cell state after processing
 #         last input.
 ```
+Wrap recurrent hidden layers in `tf.dynamic_rnn`.
+
+Unrolls loops when computation graph is running.
+
+Loops will be unrolled `SEQUENCE_LENGTH` times.
+
 
 _note_
 The loops will be unrolled `SEQUENCE_LENGTH` times. You can think of this as us
@@ -1178,10 +1189,11 @@ graph that has 30 sets of hidden layers.
 Note that `H_out` is the input hidden cell state that's been updated by the
 last input. `H_out` is used as the next character's input (`H_in`).
 
-[NEXT]
-![rnn_unrolled](images/rnn-unrolled.svg)
+
 
 [NEXT]
+### Output is probability distribution
+
 ![full_network_small](images/full_network_softmax.svg)
 
 ```python
@@ -1208,6 +1220,8 @@ steps. Doing this treats values coming from a single sequence time step (one
 char) and values coming from a mini-batch run as the same thing.
 
 [NEXT]
+### Pick most probable character
+
 ![full_network_small](images/full_network_output.svg)
 
 ```python
@@ -1236,9 +1250,11 @@ Used to compute a "loss" number that indicates how well the networking is
 is predicting the next char.
 
 [NEXT]
+### Loss Function
 ![full_network_loss](images/full_network_loss.svg)
 
 [NEXT]
+### Loss Function
 
 Input expected next chars into network:
 
@@ -1254,6 +1270,7 @@ Yflat_ = tf.reshape(Yo_, [-1, ALPHABET_SIZE])
 ```
 
 [NEXT]
+### Loss Function
 Defining the loss function:
 
 ```
@@ -1272,13 +1289,17 @@ know for this talk is that is a commonly used loss function when predicting
 discrete, category values like characters.
 
 [NEXT]
-Choose an optimiser.
+### Choose an optimiser
+<br>
 
 Will adjust network weights to minimise the `loss`.
 
 ```
 train_step = tf.train.GradientDescentOptimizer(lr).minimize(loss)
 ```
+<br>
+
+In the workshop we'll use a flavour called `AdamOptimizer`.
 
 [NEXT SECTION]
 ## 8. Tensorflow
@@ -1301,6 +1322,7 @@ Of course, the downside of running loads of epochs is that it takes much
 longer to train the network.
 
 [NEXT]
+### Minibatch splitting across several epochs
 ```python
 # Contains: [Training Data, Test Data, Epoch Number]
 Batch = Tuple[np.matrix, np.matrix, int]
@@ -1325,6 +1347,7 @@ Omit the details, just explain the underlying concept of splitting one big
 large sequence into more sequences.
 
 [NEXT]
+### Start training
 ```python
 # Initialize the hidden cell states to 0 before running any steps.
 input_state = np.zeros(
@@ -1335,8 +1358,6 @@ init = tf.global_variables_initializer()
 session = tf.Session()
 session.run(init)
 ```
-
-[NEXT]
 Load dataset and construct mini-batch generator:
 
 ```python
