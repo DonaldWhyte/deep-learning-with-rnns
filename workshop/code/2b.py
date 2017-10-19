@@ -79,6 +79,7 @@ biases = {
 
 hidden_layer = tf.add(tf.matmul(x, weights['hidden']), biases['hidden'])
 
+
 logits_output_layer = tf.add(
     tf.matmul(hidden_layer, weights['output']), biases['output'])
 

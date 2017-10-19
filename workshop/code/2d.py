@@ -133,9 +133,7 @@ with tf.Session() as session:
             # Every so often, calculate batch loss and accuracy and display them
             # to the user.
             step_should_display_accuracy = (
-                step % DISPLAY_ACC_EVERY_N_STEPS == 0
-                or step == 1)
-
+                step % DISPLAY_ACC_EVERY_N_STEPS == 0)
             if step_should_display_accuracy:
                 batch_loss, batch_acc = session.run(
                     [loss, accuracy],

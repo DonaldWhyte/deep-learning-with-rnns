@@ -3,5 +3,7 @@
 # By Donald Whyte and Alejandro Saucedo
 #
 # Step 5:
-# Adding Stats for Tensorboard
+# Adding Dropout to Reduce Overfitting
 # ==============================================================================
+
+# TODO: on RNN, show how it improves accuracy
