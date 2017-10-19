@@ -6,7 +6,7 @@
     <a href="http://donaldwhyte.co.uk">Donald Whyte</a>
     / <a href="http://twitter.com/donald_whyte">@donald_whyte</a>
     <br />
-    <a href="http://donaldwhyte.co.uk">Alejandro Saucedo</a>
+    <a href="http://e-x.io">Alejandro Saucedo</a>
     / <a href="http://twitter.com/AxSaucedo">@AxSaucedo</a><br/>
   <br />
 </p>
@@ -29,25 +29,24 @@
 </table>
 
 [NEXT]
-<!-- .slide: data-background="images/books_opened.jpg" class="background large" -->
+<!-- .slide: data-background="images/books_opened.jpg" class="background smallquote" -->
 
-Create an AI author.
+# Create an AI author.
+
+> Create a neural network that can write novels.
+>
+> Using 34,000 English novels to train the network.
 
 [NEXT]
 <!-- .slide: data-background="images/books_opened.jpg" class="background smallquote" -->
+
+# The Output
 
 > Gradually drawing away from the rest, two combatants are striving; each devoting every nerve, every energy, to the overthrow of the other.
 >
 > But each attack is met by counter attack, each terrible swinging stroke by the crash of equally hard pain or the dull slap of tough hard shield opposed in parry.
 >
 > More men are down. Even numbers of men on each side, these two combatants strive on.
-
-[NEXT]
-<!-- .slide: data-background="images/books_opened.jpg" class="background" -->
-Create a neural network that can write novels.
-
-Using 34,000 English novels to train the network.
-
 
 [NEXT]
 <!-- .slide: data-background="images/books_opened.jpg" class="background smallest" -->
@@ -140,7 +139,7 @@ for x, y_, epoch in txt.rnn_minibatch_sequencer(codetext, BATCHSIZE, SEQLEN, nb_
 <div class="clear-col"></div>
 
 <!-- .element style="color: white;" -->
-75 lines of Tensorflow code!
+Less than 100 lines of Tensorflow code!
 
 [NEXT]
 #### Gutenberg Datatset
@@ -290,9 +289,9 @@ Can this be used to learn how to write novels?
 **No.**
 
 [NEXT]
-Generating coherent text requires memory of what was written previously.
+#### Generating coherent text requires memory of what was written previously.
+<br>
 
-[NEXT]
 > <span style="font-weight: bold; color: red">Valentin's</span> favourite
 > <span style="font-weight: bold; color: blue">drink</span> is
 > <span style="font-weight: bold; color: blue">beer.</span>
@@ -319,8 +318,11 @@ Other issues with traditional machine learning:
 * Relies on you to break raw input data into a small set of useful features
 * Good feature engineering requires in-depth domain knowledge and time
 
+[NEXT]
+How do we do this?
 
 [NEXT SECTION]
+
 ## 2. Deep Neural Networks
 
 [NEXT]
@@ -347,25 +349,28 @@ No need for for manual feature extraction.
 * Modeled after a neuron in the human brain
 
 [NEXT]
-![perceptron](images/perceptron.svg)
+### The Mighty Perceptron
 
-[NEXT]
-### Perceptron Definition
+Synonymous to our linear function `f(x) = mx + c`
+
+<br>
 
 For `n` features, the perceptron is defined as:
 
+### `y = f(wx + b)`
+
 * `n`-dimensional weight vector `w`
+* `n`-dimensional input vector `x`
 * bias scalar `b`
 * activation function `f(s)`
+* output `y`
 
 [NEXT]
-|                     |                                            |
-| ------------------- | ------------------------------------------ |
-| Input               | $x = \left(x_0, x_1, \cdots, w_n\right)$   |
-| Weights             | $w = \left(w_0, w_1, \cdots, w_n\right)$   |
-| Bias                | $b$                                        |
-| Weighted Sum        | $\left(\sum_{i=0}^{n} {w_ix_i}\right) + b$ |
-| Activation Function | $f(s)$                                     |
+### The Mighty Perceptron
+
+### `f(wx + b) = y`
+
+![perceptron](images/perceptron.svg)
 
 
 [NEXT]
@@ -376,7 +381,11 @@ Simulates the 'firing' of a physical neuron.
 Takes the weighted sum and squashes it into a smaller range.
 
 [NEXT]
-### Sigmoid Function
+### Activation Function
+
+<br>
+
+#### Sigmoid Function
 
 * Squashes perceptron output into range [0,1]
 * Used to learn weights (`w`)
@@ -430,7 +439,11 @@ Make the input layer represent:
 Use the input to word/char to predict the next.
 
 [NEXT]
-We will use characters as the inputs.
+#### We will use characters as the inputs.
+
+<br>
+
+![char_perceptron](images/char_perceptron1.svg)
 
 _note_
 There are pros and cons with either representation. Both techniques use the
@@ -443,8 +456,6 @@ many tasks, actually results in better performing networks.
 We don't have time to go into more detail in this talk, but feel free to ask
 us for more details afterwards.
 
-[NEXT]
-![char_perceptron](images/char_perceptron1.svg)
 
 [NEXT]
 ![char_perceptron_filled](images/char_perceptron2.svg)
@@ -485,48 +496,36 @@ us for more details afterwards.
   <tr><td><strong>Current sentence:</strong> <span style="color: blue">ball games were often playe</span><span style="color: red">d</span></td></tr>
 </table>
 
+[NEXT]
+
+#### \#Winning
 
 [NEXT]
 ### Problem
 
 Single perceptrons are straight line equations.
 
-Produce a single output.
+Produce a single output, and hence cannot be used for complex problems like language.
 
 Need a *network* of neurons to output the full one-hot vector.
 
 [NEXT]
-### Neural Networks
+### Solution: Neural Networks
 
-Uses *many* perceptrons to:
+Uses *muli-layer perceptrons* to:
 
 * learn patterns in complex data, like language
 * produce the multiple outputs required for text prediction
+* Has multiple layers to provide flexibility on learning
 
-[NEXT]
-![nn_chars_filled_in](images/nn_chars_filled_in.svg)
-
-[NEXT]
 ![nn_chars_filled_in](images/deep_nn_chars_filled_in.svg)
 
 [NEXT]
-|            |                                     |
-| ---------- | ----------------------------------- |
-| **Input**  | $V$ nodes, a single one-hot vector  |
-| **Hidden** | multiple percetrons                 |
-| **Output** | $V$ nodes, a single one-hout vector |
 
-where $V$ is the number of characters.
-
-_note_
-The hidden layers is where all the smarts comes in. I could spend days
-discussing how to choose the number of hidden layers and nodes in each
-layer.
-
-It depends on so many factors. The number of input features, the distribution
-of inputs across feature space.
+## \#Winning
 
 [NEXT]
+
 ### Neuron Connectivity
 
 * Each layer is **fully connected** to the next
@@ -544,9 +543,13 @@ One for each layer
 
 ![weight_matrix](images/weight_matrix.svg)
 
+Which allows us to...
+
 _note_
 Weight matrix produced using the following Latex equation:
 W = \begin{bmatrix} w_{00} & w_{01} & \cdots & w_{0n} \\ w_{10} & w_{11} & \cdots & w_{1n} \\ \vdots & \vdots & \vdots & \vdots \\ w_{m0} & w_{m1} & \cdots & w_{mn} \end{bmatrix}
+
+
 
 [NEXT]
 ### Training Neural Networks
@@ -554,10 +557,11 @@ W = \begin{bmatrix} w_{00} & w_{01} & \cdots & w_{0n} \\ w_{10} & w_{11} & \cdot
 Learn the weight matrices!
 
 [NEXT]
-Optimisation problem.
+## Loss Function
 
-[NEXT]
-### Loss Function
+#### An optimization problem
+
+<br>
 
 **Inputs:**
 
@@ -590,14 +594,7 @@ Keep adjusting the weights of each hidden layer...
 
 ...until loss is not getting any smaller.
 
-_note_
-Used to compute a "loss" number that indicates how well the networking is
-is predicting the next char.
-
-[NEXT]
 ![gradient_descent](images/gradient_descent_cropped.gif)
-
-Uses **derivatives** of activation functions to adjust weights
 
 _note_
 
@@ -640,51 +637,7 @@ http://www.emergentmind.com/neural-network
 
 [NEXT]
 ### Forward Pass
-![backprop_forward_pass](images/ffnn_nclass.svg)
-
-_note_
-1. Start with random weights
-2. Feed input feature vector to input layer
-3. Let the first layer evaluate their activation using
-4. Feed activation into next layer, repeat for all layers
-5. Finally, compute output layer values
-
-[NEXT]
-### Forward Pass
-![backprop_forward_pass](images/backprop_forwardpass_0.svg)
-
-[NEXT]
-### Forward Pass
-![backprop_forward_pass](images/backprop_forwardpass_1.svg)
-
-[NEXT]
-### Forward Pass
-![backprop_forward_pass](images/backprop_forwardpass_2.svg)
-
-[NEXT]
-### Forward Pass
 ![backprop_forward_pass](images/backprop_forwardpass_3.svg)
-
-[NEXT]
-### Backward Pass
-![backprop_back_pass](images/backprop_backpass_0.svg)
-
-_note_
-1. Compare the target output to the actual output
-  - calculate the errors of the output neurons
-2. Calculate weight updates associated with output neurons using perceptron learning principle
-  - same adjustments as the ones made in the Perceptron Algorithm)
-3. For each output neuron, propagate values back to the previous layer
-4. Calculate weight updates associated with hidden neurons using perceptron learning principle
-5. Update weights, then repeat from step 1 (performing another forward and backward pass) until the weight values converge
-
-[NEXT]
-### Backward Pass
-![backprop_back_pass](images/backprop_backpass_1.svg)
-
-[NEXT]
-### Backward Pass
-![backprop_back_pass](images/backprop_backpass_2.svg)
 
 [NEXT]
 ### Backward Pass
@@ -695,6 +648,10 @@ After training the network, we obtain weights which minimise prediction error.
 
 Predict next character by running the last character through the
 **forward pass** step.
+
+[NEXT]
+
+# \#WINNING
 
 [NEXT]
 ### However...
@@ -947,6 +904,8 @@ Here is a small section of the computation graph required to train a simple
 recurrent network.
 
 [NEXT]
+### Problem: Complex Derivations
+
 ![nn_backprop_algebra](images/nn_backprop_algebra.png)
 
 _note_
@@ -956,7 +915,16 @@ This is some of the algebra require for one step of backpropagaiton/training
 for a single layer. And this is basic neural network with lno oops or cell states.
 
 [NEXT]
-### Python Neural Net Libraries
+### Solution
+
+![tensorflow](images/tensorflow.svg)
+
+* Can build very complex networks quickly
+* Easy to extend if required
+* Built-in support for RNN memory cells
+
+[NEXT]
+### Other Python Neural Net Libraries
 
 ![icon_tensorflow](images/tensorflow_icon.svg)
 ![icon_keras](images/keras_icon.svg)
@@ -970,12 +938,6 @@ Allows user to write symbolic mathematical expressions, then automatically gener
 
 Theano: The reference deep-learning library for Python with an API largely compatible with the popular NumPy library.
 
-[NEXT]
-![tensorflow](images/tensorflow.svg)
-
-* Can build very complex networks quickly
-* Easy to extend if required
-* Built-in support for RNN memory cells
 * Good visualisation tools
 
 
@@ -984,24 +946,6 @@ Theano: The reference deep-learning library for Python with an API largely compa
 
 #### Quick Start
 
-[NEXT]
-### Goal
-
-Build a computation graph that learns the weights of our network.
-
-[NEXT]
-### The Computation Graph
-
-|                |                                                                                   |
-| -------------  | --------------------------------------------------------------------------------- |
-| `tf.Tensor`    | Unit of data. An _n_ dimensional array of numbers.        |
-| `tf.Operation` | Unit of computation. Takes 0+ `tf.Tensor`s as inputs and outputs 0+ `tf.Tensor`s. |
-| `tf.Graph`     | Collection of connected `tf.Tensor`s and `tf.Operation`s. |
-
-Operations are nodes and tensors are edges.
-
-[NEXT]
-![tensorflow_graph_marked](images/tensorflow_graph_marked.png)
 
 [NEXT]
 `tf.Operation`
@@ -1024,16 +968,6 @@ Output:
 Tensor("Const:0", shape=(), dtype=float32)
 Tensor("Const_1:0", shape=(), dtype=float32)
 ```
-
-[NEXT]
-Many built-in `tf.Operation`s:
-
-|            |                                                                    |
-| ---------- | ------------------------------------------------------------------ |
-| `constant` | outputs a constant tensor                                          |
-| `reshape`  | reshapes an input tensor to a new tensor with different dimensions |
-| `add`      | add values of two tensors                                          |
-| `matmul`   | multiplys two matrices                                             |
 
 [NEXT]
 `tf.Session`
@@ -1070,8 +1004,51 @@ For us, the inputs will be those one-hot vector inputs that represent
 characters which I showed you before.
 
 [NEXT]
-Build a graph that triples multiple numbers and sums them.
+![tensorflow_graph](images/tensorflow_graph.png)
+
 [NEXT]
+
+1. Define graph inputs: `tf.Placeholder`s
+  - previous char that is used to predict the next char
+2. Define graph operations: `tf.Operation`s
+  - architecture of the network (hidden layers)
+3. Use `tf.Session` to execute graph
+  - call `run()`, passing in root node of graph
+
+
+[NEXT SECTION]
+## 7. Tensorflow
+
+#### Building our Model
+
+[NEXT]
+
+![full_network](images/full_network_output.svg)
+#### Build a recurrent neural network to generate stories in Tensorflow.
+
+[NEXT]
+### How?
+
+Build a computation graph that learns the weights of our network.
+
+[NEXT]
+### The Computation Graph
+
+|                |                                                                                   |
+| -------------  | --------------------------------------------------------------------------------- |
+| `tf.Tensor`    | Unit of data. An _n_ dimensional array of numbers.        |
+| `tf.Operation` | Unit of computation. Takes 0+ `tf.Tensor`s as inputs and outputs 0+ `tf.Tensor`s. |
+| `tf.Graph`     | Collection of connected `tf.Tensor`s and `tf.Operation`s. |
+
+Operations are nodes and tensors are edges.
+
+[NEXT]
+### The Computation Graph
+![tensorflow_graph_marked](images/tensorflow_graph_marked.png)
+
+[NEXT]
+
+#### Graph that triples numbers & sums them.
 
 ```python
 # Graph Node 1: inputs
@@ -1097,62 +1074,53 @@ Output
 930
 ```
 
-[NEXT]
-![tensorflow_graph](images/tensorflow_graph.png)
+_note_
+TODO: Change comments
 
 [NEXT]
+### Defining Hyperparameters
 
-1. Define graph inputs: `tf.Placeholder`s
-  - previous char that is used to predict the next char
-2. Define graph operations: `tf.Operation`s
-  - architecture of the network (hidden layers)
-3. Use `tf.Session` to execute graph
-  - call `run()`, passing in root node of graph
-
-
-[NEXT SECTION]
-## 7. Tensorflow
-
-#### Building our Model
-
-[NEXT]
-![full_network](images/full_network_no_marks.svg)
-
-[NEXT]
 ```python
+# Input Hyperparameters
 SEQUENCE_LEN = 30
 BATCH_SIZE = 200
 ALPHABET_SIZE = 98
+
+# Hidden Recurrent Layer Hyperparameters
+HIDDEN_LAYER_SIZE = 512
+NUM_HIDDEN_LAYERS = 3
 ```
+# 
+![full_network_small](images/full_network_output.svg)
 
 [NEXT]
-![full_network_small](images/full_network_input.svg)
-
 ```python
 # Dimensions: [ BATCH_SIZE, SEQUENCE_LEN ]
 X = tf.placeholder(tf.uint8, [None, None], name='X')
 ```
 
-[NEXT]
-![full_network_small](images/full_network_onehot.svg)
+![full_network_small](images/full_network_input.svg)
 
+[NEXT]
 ```python
 # Dimensions: [ BATCH_SIZE, SEQUENCE_LEN, ALPHABET_SIZE ]
 Xo = tf.one_hot(X, ALPHABET_SIZE, 1.0, 0.0)
 ```
 
+![full_network_small](images/full_network_onehot.svg)
+
 [NEXT]
+
+### Defining Hidden State
+
 ![full_network_small](images/full_network_hidden.svg)
 
-```python
-HIDDEN_LAYER_SIZE = 512
-NUM_HIDDEN_LAYERS = 3
-```
 
 _note_
 Recap how the deep RNN cell layers work.
 
 [NEXT]
+### Defining Hidden State
 ```python
 from tensorflow.contrib import rnn
 
@@ -1189,12 +1157,11 @@ LSTM, but computationally more efficient (less complex structure as pointed
 out). So we are seeing it being used more and more.
 
 [NEXT]
-Wrap recurrent hidden layers in `tf.dynamic_rnn`.
+### Unrolling Recurrent Network Layers
+![rnn_unrolled](images/rnn-unrolled.svg)
 
-Unrolls loops when computation graph is running.
-
-Loops will be unrolled `SEQUENCE_LENGTH` times.
-
+[NEXT]
+### Unrolling Recurrent Network Layers
 ```python
 Yr, H_out = tf.nn.dynamic_rnn(
     multicell,
@@ -1207,6 +1174,12 @@ Yr, H_out = tf.nn.dynamic_rnn(
 # H_out = the altered hidden cell state after processing
 #         last input.
 ```
+Wrap recurrent hidden layers in `tf.dynamic_rnn`.
+
+Unrolls loops when computation graph is running.
+
+Loops will be unrolled `SEQUENCE_LENGTH` times.
+
 
 _note_
 The loops will be unrolled `SEQUENCE_LENGTH` times. You can think of this as us
@@ -1216,10 +1189,11 @@ graph that has 30 sets of hidden layers.
 Note that `H_out` is the input hidden cell state that's been updated by the
 last input. `H_out` is used as the next character's input (`H_in`).
 
-[NEXT]
-![rnn_unrolled](images/rnn-unrolled.svg)
+
 
 [NEXT]
+### Output is probability distribution
+
 ![full_network_small](images/full_network_softmax.svg)
 
 ```python
@@ -1246,6 +1220,8 @@ steps. Doing this treats values coming from a single sequence time step (one
 char) and values coming from a mini-batch run as the same thing.
 
 [NEXT]
+### Pick most probable character
+
 ![full_network_small](images/full_network_output.svg)
 
 ```python
@@ -1274,9 +1250,11 @@ Used to compute a "loss" number that indicates how well the networking is
 is predicting the next char.
 
 [NEXT]
+### Loss Function
 ![full_network_loss](images/full_network_loss.svg)
 
 [NEXT]
+### Loss Function
 
 Input expected next chars into network:
 
@@ -1292,6 +1270,7 @@ Yflat_ = tf.reshape(Yo_, [-1, ALPHABET_SIZE])
 ```
 
 [NEXT]
+### Loss Function
 Defining the loss function:
 
 ```
@@ -1310,13 +1289,17 @@ know for this talk is that is a commonly used loss function when predicting
 discrete, category values like characters.
 
 [NEXT]
-Choose an optimiser.
+### Choose an optimiser
+<br>
 
 Will adjust network weights to minimise the `loss`.
 
 ```
 train_step = tf.train.GradientDescentOptimizer(lr).minimize(loss)
 ```
+<br>
+
+In the workshop we'll use a flavour called `AdamOptimizer`.
 
 [NEXT SECTION]
 ## 8. Tensorflow
@@ -1339,6 +1322,7 @@ Of course, the downside of running loads of epochs is that it takes much
 longer to train the network.
 
 [NEXT]
+### Minibatch splitting across epochs
 ```python
 # Contains: [Training Data, Test Data, Epoch Number]
 Batch = Tuple[np.matrix, np.matrix, int]
@@ -1363,6 +1347,7 @@ Omit the details, just explain the underlying concept of splitting one big
 large sequence into more sequences.
 
 [NEXT]
+### Start training
 ```python
 # Initialize the hidden cell states to 0 before running any steps.
 input_state = np.zeros(
@@ -1373,8 +1358,6 @@ init = tf.global_variables_initializer()
 session = tf.Session()
 session.run(init)
 ```
-
-[NEXT]
 Load dataset and construct mini-batch generator:
 
 ```python
@@ -1412,13 +1395,6 @@ for batch_input, expected_batch_output, epoch in generator:
     step += BATCH_SIZE * SEQUENCE_LENGTH
 ```
 <!-- .element class="small" -->
-
-[NEXT]
-### Demo
-
-_note_
-Briefly show real code and start running training. Run through one batch and
-see how the loss is reduced.
 
 [NEXT]
 ### Final Results
@@ -1507,43 +1483,123 @@ static int indicate_policy(void)
 
 
 [NEXT SECTION]
-<!-- .slide: data-background="images/books_opened.jpg" class="background" -->
-## Fin
+<!-- .slide: data-background="images/books_opened.jpg" class="background smallest" -->
+
+# Success!
+
+[NEXT]
+<!-- .slide: data-background="images/books_opened.jpg" class="background smallest" -->
+
+We have created an AI author!
+
+<div class="left-col">
+  <pre><code class="two-col-code python hljs"># ONE
+
+import tensorflow as tf
+from tensorflow.contrib import layers, rnn
+import os
+import time
+import math
+import numpy as np
+tf.set_random_seed(0)
+
+# model parameters
+SEQLEN = 30
+BATCHSIZE = 200
+ALPHASIZE = 89
+INTERNALSIZE = 512
+NLAYERS = 3
+learning_rate = 0.001
+dropout_pkeep = 0.8
+
+codetext, valitext, bookranges = load_data()
+
+# the model
+lr = tf.placeholder(tf.float32, name='lr')  # learning rate
+pkeep = tf.placeholder(tf.float32, name='pkeep')  # dropout parameter
+batchsize = tf.placeholder(tf.int32, name='batchsize')
+
+# inputs
+X = tf.placeholder(tf.uint8, [None, None], name='X')
+Xo = tf.one_hot(X, ALPHASIZE, 1.0, 0.0)
+# expected outputs
+Y_ = tf.placeholder(tf.uint8, [None, None], name='Y_')
+Yo_ = tf.one_hot(Y_, ALPHASIZE, 1.0, 0.0)
+# input state
+Hin = tf.placeholder(tf.float32, [None, INTERNALSIZE*NLAYERS], name='Hin')
+
+# hidden layers
+cells = [rnn.GRUCell(INTERNALSIZE) for _ in range(NLAYERS)]
+multicell = rnn.MultiRNNCell(cells, state_is_tuple=False)
+  </code></pre>
+</div>
+
+<div class="right-col">
+  <pre><code class="two-col-code python hljs"># TWO
+
+Yr, H = tf.nn.dynamic_rnn(multicell, Xo, dtype=tf.float32, initial_state=Hin)
+H = tf.identity(H, name='H')
+
+# Softmax layer implementation
+Yflat = tf.reshape(Yr, [-1, INTERNALSIZE])
+Ylogits = layers.linear(Yflat, ALPHASIZE)
+Yflat_ = tf.reshape(Yo_, [-1, ALPHASIZE])
+loss = tf.nn.softmax_cross_entropy_with_logits(logits=Ylogits, labels=Yflat_)
+loss = tf.reshape(loss, [batchsize, -1])
+Yo = tf.nn.softmax(Ylogits, name='Yo')
+Y = tf.argmax(Yo, 1)
+Y = tf.reshape(Y, [batchsize, -1], name="Y")
+train_step = tf.train.AdamOptimizer(lr).minimize(loss)
+
+# Init for saving models
+if not os.path.exists("checkpoints"):
+    os.mkdir("checkpoints")
+saver = tf.train.Saver(max_to_keep=1000)
+
+# init
+istate = np.zeros([BATCHSIZE, INTERNALSIZE*NLAYERS])
+init = tf.global_variables_initializer()
+sess = tf.Session()
+sess.run(init)
+step = 0
+
+# train on one minibatch at a time
+for x, y_, epoch in txt.rnn_minibatch_sequencer(codetext, BATCHSIZE, SEQLEN, nb_epochs=10):
+    feed_dict = {X: x, Ye: ye, Hin: istate, lr: learning_rate, pkeep: dropout_pkeep, batchsize: BATCHSIZE}
+    _, y, ostate = sess.run([train_step, Y, H], feed_dict=feed_dict)
+
+    if step // 10 % _50_BATCHES == 0:
+        saved_file = saver.save(sess, 'checkpoints/rnn_train_' + timestamp, global_step=step)
+        print("Saved file: " + saved_file)
+
+    istate = ostate
+    step += BATCHSIZE * SEQLEN
+  </code></pre>
+</div>
+
+<div class="clear-col"></div>
+
+Less than 100 lines of Tensorflow code!
+
 
 [NEXT]
 <!-- .slide: data-background="images/books_opened.jpg" class="background" -->
-Machine learning often used for prediction.
+### Code
+https://github.com/DonaldWhyte/deep-learning-with-rnns
 
-[NEXT]
-<!-- .slide: data-background="images/books_opened.jpg" class="background" -->
-Deep learning used to predict in domains where regular ML techniques cannot.
-
-Deep recurrent neural networks good for predicting time-series data.
-
-[NEXT]
-<!-- .slide: data-background="images/books_opened.jpg" class="background" -->
-Used RNNs to predict next chars in textual data (novels).
-
-Trained RNN in Python using Tensorflow.
-
-Trained model then used to generate real-looking text.
-
-[NEXT]
-<!-- .slide: data-background="images/books_opened.jpg" class="background" -->
-Significant computation required.
-
-But only a small amount of code.
-
-Thanks to Tensorflow.
-
-[NEXT]
-<!-- .slide: data-background="images/books_opened.jpg" class="background" -->
 ### Slides
 http://donaldwhyte.co.uk/deep-learning-with-rnns
 
 [NEXT]
 <!-- .slide: data-background="images/books_opened.jpg" class="background" -->
 ## Come to our workshop!
+
+[NEXT]
+<!-- .slide: data-background="images/books_opened.jpg" class="background" -->
+### Best AI Author Prize
+
+![prize](images/prize.jpg)
+
 
 [NEXT]
 <!-- .slide: data-background="images/books_opened.jpg" class="background" -->
