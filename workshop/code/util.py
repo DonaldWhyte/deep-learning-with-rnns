@@ -92,13 +92,13 @@ def read_data_files(glob_pattern: str, validation: bool=True) -> SequenceData:
 
 def encode_text(text: str) -> List[int]:
     """Encode given `text` as a list of integers suitable for NNs."""
-    return [_convert_from_alphabet(ord(ch)) for ch in text]
+    return [convert_from_alphabet(ord(ch)) for ch in text]
 
 
 def decode_to_text(chars: List[int], avoid_tab_and_lf: bool=False) -> str:
     """Decode given `chars` integer codes to an ASCII string."""
     return ''.join(
-        [_convert_to_alphabet(ch, avoid_tab_and_lf) for ch in chars])
+        [convert_to_alphabet(ch, avoid_tab_and_lf) for ch in chars])
 
 
 # A training batch consists of (X, Y, epoch), which are the input feature
@@ -277,7 +277,7 @@ def _find_file(char_index: int, file_index: List[dict]) -> str:
         if (f['start'] <= char_index < f['end']))
 
 
-def _convert_from_alphabet(ch: str) -> int:
+def convert_from_alphabet(ch: str) -> int:
     """Encode character `ch` to an integer.
 
     Specification of the supported alphabet (subset of ASCII-7):
@@ -298,7 +298,7 @@ def _convert_from_alphabet(ch: str) -> int:
         return 0  # unknown
 
 
-def _convert_to_alphabet(ch: int, avoid_tab_and_lf: bool=False) -> chr:
+def convert_to_alphabet_str(ch: int, avoid_tab_and_lf: bool=False) -> str:
     """Decode an encoded character `ch` to a string chartacter.
 
     What each input integer will be converted to:
@@ -308,10 +308,10 @@ def _convert_to_alphabet(ch: int, avoid_tab_and_lf: bool=False) -> chr:
         * 2 to 96 = 36 to 126 ASCII codes
         * 97 = LF (linefeed)
     """
-    return chr(_convert_to_alphabet_impl(ch, avoid_tab_and_lf))
+    return chr(convert_to_alphabet_int(ch, avoid_tab_and_lf))
 
 
-def _convert_to_alphabet_impl(ch: int, avoid_tab_and_lf: bool=False) -> int:
+def convert_to_alphabet_int(ch: int, avoid_tab_and_lf: bool=False) -> int:
     if ch == 1:
         return 32 if avoid_tab_and_lf else 9  # space instead of TAB
     if ch == 127 - 30:
@@ -320,3 +320,23 @@ def _convert_to_alphabet_impl(ch: int, avoid_tab_and_lf: bool=False) -> int:
         return ch + 30
     else:
         return 0  # unknown
+
+
+def sample_from_probabilities(probabilities, topn: int=ALPHABET_SIZE) -> int:
+    """
+    Roll the dice to return a random integer in the [0..ALPHABET_SIZE] range,
+    according to the provided probabilities.
+
+    If `topn` is specified, only the `topn`` highest probabilities are taken
+    into account.
+
+    `probabilities` should be a list of size `ALPHABET_SIZE` with the individual
+    probabilities of each char.
+
+    :param topn: the number of highest probabilities to consider. Defaults to
+                 all of them.
+    """
+    p = np.squeeze(probabilities)
+    p[np.argsort(p)[:-topn]] = 0
+    p = p / np.sum(p)
+    return np.random.choice(ALPHABET_SIZE, 1, p=p)[0]
