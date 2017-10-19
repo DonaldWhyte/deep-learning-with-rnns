@@ -139,7 +139,7 @@ for x, y_, epoch in txt.rnn_minibatch_sequencer(codetext, BATCHSIZE, SEQLEN, nb_
 <div class="clear-col"></div>
 
 <!-- .element style="color: white;" -->
-75 lines of Tensorflow code!
+Less than 100 lines of Tensorflow code!
 
 [NEXT]
 #### Gutenberg Datatset
@@ -1322,7 +1322,7 @@ Of course, the downside of running loads of epochs is that it takes much
 longer to train the network.
 
 [NEXT]
-### Minibatch splitting across several epochs
+### Minibatch splitting across epochs
 ```python
 # Contains: [Training Data, Test Data, Epoch Number]
 Batch = Tuple[np.matrix, np.matrix, int]
@@ -1395,13 +1395,6 @@ for batch_input, expected_batch_output, epoch in generator:
     step += BATCH_SIZE * SEQUENCE_LENGTH
 ```
 <!-- .element class="small" -->
-
-[NEXT]
-### Demo
-
-_note_
-Briefly show real code and start running training. Run through one batch and
-see how the loss is reduced.
 
 [NEXT]
 ### Final Results
@@ -1490,43 +1483,123 @@ static int indicate_policy(void)
 
 
 [NEXT SECTION]
-<!-- .slide: data-background="images/books_opened.jpg" class="background" -->
-## Fin
+<!-- .slide: data-background="images/books_opened.jpg" class="background smallest" -->
+
+# Success!
+
+[NEXT]
+<!-- .slide: data-background="images/books_opened.jpg" class="background smallest" -->
+
+We have created an AI author!
+
+<div class="left-col">
+  <pre><code class="two-col-code python hljs"># ONE
+
+import tensorflow as tf
+from tensorflow.contrib import layers, rnn
+import os
+import time
+import math
+import numpy as np
+tf.set_random_seed(0)
+
+# model parameters
+SEQLEN = 30
+BATCHSIZE = 200
+ALPHASIZE = 89
+INTERNALSIZE = 512
+NLAYERS = 3
+learning_rate = 0.001
+dropout_pkeep = 0.8
+
+codetext, valitext, bookranges = load_data()
+
+# the model
+lr = tf.placeholder(tf.float32, name='lr')  # learning rate
+pkeep = tf.placeholder(tf.float32, name='pkeep')  # dropout parameter
+batchsize = tf.placeholder(tf.int32, name='batchsize')
+
+# inputs
+X = tf.placeholder(tf.uint8, [None, None], name='X')
+Xo = tf.one_hot(X, ALPHASIZE, 1.0, 0.0)
+# expected outputs
+Y_ = tf.placeholder(tf.uint8, [None, None], name='Y_')
+Yo_ = tf.one_hot(Y_, ALPHASIZE, 1.0, 0.0)
+# input state
+Hin = tf.placeholder(tf.float32, [None, INTERNALSIZE*NLAYERS], name='Hin')
+
+# hidden layers
+cells = [rnn.GRUCell(INTERNALSIZE) for _ in range(NLAYERS)]
+multicell = rnn.MultiRNNCell(cells, state_is_tuple=False)
+  </code></pre>
+</div>
+
+<div class="right-col">
+  <pre><code class="two-col-code python hljs"># TWO
+
+Yr, H = tf.nn.dynamic_rnn(multicell, Xo, dtype=tf.float32, initial_state=Hin)
+H = tf.identity(H, name='H')
+
+# Softmax layer implementation
+Yflat = tf.reshape(Yr, [-1, INTERNALSIZE])
+Ylogits = layers.linear(Yflat, ALPHASIZE)
+Yflat_ = tf.reshape(Yo_, [-1, ALPHASIZE])
+loss = tf.nn.softmax_cross_entropy_with_logits(logits=Ylogits, labels=Yflat_)
+loss = tf.reshape(loss, [batchsize, -1])
+Yo = tf.nn.softmax(Ylogits, name='Yo')
+Y = tf.argmax(Yo, 1)
+Y = tf.reshape(Y, [batchsize, -1], name="Y")
+train_step = tf.train.AdamOptimizer(lr).minimize(loss)
+
+# Init for saving models
+if not os.path.exists("checkpoints"):
+    os.mkdir("checkpoints")
+saver = tf.train.Saver(max_to_keep=1000)
+
+# init
+istate = np.zeros([BATCHSIZE, INTERNALSIZE*NLAYERS])
+init = tf.global_variables_initializer()
+sess = tf.Session()
+sess.run(init)
+step = 0
+
+# train on one minibatch at a time
+for x, y_, epoch in txt.rnn_minibatch_sequencer(codetext, BATCHSIZE, SEQLEN, nb_epochs=10):
+    feed_dict = {X: x, Ye: ye, Hin: istate, lr: learning_rate, pkeep: dropout_pkeep, batchsize: BATCHSIZE}
+    _, y, ostate = sess.run([train_step, Y, H], feed_dict=feed_dict)
+
+    if step // 10 % _50_BATCHES == 0:
+        saved_file = saver.save(sess, 'checkpoints/rnn_train_' + timestamp, global_step=step)
+        print("Saved file: " + saved_file)
+
+    istate = ostate
+    step += BATCHSIZE * SEQLEN
+  </code></pre>
+</div>
+
+<div class="clear-col"></div>
+
+Less than 100 lines of Tensorflow code!
+
 
 [NEXT]
 <!-- .slide: data-background="images/books_opened.jpg" class="background" -->
-Machine learning often used for prediction.
+### Code
+https://github.com/DonaldWhyte/deep-learning-with-rnns
 
-[NEXT]
-<!-- .slide: data-background="images/books_opened.jpg" class="background" -->
-Deep learning used to predict in domains where regular ML techniques cannot.
-
-Deep recurrent neural networks good for predicting time-series data.
-
-[NEXT]
-<!-- .slide: data-background="images/books_opened.jpg" class="background" -->
-Used RNNs to predict next chars in textual data (novels).
-
-Trained RNN in Python using Tensorflow.
-
-Trained model then used to generate real-looking text.
-
-[NEXT]
-<!-- .slide: data-background="images/books_opened.jpg" class="background" -->
-Significant computation required.
-
-But only a small amount of code.
-
-Thanks to Tensorflow.
-
-[NEXT]
-<!-- .slide: data-background="images/books_opened.jpg" class="background" -->
 ### Slides
 http://donaldwhyte.co.uk/deep-learning-with-rnns
 
 [NEXT]
 <!-- .slide: data-background="images/books_opened.jpg" class="background" -->
 ## Come to our workshop!
+
+[NEXT]
+<!-- .slide: data-background="images/books_opened.jpg" class="background" -->
+### Best AI Author Prize
+
+![prize](images/prize.jpg)
+
 
 [NEXT]
 <!-- .slide: data-background="images/books_opened.jpg" class="background" -->
