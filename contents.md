@@ -1268,10 +1268,6 @@ large sequence into more sequences.
 [NEXT]
 ### Start training
 ```python
-# Initialize the hidden cell states to 0 before running any steps.
-input_state = np.zeros(
-    [BATCH_SIZE, HIDDEN_LAYER_SIZE * NUM_HIDDEN_LAYERS])
-
 # Create the session and initialize its variables to 0.
 init = tf.global_variables_initializer()
 session = tf.Session()
