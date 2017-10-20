@@ -363,6 +363,17 @@ pip3 install --upgrade tensorboard
 ```
 
 [NEXT]
+Clone the workshop repo:
+
+```bash
+git clone https://github.com/DonaldWhyte/deep-learning-with-rnns.git
+```
+
+[NEXT]
+```
+```
+
+[NEXT]
 ### The Computation Graph
 
 |                |                                                                                   |
