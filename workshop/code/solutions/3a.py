@@ -7,9 +7,6 @@
 # ==============================================================================
 
 import numpy as np
-import tensorflow as tf
-# `rnn` module temporarily in contrib. It's moving back to code in TF 1.1.
-from tensorflow.contrib import layers, rnn
 
 from util import ALPHABET_SIZE, read_data_files, rnn_minibatch_generator
 

@@ -330,8 +330,8 @@ for a single layer. And this is basic neural network with lno oops or cell state
 * Easy to extend if required
 * Built-in support for RNN memory cells
 
-[NEXT]
-## 6. Build the AI Author
+[NEXT SECTION]
+## 5. Build the AI Author
 
 Let's code!
 
@@ -370,8 +370,34 @@ git clone https://github.com/DonaldWhyte/deep-learning-with-rnns.git
 ```
 
 [NEXT]
+Test your installation works:
+
 ```
+cd deep-learning-with-rnns/workshop
+
+# Run with `TF_CPP_MIN_LOG_LEVEL=2` to disable verbose warnings
+TF_CPP_MIN_LOG_LEVEL=2 python3 solutions/1.py
 ```
+
+Expected output:
+
+```
+75.0
+```
+
+[NEXT]
+Run Tensorboard to ensure it works:
+
+```
+tensorboard --logdir log
+```
+
+_note_
+Show Tensorboard output.
+
+[NEXT]
+Get started!
+
 
 [NEXT]
 ### The Computation Graph

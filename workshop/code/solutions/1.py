@@ -22,9 +22,11 @@ output_sum = tf.reduce_sum(multiplied_inputs)
 # Setup to visualise the generated graph using Tensorboard.
 session = tf.Session()
 summary_writer = tf.summary.FileWriter(
-    os.path.join('logs', 'example'),
+    os.path.join('log', 'example'),
     graph=session.graph)
 
 # Run the graph.
-result = session.run(output_sum, feed_dict={inputs: [10, 15]})
-print(result)
+result1, result2 = session.run([multiplied_inputs, output_sum], feed_dict={
+    inputs: [10, 15]
+})
+print(result1, result2)
