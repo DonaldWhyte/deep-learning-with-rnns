@@ -1,6 +1,6 @@
 # Deep Learning with Recurrent Neural Networks
 
-### [View Presentation](http://donaldwhyte.github.io/deep-learning-with-rnns/)
+### [View Presentation Slides](http://donaldwhyte.github.io/deep-learning-with-rnns/)
 
 Presentation briefly introducing deep learning and how to apply a specific subset of deep learning, recurrent neural networks, to solve real world problems.
 
@@ -16,7 +16,11 @@ Topics covered:
 
 ## Workshop
 
-There is a workshop that accompanies this talk. The workshop instructions and associated data/code is **[available here](workshop/)**.
+There is a workshop that accompanies this talk. The workshop involves building the RNN architecture discussed in the talk to generate Shakespearean text.
+
+### [View Workshop Slides](http://donaldwhyte.github.io/deep-learning-with-rnns/workshop.html)
+
+### [Workshop Code Solutions and Data](workshop/)
 
 ## Running Presentation
 
