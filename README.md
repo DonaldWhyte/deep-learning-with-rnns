@@ -1,5 +1,6 @@
 # Deep Learning with Recurrent Neural Networks
 
+### [View Video Talk](https://www.youtube.com/watch?v=1GIBqPDzgwk)
 ### [View Presentation Slides](http://donaldwhyte.github.io/deep-learning-with-rnns/)
 
 Presentation briefly introducing deep learning and how to apply a specific subset of deep learning, recurrent neural networks, to solve real world problems.
